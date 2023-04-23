@@ -1,26 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import WeekViewCalendar from './components/Calendar/WeekViewCalendar';
+import { TaskContainerView } from './components/TaskView/TaskContainerView';
+import { Grid } from '@mui/material';
 
 function App() {
   return (
     <div className="App">
-      <WeekViewCalendar />
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
+      <Grid container>
+        <Grid xs={0.5} md={0.5}>
+          Nav
+        </Grid>
+        <Grid xs={4} md={2}>
+          <TaskContainerView/>
+        </Grid>
+        <Grid xs={2} md={7}>
+          <WeekViewCalendar />
+        </Grid>
+        <Grid xs={4} md={2}>
+          Right panel
+        </Grid>
+      </Grid>
     </div>
   );
 }
