@@ -7,7 +7,7 @@ import { Grid } from '@mui/material';
 function App() {
   return (
     <div className="App">
-      <Grid container>
+      <Grid container spacing={0}>
         <Grid xs={0.5} md={0.5}>
           Nav
         </Grid>
