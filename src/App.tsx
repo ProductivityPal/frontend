@@ -3,6 +3,7 @@ import './App.css';
 import WeekViewCalendar from './components/Calendar/WeekViewCalendar';
 import { TaskContainerView } from './components/TaskView/TaskContainerView';
 import { Grid } from '@mui/material';
+import './App.css';
 
 function App() {
   return (

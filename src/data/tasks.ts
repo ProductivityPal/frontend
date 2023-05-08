@@ -62,13 +62,13 @@ export const tasksList: Task[] = [
     },
     {
         id: 2,
-        title: "Learn React 2",
+        title: "Learn JS",
         description: "Learn React and Redux",
         completed: false,
         subtasks: [
             {
                 id: 22,
-                title: "Learn React",
+                title: "Learn JS",
                 description: "Learn React and Redux",
                 completed: false,
                 deadline: new Date(2020, 1, 1),

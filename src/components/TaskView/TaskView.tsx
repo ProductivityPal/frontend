@@ -10,11 +10,6 @@ type TaskViewProps = {
 
 export function TaskView(props: TaskViewProps) {
     const [SubtasksShowState, setSubtasksShowState] = React.useState('Show subtasks');
-    const subTasks = [
-        <div className='subtask-body'>
-            ✦ Subtask name
-        </div>
-    ];
     const toggleSubtasks = () => {
         if (SubtasksShowState === 'Show subtasks') {
             setSubtasksShowState('Hide subtasks');
@@ -22,19 +17,18 @@ export function TaskView(props: TaskViewProps) {
             setSubtasksShowState('Show subtasks');
         }
     }
-    
+
     return (
     <div className='task-body'>
         <div className='task-header'>
-            <h3>{props.taskName}</h3>
+            <p>{props.taskName}</p>
             <Button>✎</Button>
+            
         </div>
-        {/* {props.subTasks.map((_) => <div></div>)} */}
-        {/* todo: add option to hide and show subtasks */}
-        {props.subTasks && props.subTasks.map((subtask) => (<div className='subtask-body' key={subtask.id}>✦ {subtask.title}</div>))}
-        
-        {/* <Button onClick="toggleSubtasks">{SubtasksShowState}</Button>
-         */}
+        {SubtasksShowState === 'Hide subtasks' && 
+        props.subTasks && props.subTasks.map((subtask) =>
+          (<div className='subtask-body' key={subtask.id}>{subtask.title}</div>))}
+        <Button onClick={toggleSubtasks}>{SubtasksShowState}</Button>
     </div> 
     );
 }

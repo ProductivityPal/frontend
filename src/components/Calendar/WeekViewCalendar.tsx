@@ -8,7 +8,7 @@ const getDateFromToday = (numOfDays: number) => {
     let day = new Date();
     return new Date(day.setDate(day.getDate() + numOfDays));
 }
-
+// Returns an array of the next 7 days from today
 const getDaysOfTheWeek = () => {
     let daysOfTheWeek = [];
     for (let i = 0; i < 7; i++) {
@@ -16,6 +16,8 @@ const getDaysOfTheWeek = () => {
     }
     return daysOfTheWeek;
 }
+
+// todo; add a button to go to the next week
 
 export default function WeekViewCalendar() {
     let [todayDate, setTodayDate] = useState(new Date());
