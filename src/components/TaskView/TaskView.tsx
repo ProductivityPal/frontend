@@ -6,6 +6,7 @@ import { Button } from '@mui/material';
 type TaskViewProps = {
     taskName: string;
     subTasks?: any[];
+    isAlgoSort?: boolean;
 }
 
 export function TaskView(props: TaskViewProps) {
@@ -22,13 +23,15 @@ export function TaskView(props: TaskViewProps) {
     <div className='task-body'>
         <div className='task-header'>
             <p>{props.taskName}</p>
-            <Button>✎</Button>
+            {props.isAlgoSort && <Button>✓</Button>}
+            {!props.isAlgoSort && <Button>✎</Button>}
             
         </div>
-        {SubtasksShowState === 'Hide subtasks' && 
-        props.subTasks && props.subTasks.map((subtask) =>
-          (<div className='subtask-body' key={subtask.id}>{subtask.title}</div>))}
-        <Button onClick={toggleSubtasks}>{SubtasksShowState}</Button>
+        {props.subTasks && SubtasksShowState === 'Hide subtasks' && props.subTasks.map((subtask) =>
+          (<div className='subtask-body' key={subtask.id}>{subtask.title}
+          <Button onClick={toggleSubtasks}>{SubtasksShowState}</Button></div>))
+        }
+        
     </div> 
     );
 }

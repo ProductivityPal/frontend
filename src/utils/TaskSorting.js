@@ -1,5 +1,40 @@
+const tasks = [
+  {
+    id: 1,
+    name: 'Scrum Exam',
+    deadline: '2023-05-15',
+    difficulty: 2,
+    timeEstimate: 5,
+    likeliness: 3
+  },
+  {
+    id: 2,
+    name: 'IO - projekt',
+    deadline: '2023-05-15',
+    difficulty: 3,
+    timeEstimate: 3,
+    likeliness: 2
+  },
+  {
+    id: 3,
+    name: 'Inzynierka - algorytm',
+    deadline: '2023-05-17',
+    difficulty: 4,
+    timeEstimate: 4,
+    likeliness: 2
+  },
+  {
+    id: 4,
+    name: 'Kalendarz - inz',
+    deadline: '2023-05-20',
+    difficulty: 5,
+    timeEstimate: 6,
+    likeliness: 4
+  }
+];
+ 
  const weights = {
-   deadline: 5,
+   deadline: 100,
    difficulty: 3,
    timeEstimate: 1,
    likeliness: 2

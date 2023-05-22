@@ -1,13 +1,17 @@
 export type Task = {
     id: number;
-    title: string;
+    name: string;
     description?: string;
-    completed: boolean;
-    subtasks?: Task[];
-    deadline: Date;
+    priority: number;
     difficulty: Difficulty;
-    timeEstimate: number;
     likeliness: Likeliness;
+    deadline: Date;
+    timeEstimate: number;
+    completionTime?: number;
+    isSubtask: boolean;
+    isParent: boolean;
+    isCompleted: boolean;
+    parentId?: number;
 
     //todo: time estimate can be a sum of subtasks and modified by difficulty
 }
@@ -30,56 +34,33 @@ enum Likeliness {
 export const tasksList: Task[] = [
     {
         id: 1,
-        title: "Learn React",
-        description: "Learn React and Redux",
-        completed: false,
-        subtasks: [
-            {
-                id: 12,
-                title: "Learn React",
-                description: "Learn React and Redux",
-                completed: false,
-                deadline: new Date(2020, 1, 1),
-                difficulty: Difficulty.Medium,
-                timeEstimate: 10,
-                likeliness: Likeliness.Like
-            },
-            {
-                id: 13,
-                title: "Learn React",
-                description: "Learn React and Redux",
-                completed: false,
-                deadline: new Date(2020, 1, 1),
-                difficulty: Difficulty.Medium,
-                timeEstimate: 10,
-                likeliness: Likeliness.Like
-            },
-        ],
-        deadline: new Date(2020, 1, 1),
-        difficulty: Difficulty.Medium,
-        timeEstimate: 10,
-        likeliness: Likeliness.Like
+        name: "Task 1",
+        description: "This is a task",
+        priority: 1,
+        difficulty: Difficulty.Easy,
+        likeliness: Likeliness.Love,
+        deadline: new Date(),
+        timeEstimate: 1,
+        isSubtask: false,
+        isParent: false,
+        isCompleted: false
     },
     {
         id: 2,
-        title: "Learn JS",
-        description: "Learn React and Redux",
-        completed: false,
-        subtasks: [
-            {
-                id: 22,
-                title: "Learn JS",
-                description: "Learn React and Redux",
-                completed: false,
-                deadline: new Date(2020, 1, 1),
-                difficulty: Difficulty.Medium,
-                timeEstimate: 10,
-                likeliness: Likeliness.Like
-            },],
-        deadline: new Date(2020, 1, 1),
-        difficulty: Difficulty.Medium,
-        timeEstimate: 10,
-        likeliness: Likeliness.Like
-    }];
+        name: "Task 2",
+        description: "This is a task",
+        priority: 1,
+        difficulty: Difficulty.Easy,
+        likeliness: Likeliness.Love,
+        deadline: new Date(),
+        timeEstimate: 1,
+        isSubtask: false,
+        isParent: false,
+        isCompleted: false
+    }
+    ];
 
+export const getTasks = () => {
+    return tasksList;
+}
 
