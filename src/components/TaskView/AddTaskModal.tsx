@@ -52,7 +52,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
             completionTime: 0,
             timeEstimate,
             appUser: {
-                id: 1,
+                id: 3,
             },
         };
         postNewTask(newTaskData)(() =>{

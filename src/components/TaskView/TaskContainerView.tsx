@@ -15,9 +15,9 @@ import { AddTaskModal } from './AddTaskModal';
 
 
 
-const fetchTasks = fetchData<Task[]>('http://localhost:8080/task/?id=1');
-const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort?id=1');
-const putEnergyLevel = (energyLevel: String) => putData<{}>(`http://localhost:8080/user/energyLevel/${energyLevel}?id=${1}`, {});
+const fetchTasks = fetchData<Task[]>('http://localhost:8080/task/?id=3');
+const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort?id=3');
+const putEnergyLevel = (energyLevel: String) => putData<{}>(`http://localhost:8080/user/energyLevel/${energyLevel}?id=${3}`, {});
 
 export function TaskContainerView() {
 
