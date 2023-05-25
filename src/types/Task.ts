@@ -3,8 +3,8 @@ export type Task = {
     name: string;
     description?: string;
     priority: number;
-    difficulty: Difficulty;
-    likeliness: Likeliness;
+    difficulty: string;
+    likeliness: string;
     deadline: Date;
     timeEstimate: number;
     completionTime?: number;

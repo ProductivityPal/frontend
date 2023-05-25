@@ -15,9 +15,9 @@ import { AddTaskModal } from './AddTaskModal';
 
 
 
-const fetchTasks = fetchData<Task[]>('http://localhost:8080/task/?id=3');
-const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort?id=3');
-const putEnergyLevel = (energyLevel: String) => putData<{}>(`http://localhost:8080/user/energyLevel/${energyLevel}?id=${3}`, {});
+const fetchTasks = fetchData<Task[]>('http://localhost:8080/task/?id=5');
+const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort?id=5');
+const putEnergyLevel = (energyLevel: String) => putData<{}, number>(`http://localhost:8080/user/energyLevel/${energyLevel}?id=${5}`, {});
 
 export function TaskContainerView() {
 
@@ -61,8 +61,9 @@ export function TaskContainerView() {
         setEnergyLevelPopupView(false);
 
     }
+    
     const energyButtonLow = {
-        backgroundColor: '#3b8132',
+        backgroundColor: '#b90e0a',
         color: 'white',
     }
     const energyButtonMedium = {
@@ -70,7 +71,7 @@ export function TaskContainerView() {
         color: 'white',
     }
     const energyButtonHigh = {
-        backgroundColor: '#b90e0a',
+        backgroundColor: '#3b8132',
         color: 'white',
     }
 

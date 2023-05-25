@@ -30,7 +30,7 @@ type NewTaskProps = {
     };
 }
 
-const postNewTask = (newTask: NewTaskProps) => postData<{}>('http://localhost:8080/task/?id=1', newTask);
+const postNewTask = (newTask: NewTaskProps) => postData<{}, number>('http://localhost:8080/task/?id=5', newTask);
 
 export function AddTaskModal(props: AddTaskModalProps) {
     const [taskName, setTaskName] = React.useState('');
@@ -51,26 +51,18 @@ export function AddTaskModal(props: AddTaskModalProps) {
             isParent,
             completionTime: 0,
             timeEstimate,
+            isSubtask: false,
+            isCompleted: false,
             appUser: {
-                id: 3,
+                id: 5,
             },
         };
-        postNewTask(newTaskData)(() =>{
-            // props.addTask({
-            //     id: number;
-            //     name: string;
-            //     description?: string;
-            //     priority: number;
-            //     difficulty: Difficulty;
-            //     likeliness: Likeliness;
-            //     deadline: Date;
-            //     timeEstimate: number;
-            //     completionTime?: number;
-            //     isSubtask: boolean;
-            //     isParent: boolean;
-            //     isCompleted: boolean;
-            //     parentId?: number;
-            // })
+        postNewTask(newTaskData)((id) =>{
+            props.addTask({
+                id,
+                ...newTaskData 
+            });
+        
         });
         
         // setTaskName('');

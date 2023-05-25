@@ -19,8 +19,8 @@ export const fetchData = <T,>(url: string) => (
     });
 }
 
-const genericQuery = (method: string) => <T,>(url: string, data: T) => (
-    setData: (data: T) => void = () => {},
+const genericQuery = (method: string) => <T,R,>(url: string, data: T) => (
+    setData: (data: R) => void = () => {},
     setLoading: (loading: boolean) => void = () => {},
     setError: (error: string) => void = () => {}
 ) => {

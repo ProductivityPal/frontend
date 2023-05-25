@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import WeekViewCalendar from './components/Calendar/WeekViewCalendar';
 import { TaskContainerView } from './components/TaskView/TaskContainerView';
+import { NavigationMenu } from './components/NavigationMenu/NavigationMenu';
 import { Grid } from '@mui/material';
 import './App.css';
 
@@ -10,7 +11,7 @@ function App() {
     <div className="App">
       <Grid container spacing={0}>
         <Grid xs={0.5} md={0.5}>
-          Nav
+          <NavigationMenu/>
         </Grid>
         <Grid xs={4} md={2}>
           <TaskContainerView/>
