@@ -12,7 +12,7 @@ import { fetchData, putData } from '../../utils/fetchUtils';
 import { postData } from '../../utils/fetchUtils';
 import { Add } from '@material-ui/icons';
 import { AddTaskModal } from './AddTaskModal';
-
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 
 const fetchTasks = fetchData<Task[]>('http://localhost:8080/task/?id=5');
@@ -61,7 +61,7 @@ export function TaskContainerView() {
         setEnergyLevelPopupView(false);
 
     }
-    
+
     const energyButtonLow = {
         backgroundColor: '#b90e0a',
         color: 'white',
@@ -93,11 +93,21 @@ export function TaskContainerView() {
                         <ToggleButton key={2} value="2" onClick={toggleSortedView}>SortedView </ToggleButton>
                     </ToggleButtonGroup>
                 </Stack>
-                {currentView === 'ListView' && <div>
-                    {tasksList.map((task) => (<TaskView key={task.id} taskName={task.name} isAlgoSort={false} />))}
-                    <Button onClick={addNewTask}>Add new task</Button>
-                </div>
-                }
+                <DragDropContext onDragEnd={(result, provided) => {
+                    console.log("onDragEnd");
+                }}>
+                    <Droppable droppableId={"tasksviewsdroppable"} key={"tasksviewsdroppable"}>
+                        {(provided) => (
+                            currentView === 'ListView' ? (<div  {...provided.droppableProps} ref={provided.innerRef}>
+                                {tasksList.map((task, index) => (<TaskView key={task.id} taskName={task.name} isAlgoSort={false} index={index} />))}
+                                <Button onClick={addNewTask}>Add new task</Button>
+                            </div>) : <div />
+                            
+                        )}
+
+
+                    </Droppable>
+                </DragDropContext>
                 <AddTaskModal
                     open={openAddTaskModal}
                     setOpen={setOpenAddTaskModal}
