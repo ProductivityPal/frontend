@@ -6,7 +6,7 @@
     border-radius: 10px;
     background-color: #E7C3A1;
     padding: 10px;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     text-align: left;
 }
@@ -23,11 +23,11 @@
     text-align: left;
 }
 
-.task-header {
+/* .task-header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     height: 10%;
     width: 100%;
-}
+} */

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Stack from '@mui/material/Stack';
@@ -12,19 +12,64 @@ import { fetchData, putData } from '../../utils/fetchUtils';
 import { postData } from '../../utils/fetchUtils';
 import { Add } from '@material-ui/icons';
 import { AddTaskModal } from './AddTaskModal';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-
+import { Droppable } from 'react-beautiful-dnd';
+import { TasksCalendarContext } from '../../utils/tasksCalendarContext'
 
 const fetchTasks = fetchData<Task[]>('http://localhost:8080/task/?id=5');
 const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort?id=5');
 const putEnergyLevel = (energyLevel: String) => putData<{}, number>(`http://localhost:8080/user/energyLevel/${energyLevel}?id=${5}`, {});
+const TASK_LIST_COMPONENT_ID = "tasksList";
 
 export function TaskContainerView() {
 
     // Tasks / Sorted View
-    const [tasksList, setTasksList] = useState<Task[]>([]);
+    const { calendar, moveTask, addTask, setTasks } = useContext(TasksCalendarContext);
+    const tasksList = calendar[TASK_LIST_COMPONENT_ID];
+
+    // useEffect(() => {
+    //     setTasks(TASK_LIST_COMPONENT_ID, [
+    //         {
+    //             id: 1,
+    //             name: "abcd",
+    //             description: "asdasdas",
+    //             priority: 1,
+    //             difficulty: 1,
+    //             likeliness: "like",
+    //             deadline: new Date(),
+    //             timeEstimate: 60,
+    //             isSubtask: false,
+    //             isParent: false,
+    //             isCompleted: false,
+    //         },
+    //         {
+    //             id: 2,
+    //             name: "dsfsd",
+    //             description: "asdasdas",
+    //             priority: 1,
+    //             difficulty: 2,
+    //             likeliness: "like",
+    //             deadline: new Date(),
+    //             timeEstimate: 60,
+    //             isSubtask: false,
+    //             isParent: false,
+    //             isCompleted: false,
+    //         },
+    //         {
+    //             id: 3,
+    //             name: "aasdasdasbcd",
+    //             description: "asdasdas",
+    //             priority: 1,
+    //             difficulty: "medium",
+    //             likeliness: "like",
+    //             deadline: new Date(),
+    //             timeEstimate: 60,
+    //             isSubtask: false,
+    //             isParent: false,
+    //             isCompleted: false,
+    //         }
+    //     ]);
+    // }, [])
     const [currentView, setCurrentView] = useState('ListView');
-    const [algoSortList, setAlgoSortList] = useState<Task[]>([]);
     const [energyLevelPopupView, setEnergyLevelPopupView] = useState(true);
 
     // Adding new task
@@ -47,6 +92,7 @@ export function TaskContainerView() {
         // todo: after click on ListView button, show ListView and change button color
     }
     const toggleSortedView = () => {
+        setTasks(TASK_LIST_COMPONENT_ID, []);
         setCurrentView('SortedView');
         // todo: after click on SortedView button, show SortedView and change button color
     }
@@ -56,8 +102,7 @@ export function TaskContainerView() {
     }
     const showSortedTasksForEnergyLevel = (energyLevel: String) => {
         putEnergyLevel(energyLevel)();
-        fetchAlgoSortList(energyLevel)(setAlgoSortList, setIsLoading, setErrorMessage);
-        setAlgoSortList([]);
+        fetchAlgoSortList(energyLevel)((tasks) => setTasks(TASK_LIST_COMPONENT_ID, tasks), setIsLoading, setErrorMessage);
         setEnergyLevelPopupView(false);
 
     }
@@ -76,7 +121,7 @@ export function TaskContainerView() {
     }
 
     useEffect(() => {
-        fetchTasks(setTasksList, setIsLoading, setErrorMessage);
+        fetchTasks((tasks: Task[]) => setTasks(TASK_LIST_COMPONENT_ID, tasks), setIsLoading, setErrorMessage);
     }, []);
 
     return (
@@ -93,28 +138,23 @@ export function TaskContainerView() {
                         <ToggleButton key={2} value="2" onClick={toggleSortedView}>SortedView </ToggleButton>
                     </ToggleButtonGroup>
                 </Stack>
-                <DragDropContext onDragEnd={(result, provided) => {
-                    console.log("onDragEnd");
-                }}>
-                    <Droppable droppableId={"tasksviewsdroppable"} key={"tasksviewsdroppable"}>
-                        {(provided) => (
-                            currentView === 'ListView' ? (<div  {...provided.droppableProps} ref={provided.innerRef}>
-                                {tasksList.map((task, index) => (<TaskView key={task.id} taskName={task.name} isAlgoSort={false} index={index} />))}
-                                <Button onClick={addNewTask}>Add new task</Button>
-                            </div>) : <div />
-                            
-                        )}
-
-
-                    </Droppable>
-                </DragDropContext>
+                <Droppable droppableId={TASK_LIST_COMPONENT_ID} key={TASK_LIST_COMPONENT_ID}>
+                    {(provided) => (
+                        <div  {...provided.droppableProps} ref={provided.innerRef} >
+                            {tasksList.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} isAlgoSort={currentView !== 'ListView'} index={index} />))}
+                            <Button onClick={addNewTask}>Add new task</Button>
+                            {provided.placeholder}
+                        </div>
+                        
+                    )}
+                </Droppable>
                 <AddTaskModal
                     open={openAddTaskModal}
                     setOpen={setOpenAddTaskModal}
                     anchorEl={anchorEl}
                     setAnchorEl={setAnchorEl}
                     handleClose={handleAddTaskClose}
-                    addTask={(task: Task) => setTasksList((tasksList) => [...tasksList, task])}
+                    addTask={(task: Task) => addTask(TASK_LIST_COMPONENT_ID, task)}
                 />
                 {currentView === 'SortedView' && <div>
                     {energyLevelPopupView && <div className='energyPopupContainer'>Select your current energy level:
@@ -124,7 +164,7 @@ export function TaskContainerView() {
                         <Button style={energyButtonHigh} onClick={() => showSortedTasksForEnergyLevel('HIGH')}>High</Button>
                     </div>}
 
-                    {algoSortList.map((task) => (<TaskView key={task.id} taskName={task.name} isAlgoSort={true} />))}
+                    { /*algoSortList.map((task) => (<TaskView key={task.id} taskId={task.id} taskName={task.name} isAlgoSort={true} />)) */}
                 </div>}
 
             </div>

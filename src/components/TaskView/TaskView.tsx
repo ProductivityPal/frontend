@@ -3,11 +3,11 @@ import './TaskView.css';
 import { Button } from '@mui/material';
 import { useDrag } from 'react-dnd';
 import { Task } from '@mui/icons-material';
-import { DragDropContext, Draggable } from 'react-beautiful-dnd';
-// import type { Task } from '../../data/tasks';
+import { Draggable } from 'react-beautiful-dnd';
 
 type TaskViewProps = {
     taskName: string;
+    taskId: number;
     subTasks?: any[];
     isAlgoSort?: boolean;
     index?: number;
@@ -35,7 +35,7 @@ export function TaskView(props: TaskViewProps) {
         }
     }
     return (
-        <Draggable draggableId={props.taskName} index={props.index ? props.index : 0} key={props.taskName}>
+        <Draggable draggableId={(props.taskId).toString()} index={props.index ? props.index : 0} key={props.taskId}>
             {(provided) => (
                 <div className='task-body' ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} key={props.taskName} >
                     <div className='task-header'  >

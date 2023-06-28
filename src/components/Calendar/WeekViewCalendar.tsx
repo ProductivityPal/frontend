@@ -51,7 +51,7 @@ export default function WeekViewCalendar() {
             <Grid container className='calendar-container'>
                 <Grid xs={0.3} md={0.3}>
                     {Array.from(Array(24)).map((_, index) => (
-                        <Grid item xs={0} sm={2} md={2} key={index} style={{height: 76}}>
+                        <Grid item xs={0} sm={2} md={2} key={index} style={{height: 61}}>
                             <div className="calendar-hour__header">
                                 {index}
                             </div>

@@ -9,6 +9,8 @@ type CalendarDayProps = {
     isToday?: boolean;
 }
 
+const formatDate = (date: Date) => date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+
 export default function CalendarDay(calendarDayProps: CalendarDayProps) {
     
     return (
@@ -17,15 +19,9 @@ export default function CalendarDay(calendarDayProps: CalendarDayProps) {
                 <div className="calendar-day__body__events">
                     <p className='divider'></p>
                     {Array.from(Array(23)).map((_, index) => (
-                        <Droppable droppableId={"calendarHour"+index} key={index}>
-                        {(provided) => (
-                            <div className="calendar-hour" ref={provided.innerRef} {...provided.droppableProps}>
-                                {provided.placeholder}
-                            <CalendarHour/>
-                            </div>
-
-                        )}
-                    </Droppable>
+                        <div className="calendar-hour">
+                            <CalendarHour hour={(index).toString()} date={formatDate(calendarDayProps.date)}/>
+                        </div>
                     ))}
 
                 </div>
