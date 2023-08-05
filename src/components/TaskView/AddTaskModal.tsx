@@ -32,6 +32,8 @@ type NewTaskProps = {
 
 const postNewTask = (newTask: NewTaskProps) => postData<{}, number>('http://localhost:8080/task/?id=5', newTask);
 
+const selectedButtonStyle = (isSelected: Boolean) => isSelected ? { opacity: 0.5 } : {};
+
 export function AddTaskModal(props: AddTaskModalProps) {
     const [taskName, setTaskName] = React.useState('');
     const [priority, setPriority] = React.useState(1);
@@ -57,7 +59,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
                 id: 5,
             },
         };
-        postNewTask(newTaskData)((id) =>{
+        postNewTask(newTaskData)((id) => {
             props.addTask({
                 id,
                 ...newTaskData 
@@ -77,18 +79,22 @@ export function AddTaskModal(props: AddTaskModalProps) {
     const buttonImportantStyle = {
         backgroundColor: '#fa9c1b',
         color: 'white',
+        "&:hover": {backgroundColor: "#fa9c1b" }
     }
     const buttonMediumStyle = {
         backgroundColor: '#fa9c1b',
         color: 'white',
+        "&:hover": {backgroundColor: "#fa9c1b"},
     }
     const buttonLowStyle = {
         backgroundColor: '#fa9c1b',
         color: 'white',
+        "&:hover": {backgroundColor: "#fa9c1b"},
     }
     const subtasksButton = {
         backgroundColor: '#296d98',
         color: 'white',
+        "&:hover": {backgroundColor: "#296d98"},
         width: '100%',
     }
     const inputStyle = {
@@ -126,36 +132,36 @@ export function AddTaskModal(props: AddTaskModalProps) {
                     <div className="add-task-body-row">
                         <div className="add-task-body-row-label">Choose Priority:</div>
                         <div className="add-task-body-row-buttons">
-                            <Button sx={buttonImportantStyle} onClick={() => {setPriority(5)}}>5</Button>
-                            <Button sx={buttonImportantStyle} onClick={() => {setPriority(4)}}>4</Button>
-                            <Button sx={buttonMediumStyle} onClick={() => {setPriority(3)}}>3</Button>
-                            <Button sx={buttonLowStyle} onClick={() => {setPriority(2)}}>2</Button>
-                            <Button sx={buttonLowStyle} onClick={() => {setPriority(1)}}>1</Button>
+                            <Button style={selectedButtonStyle(priority == 5)} sx={buttonImportantStyle} onClick={() => {setPriority(5)}}>5</Button>
+                            <Button style={selectedButtonStyle(priority == 4)} sx={buttonImportantStyle} onClick={() => {setPriority(4)}}>4</Button>
+                            <Button style={selectedButtonStyle(priority == 3)} sx={buttonMediumStyle} onClick={() => {setPriority(3)}}>3</Button>
+                            <Button style={selectedButtonStyle(priority == 2)} sx={buttonLowStyle} onClick={() => {setPriority(2)}}>2</Button>
+                            <Button style={selectedButtonStyle(priority == 1)} sx={buttonLowStyle} onClick={() => {setPriority(1)}}>1</Button>
                         </div>     
                     </div>
                     <div className="add-task-body-row">
                         <div className="add-task-body-row-label">Choose Difficuty:</div>
                         <div className="add-task-body-row-buttons">
-                            <Button sx={buttonLowStyle} onClick={() => {setDifficulty("EASY")}} variant="contained">Easy</Button>
-                            <Button sx={buttonMediumStyle} onClick={() => {setDifficulty("MEDIUM")}}>Medium</Button>
-                            <Button sx={buttonImportantStyle} onClick={() => {setDifficulty("HARD")}}>Hard</Button>
-                            <Button sx={buttonImportantStyle} onClick={() => {setDifficulty("EXTRA HARD")}}>Extra Hard</Button>
+                            <Button style={selectedButtonStyle(difficulty == 'EASY')}  sx={buttonLowStyle} onClick={() => {setDifficulty("EASY")}} variant="contained">Easy</Button>
+                            <Button style={selectedButtonStyle(difficulty == 'MEDIUM')}  sx={buttonMediumStyle} onClick={() => {setDifficulty("MEDIUM")}}>Medium</Button>
+                            <Button style={selectedButtonStyle(difficulty == 'HARD')}  sx={buttonImportantStyle} onClick={() => {setDifficulty("HARD")}}>Hard</Button>
+                            <Button style={selectedButtonStyle(difficulty == 'EXTRA HARD')}  sx={buttonImportantStyle} onClick={() => {setDifficulty("EXTRA HARD")}}>Extra Hard</Button>
                         </div>   
                          
                     </div>
                     <div className="add-task-body-row">
                         <div className="add-task-body-row-label">When is the deadline?</div>
-                        <Input sx={inputStyle} type="date" value={deadline} onChange={(e) => setDeadline(new Date(e.target.value))} />
+                        <Input sx={inputStyle} type="date"  onChange={(e) => setDeadline(new Date(e.target.value))} />
                          
                     </div>
                     <div className="add-task-body-row">
                         <div className="add-task-body-row-label">How much do you like this task?</div>
                         <div className="add-task-body-row-buttons">
-                            <Button sx={buttonLowStyle} onClick={() => {setLikeliness("LOVE")}}>Love</Button>
-                            <Button sx={buttonLowStyle} onClick={() => {setLikeliness("LIKE")}}>Like</Button>
-                            <Button sx={buttonMediumStyle} onClick={() => {setLikeliness("NEUTRAL")}}>Neutral</Button>
-                            <Button sx={buttonImportantStyle} onClick={() => {setLikeliness("DISLIKE")}}>Dislike</Button>
-                            <Button sx={buttonImportantStyle} onClick={() => {setLikeliness("HATE")}}>Hate</Button>
+                            <Button style={selectedButtonStyle(likeliness == 'LOVE')} sx={buttonLowStyle} onClick={() => {setLikeliness("LOVE")}}>Love</Button>
+                            <Button style={selectedButtonStyle(likeliness == 'LIKE')} sx={buttonLowStyle} onClick={() => {setLikeliness("LIKE")}}>Like</Button>
+                            <Button style={selectedButtonStyle(likeliness == 'NEUTRAL')} sx={buttonMediumStyle} onClick={() => {setLikeliness("NEUTRAL")}}>Neutral</Button>
+                            <Button style={selectedButtonStyle(likeliness == 'DISLIKE')} sx={buttonImportantStyle} onClick={() => {setLikeliness("DISLIKE")}}>Dislike</Button>
+                            <Button style={selectedButtonStyle(likeliness == 'HATE')} sx={buttonImportantStyle} onClick={() => {setLikeliness("HATE")}}>Hate</Button>
                         </div>   
                          
                     </div>
@@ -167,7 +173,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
                         <Button sx={subtasksButton}>Add Subtaks +</Button>
                     </div> */}
                     <div className="add-task-body-row">
-                        <Button sx={subtasksButton} onClick={onSave}>Save This Task</Button>
+                        <Button sx={subtasksButton} disabled={deadline.getTime() < (Date.now() - 24 * 3600 * 1000) || !priority || !likeliness || !difficulty || !taskName} onClick={onSave}>Save This Task</Button>
                     </div>
                 </div>
 
