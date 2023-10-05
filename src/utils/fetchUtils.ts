@@ -3,7 +3,19 @@ export const fetchData = <T,>(url: string) => (
     setLoading: (loading: boolean) => void = () => {},
     setError: (error: string) => void = () => {}
 ) => {
-    fetch(url).then((response) => {
+    console.log(localStorage.getItem('jwt'))
+    let token = localStorage.getItem('jwt');
+
+    // Check if token is wrapped in double quotes and remove them.
+    if (token && token.startsWith('"') && token.endsWith('"')) {
+        token = token.substring(1, token.length - 1);
+    }
+    fetch(url, {
+        headers : {
+            'Authorization': `Bearer ${token}`,
+        }
+        
+    }).then((response) => {
         if(response.ok) {
             return response.json();
         }
@@ -24,12 +36,14 @@ const genericQuery = (method: string) => <T,R,>(url: string, data: T) => (
     setLoading: (loading: boolean) => void = () => {},
     setError: (error: string) => void = () => {}
 ) => {
+    
     fetch(url, {
         method,
         body: JSON.stringify(data),
         headers: {
-            "Content-type": "application/json"
-        }
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+        },
     }).then((response) => {
         console.log('response', response)
         if(response.ok) {

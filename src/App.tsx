@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import WeekViewCalendar from './components/Calendar/WeekViewCalendar';
 import { TaskContainerView } from './components/TaskView/TaskContainerView';
@@ -13,6 +13,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import CalendarPage from './pages/CalendarPage';
+import { useLocalState } from './utils/useLocalStorage';
 
 
  function App() {

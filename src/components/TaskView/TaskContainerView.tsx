@@ -15,9 +15,9 @@ import { AddTaskModal } from './AddTaskModal';
 import { Droppable } from 'react-beautiful-dnd';
 import { TasksCalendarContext } from '../../utils/tasksCalendarContext'
 
-const fetchTasks = fetchData<Task[]>('http://localhost:8080/task/?id=5');
-const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort?id=5');
-const putEnergyLevel = (energyLevel: String) => putData<{}, number>(`http://localhost:8080/user/energyLevel/${energyLevel}?id=${5}`, {});
+const fetchTasks = fetchData<Task[]>('http://localhost:8080/task');
+const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort');
+const putEnergyLevel = (energyLevel: String) => putData<{}, number>(`http://localhost:8080/user/energyLevel/${energyLevel}`, {});
 const TASK_LIST_COMPONENT_ID = "tasksList";
 
 export function TaskContainerView() {

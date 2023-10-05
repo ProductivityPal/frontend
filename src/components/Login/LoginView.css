@@ -10,22 +10,16 @@
 .formTitle {
     font-size: small;
     margin-bottom: 0rem;
-
     /* width: 149px;
     height: 27px; */
     text-align: left;
     margin-left: 13vh;
-
-
     font-style: normal;
     font-weight: 700;
     font-size: 0.9rem;
     line-height: 22px;
     letter-spacing: -0.025em;
-
     color: #8F745D;
-
-
 }
 
 .formInput {
@@ -39,7 +33,6 @@
     border-radius: 10vh;
     font-size: 2vh;
     padding: 1vh;
-
 }
 
 .actionButtonsRow {
@@ -51,11 +44,9 @@
 }
 
 .loginButton {
-
     box-sizing: border-box;
     width: 12vw;
     height: 4vh;
-
     background: #EED5B1;
     border: 1px solid #D0B897;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -63,17 +54,26 @@
     color: #8F745D;
     font-style: normal;
     font-weight: 700;
-
 }
 
 .googleLogin {
     background-color: white;
-
     width: 12vw;
     height: 4vh;
-    /* filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); */
     border-radius: 20px;
+}
 
-    /* border-color: #8F745D; */
-
+.textButton {
+    box-sizing: border-box;
+    margin-top: 2vh;
+    height: 4vh;
+    /* width: 100%; */
+    font-style: normal;
+    font-weight: 700;
+    border: 0px;
+    background-color: transparent;
+    position: absolute;
+    top: 0vh;
+    right: 1vh;
+    margin-right: 0.5vw;
 }

@@ -2,7 +2,7 @@ import React from "react";
 import template from '../images/register-template.png';
 import loginImg from '../images/imgv2.png';
 import './RegistrationPage.css';
-import { LoginView } from "../components/Login/LoginView";
+import { RegisterView } from "../components/Register/RegisterView";
 
 function RegistrationPage() {
     return (
@@ -13,7 +13,7 @@ function RegistrationPage() {
 
                 </img>
                 <div className="loginBox">
-                    <LoginView></LoginView>
+                    <RegisterView></RegisterView>
                 </div>
 
 

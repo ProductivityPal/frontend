@@ -5,6 +5,8 @@
 .week-view-calendar {
   margin: 2px;
   padding: auto;
+  margin-top: 2vh;
+  margin-right: 1vw;
 }
 
 .calendar-container {

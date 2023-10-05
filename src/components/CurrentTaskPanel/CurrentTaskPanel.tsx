@@ -5,11 +5,9 @@ import './CurrentTaskPanel.css';
 
 export function CurrentTaskPanel() {
     return (
-        <div>
+        <div className="current-task-panel">
             <CurrentTaskView/>
             <NextTaskView/>
-
-
         </div>
     );
 }

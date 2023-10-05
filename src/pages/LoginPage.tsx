@@ -9,8 +9,8 @@ function LoginPage() {
         <div className="background">
         <center>
             <div className="loginContainer">
-                <img className="template" src={loginImg} alt="loginImg">
 
+                <img className="template" src={loginImg} alt="loginImg">
                 </img>
                 <div className="loginBox">
                     <LoginView></LoginView>

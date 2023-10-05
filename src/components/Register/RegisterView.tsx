@@ -1,44 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import './LoginView.css';
-import { Navigate } from "react-router-dom";
+import '../Login/LoginView.css';
 import { useLocalState } from '../../utils/useLocalStorage';
 import { useNavigate } from "react-router-dom";
 
-export function LoginView() {
+export function RegisterView() {
   const [jwt, setJwt] = useLocalState('', 'jwt');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  function sendLoginRequest() {
-    console.log("sendLoginRequest", jwt, typeof jwt);
+  const clearJwt = () => {
+    localStorage.removeItem('jwt'); 
+    // setJwt(''); 
+  };
+
+  function sendRegisterRequest() {
+    console.log("sendRegisterRequest");
+    clearJwt()
+
     if (!jwt) {
+      console.log("I'm here!")
       const reqBody = {
         email: email,
         password: password
       };
-      console.log(reqBody)
-      fetch('http://localhost:8080/auth/authenticate', {
+
+      fetch('http://localhost:8080/auth/register', {
         headers: {
           'Content-Type': 'application/json'
         },
         method: 'POST',
         body: JSON.stringify(reqBody)
-      }).then(res => {
-        console.log(res)
-        return res.json()
-      }).then(body => {
+      }).then(res => res.json()).then(body => {
         console.log("body", body);
         setJwt(body.token);
         navigate("/calendar");
-      }).catch(err => {
-        console.log("err", err);
+
       });
     }
-
-    // TODO: Fix
     if (jwt != "") {
-      navigate("/calendar");
+      alert("You are logged in! Logging you out!")
+      navigate("/login");
     }
   }
 
@@ -54,10 +56,10 @@ export function LoginView() {
       </div>
       <div className='actionButtonsRow'>
         <button className='googleLogin'>Sign with Google</button>
-        <button className='loginButton' onClick={() => { sendLoginRequest() }} >Login me</button>
+        <button className='loginButton' onClick={() => sendRegisterRequest()} >Register me</button>
       </div>
       <div>
-        <button className='textButton' onClick={() => { navigate("/register") }}>Don't have an account? Register!</button>
+        <button className='textButton' onClick={() => { navigate("/login") }}>Already a member? Login!</button>
       </div>
     </div>
   );
