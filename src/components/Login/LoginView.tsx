@@ -56,9 +56,6 @@ export function LoginView() {
         <button className='googleLogin'>Sign with Google</button>
         <button className='loginButton' onClick={() => { sendLoginRequest() }} >Login me</button>
       </div>
-      <div>
-        <button className='textButton' onClick={() => { navigate("/register") }}>Don't have an account? Register!</button>
-      </div>
     </div>
   );
 }
