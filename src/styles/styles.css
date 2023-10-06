@@ -1,0 +1,16 @@
+/*  Button styling  */
+
+.textButton {
+    box-sizing: border-box;
+    margin-top: 2vh;
+    height: 4vh;
+    /* width: 100%; */
+    font-style: normal;
+    font-weight: 700;
+    border: 0px;
+    background-color: transparent;
+    position: absolute;
+    top: 0vh;
+    right: 1vh;
+    margin-right: 0.5vw;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../Login/LoginView.css';
+import '../LoginRegister/LoginRegistration.css';
 import { useLocalState } from '../../utils/useLocalStorage';
 import { useNavigate } from "react-router-dom";
 
@@ -44,16 +44,16 @@ export function RegisterView() {
   }
 
   return (
-    <div className='loginView'>
-      <div className='loginForm'>
-        <p className='formTitle'>email</p>
-        <input className='formInput' type='text' value={email} onChange={(e) => setEmail(e.target.value)}></input>
+    <div className='logingFormContainer'>
+      <div className='logingFormContainer__loginForm'>
+        <p className='loginForm__title'>email</p>
+        <input className='loginForm__input' type='text' value={email} onChange={(e) => setEmail(e.target.value)}></input>
       </div>
-      <div className='loginForm'>
-        <p className='formTitle'>password</p>
-        <input className='formInput' type='password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
+      <div className='logingFormContainer__loginForm'>
+        <p className='loginForm__title'>password</p>
+        <input className='loginForm__input' type='password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
       </div>
-      <div className='actionButtonsRow'>
+      <div className='logingFormContainer__actionButtonsRow'>
         <button className='googleLogin'>Sign with Google</button>
         <button className='loginButton' onClick={() => sendRegisterRequest()} >Register me</button>
       </div>
