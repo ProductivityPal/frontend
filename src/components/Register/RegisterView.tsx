@@ -11,7 +11,6 @@ export function RegisterView() {
 
   const clearJwt = () => {
     localStorage.removeItem('jwt'); 
-    // setJwt(''); 
   };
 
   function sendRegisterRequest() {
@@ -57,9 +56,6 @@ export function RegisterView() {
       <div className='actionButtonsRow'>
         <button className='googleLogin'>Sign with Google</button>
         <button className='loginButton' onClick={() => sendRegisterRequest()} >Register me</button>
-      </div>
-      <div>
-        <button className='textButton' onClick={() => { navigate("/login") }}>Already a member? Login!</button>
       </div>
     </div>
   );
