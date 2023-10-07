@@ -14,6 +14,7 @@ import { Add } from '@material-ui/icons';
 import { AddTaskModal } from './AddTaskModal';
 import { Droppable } from 'react-beautiful-dnd';
 import { TasksCalendarContext } from '../../utils/tasksCalendarContext'
+import '../../styles/styles.css'
 
 const fetchTasks = fetchData<Task[]>('http://localhost:8080/task');
 const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort');
@@ -133,7 +134,7 @@ export function TaskContainerView() {
             make smaller toggle button */}
             <div className='tasks-container'>
                 <Stack spacing={2} alignItems="center">
-                    <ToggleButtonGroup aria-label="Medium sizes">
+                    <ToggleButtonGroup aria-label="Medium sizes" className="toggle">
                         <ToggleButton key={1} value="1" onClick={toggleListView}>ListView</ToggleButton>,
                         <ToggleButton key={2} value="2" onClick={toggleSortedView}>SortedView </ToggleButton>
                     </ToggleButtonGroup>
@@ -142,7 +143,7 @@ export function TaskContainerView() {
                     {(provided) => (
                         <div  {...provided.droppableProps} ref={provided.innerRef} >
                             {tasksList.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} isAlgoSort={currentView !== 'ListView'} index={index} />))}
-                            <Button onClick={addNewTask}>Add new task</Button>
+                            <button onClick={addNewTask} className='ovalActionButton'>Add new task +</button>
                             {provided.placeholder}
                         </div>
                         
