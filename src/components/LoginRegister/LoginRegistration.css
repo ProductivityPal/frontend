@@ -51,6 +51,8 @@
     box-shadow: var(--black-box-shadow);
 }
 
+/* Login and Register form styling */
+
 .logingFormContainer {
     justify-content: center;
     align-items: center;
