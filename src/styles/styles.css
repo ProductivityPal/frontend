@@ -14,3 +14,29 @@
     right: 1vh;
     margin-right: 0.5vw;
 }
+
+.basicButton {
+    background-color: transparent;
+    border: 0;
+
+}
+
+.circleButton {
+    height: 15px;
+    width: 15px;
+    background-color: #E7C3A1;
+    border: 0;
+    border-radius: 100%;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.ovalActionButton {
+    margin-top: 5px;
+    font-size: medium;
+    /* border: solid grey 1px; */
+    border: 0;
+    background-color: transparent;
+    border-radius: 5px;
+
+}

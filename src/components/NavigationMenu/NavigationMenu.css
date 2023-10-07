@@ -6,11 +6,16 @@
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    margin-top: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 .menuContainer {
     display: flex;
-    align-items: top;
+    justify-content: space-between;
     flex-direction: column;
     padding: 10px;
+}
+
+.menuContainer_options {
+    align-items: top;
 }
