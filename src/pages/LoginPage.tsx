@@ -1,32 +1,25 @@
 import React from "react";
-import template from '../images/register-template.png';
 import loginImg from '../images/imgv2.png';
-import './RegistrationPage.css';
-import { LoginView } from "../components/Login/LoginView";
+import { LoginView } from "../components/LoginRegister/LoginView";
 import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
     const navigate = useNavigate();
     return (
-        <div className="background">
+        <div className="loginBackground">
             <center>
                 <div className="loginContainer">
                     <div>
                         <button className='textButton' onClick={() => { navigate("/register") }}>Don't have an account? Register!</button>
                     </div>
-
-                    <img className="template" src={loginImg} alt="loginImg">
+                    <img className="loginContainer__image" src={loginImg} alt="loginImg">
                     </img>
-                    <div className="loginBox">
+                    <div className="loginContainer__loginBox">
                         <LoginView></LoginView>
                     </div>
-
-
                 </div>
-
             </center>
         </div>
-
     );
 }
 
