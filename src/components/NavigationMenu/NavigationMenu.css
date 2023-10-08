@@ -1,6 +1,6 @@
 .menuContainer {
     height: 100vh;
-    background-color: antiquewhite;
+    background: var(--primary);
 }
 .logo {
     width: 40px;

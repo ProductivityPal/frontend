@@ -32,7 +32,7 @@ type NewTaskProps = {
 
 const postNewTask = (newTask: NewTaskProps) => postData<{}, number>('http://localhost:8080/task/?id=5', newTask);
 
-const selectedButtonStyle = (isSelected: Boolean) => isSelected ? { opacity: 0.5 } : {};
+const selectedButtonStyle = (isSelected: Boolean) => isSelected ? {} : { opacity: 0.5 };
 
 export function AddTaskModal(props: AddTaskModalProps) {
     const [taskName, setTaskName] = React.useState('');
@@ -77,24 +77,24 @@ export function AddTaskModal(props: AddTaskModalProps) {
     };
 
     const buttonImportantStyle = {
-        backgroundColor: '#fa9c1b',
+        backgroundColor: '#D5C7AE',
         color: 'white',
-        "&:hover": {backgroundColor: "#fa9c1b" }
+        "&:hover": {backgroundColor: "#F8DEB3" }
     }
     const buttonMediumStyle = {
-        backgroundColor: '#fa9c1b',
+        backgroundColor: '#D5C7AE',
         color: 'white',
-        "&:hover": {backgroundColor: "#fa9c1b"},
+        "&:hover": {backgroundColor: "#F8DEB3"},
     }
     const buttonLowStyle = {
-        backgroundColor: '#fa9c1b',
+        backgroundColor: '#D5C7AE',
         color: 'white',
-        "&:hover": {backgroundColor: "#fa9c1b"},
+        "&:hover": {backgroundColor: "#F8DEB3"},
     }
     const subtasksButton = {
-        backgroundColor: '#296d98',
+        backgroundColor: '#EE7F3B',
         color: 'white',
-        "&:hover": {backgroundColor: "#296d98"},
+        "&:hover": {backgroundColor: "#F8DEB3"},
         width: '100%',
     }
     const inputStyle = {
