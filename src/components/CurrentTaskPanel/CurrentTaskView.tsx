@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 
 export function CurrentTaskView() {
     const buttonStyle = {
-        backgroundColor: 'rgb(239, 204, 125)',
+        backgroundColor: '#F8DEB3',
         color: 'white',
         width: '30%',
         'border-radius': '50px',

@@ -1,4 +1,19 @@
 :root {
+    /* Primary colors */
+    --primary: #F8DEB3;
+    --secondary: #D5C7AE;
+    --green: #707247;
+
+    /* Whites */
+    --primary-white: #FCF5E5;
+
+    /* Blacks */
+    --primary-black: #333333;
+    --primary-grey:  #E5E5E5;
+
+    /* Accent */
+    --primary-accent: #EE7F3B;
+
     /* Login Pallete:  */
 
     --login-background-color: radial-gradient(60.85% 121.91% at 45.85% 91.82%, #7D6851 0%, #EAC28E 80.88%);
