@@ -10,6 +10,10 @@ export default function CalendarHour({ hour, date }: { hour: string , date: stri
 
     const { calendar, moveTask, addTask, setTasks } = useContext(TasksCalendarContext);
 
+    const handleTaskComplete = (taskIndex: number) => {
+        // TODO
+    };
+
     const id1 = getId(hour, "00", date);
     const id2 = getId(hour, "15", date);
     const id3 = getId(hour, "30", date);
@@ -25,28 +29,28 @@ export default function CalendarHour({ hour, date }: { hour: string , date: stri
             <Droppable droppableId={id1} key={id1}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList1.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} index={index} />))}
+                         {tasksList1.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} index={index} onComplete={() => handleTaskComplete(index)} />))}
                     </div>
                 )}
             </Droppable>
             <Droppable droppableId={id2} key={id2}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList2.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} index={index} />))}
+                         {tasksList2.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} index={index} onComplete={() => handleTaskComplete(index)} />))}
                     </div>
                 )}
             </Droppable>
             <Droppable droppableId={id3} key={id3}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList3.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} index={index} />))}
+                         {tasksList3.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} index={index} onComplete={() => handleTaskComplete(index)} />))}
                     </div>
                 )}
             </Droppable>
             <Droppable droppableId={id4} key={id4}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList4.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} index={index} />))}
+                         {tasksList4.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} index={index} onComplete={() => handleTaskComplete(index)} />))}
                     </div>
                 )}
             </Droppable>

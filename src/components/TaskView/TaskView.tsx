@@ -3,6 +3,7 @@ import './TaskView.css';
 import { Button } from '@mui/material';
 import { Draggable } from 'react-beautiful-dnd';
 import "../../styles/styles.css"
+import { putData } from '../../utils/fetchUtils';
 
 type TaskViewProps = {
     taskName: string;
@@ -10,6 +11,7 @@ type TaskViewProps = {
     subTasks?: any[];
     isAlgoSort?: boolean;
     index?: number;
+    onComplete: () => void;
 }
 
 export function TaskView(props: TaskViewProps) {
@@ -21,6 +23,13 @@ export function TaskView(props: TaskViewProps) {
             setSubtasksShowState('Show subtasks');
         }
     }
+    function completeTask(taskId: number) {
+        console.log("complete Task!" + taskId)
+        putData<{}, number>(`http://localhost:8080/task/${taskId}`, {"isCompleted": true})();
+        // Deleting this task from the TaskContainerView.
+        props.onComplete()
+
+    }
     return (
         <Draggable draggableId={(props.taskId).toString()} index={props.index ? props.index : 0} key={props.taskId}>
             {(provided) => (
@@ -31,7 +40,7 @@ export function TaskView(props: TaskViewProps) {
                         {/* {props.isAlgoSort && <Button>✓</Button>}
                         {!props.isAlgoSort && <Button>✎</Button>} */}
                     </div>
-                    <button className='basicButton'>✓</button>
+                    <Button className='basicButton' onClick={() => {completeTask(props.taskId)}}>✓</Button>
                 </div>
             )}
 
