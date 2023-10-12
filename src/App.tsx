@@ -13,6 +13,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import CalendarPage from './pages/CalendarPage';
+import SettingsPage from "./pages/SettingsPage"
 import { useLocalState } from './utils/useLocalStorage';
 
 
@@ -27,6 +28,7 @@ import { useLocalState } from './utils/useLocalStorage';
         <Route path="/login" Component={LoginPage} />
         <Route path="/register" Component={RegistrationPage} />
         <Route path="/calendar" Component={CalendarPage} />
+        <Route path="/settings" Component={SettingsPage} />
   </Routes>
   );
 }
