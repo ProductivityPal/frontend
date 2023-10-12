@@ -46,6 +46,9 @@ export const moveTask = (setCalendar: any) => (from: {droppableId: string, index
     console.log(`Move task with id ${taskId} from ${from.droppableId}`)
     console.log(`Add task with id ${taskId} to date ${to.droppableId}`)
 
+    // TODO: change to LocalDateTime after logic is updated on the backend side.
+    postData<{}, number>(`http://localhost:8080/calendar/task/${taskId}`, {"startDate": to.droppableId, "calendarId":1})();
+
     if(from && to && from.droppableId == to.droppableId && from.droppableId == "tasksList") {
       setCalendar((cal: any) => ({
         ...cal,
