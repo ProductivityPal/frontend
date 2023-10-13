@@ -10,7 +10,7 @@ export type Task = {
     completionTime?: number;
     isSubtask: boolean;
     isParent: boolean;
-    isCompleted: boolean;
+    completed: boolean;
     parentId?: number;
 
     //todo: time estimate can be a sum of subtasks and modified by difficulty
