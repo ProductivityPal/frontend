@@ -43,21 +43,24 @@ const swapTasks = (arr: Task[], fromIndex: number, toIndex: number) => {
 function convertDateFormat(inputDate: string): string {
     const parts = inputDate.split('-');
     if (parts.length < 2) {
-        // Handle the case where the input format is not as expected
         throw new Error("Invalid input date format");
     }
 
     // Extract the time and date
     const time = parts[0].trim();
-    const date = parts.slice(1).join('-').trim();
-    const dateParts = date.split('-').map(part => parseInt(part));
-    if (dateParts.length !== 3 || dateParts.includes(NaN)) {
+
+    const dateComponents = parts.slice(1).join('-').trim().split('-').map(part => parseInt(part));
+    if (dateComponents.length !== 3 || dateComponents.includes(NaN)) {
         throw new Error("Invalid date components");
     }
 
+    const [year, month, day] = dateComponents;
     // Format the date in the desired format
-    const formattedDate = `${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`;
-    const result = `${formattedDate}T${time}`;
+    const formattedMonth = month.toString().padStart(2, '0');
+    const formattedDay = day.toString().padStart(2, '0');
+    const formattedTime = time.padStart(5, '0');
+
+    const result = `${year}-${formattedMonth}-${formattedDay}T${formattedTime}`;
 
     return result;
 }
