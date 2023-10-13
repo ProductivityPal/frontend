@@ -54,7 +54,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
             completionTime: 0,
             timeEstimate,
             isSubtask: false,
-            isCompleted: false,
+            completed: false,
             appUser: {
                 id: 5,
             },

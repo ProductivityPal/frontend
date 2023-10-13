@@ -25,7 +25,7 @@ export function TaskContainerView() {
 
     // Tasks / Sorted View
     const { calendar, moveTask, addTask, setTasks } = useContext(TasksCalendarContext);
-    const tasksList = calendar[TASK_LIST_COMPONENT_ID];
+    const tasksList = calendar[TASK_LIST_COMPONENT_ID].filter(task => task.completed == false);
 
     const [currentView, setCurrentView] = useState('ListView');
     const [energyLevelPopupView, setEnergyLevelPopupView] = useState(true);
