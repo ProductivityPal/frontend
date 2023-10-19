@@ -48,7 +48,7 @@ export function TaskView(props: TaskViewProps) {
             <Draggable draggableId={(props.taskId).toString()} index={props.index ? props.index : 0} key={props.taskId}>
                 {(provided) => (
                     <div className='task-body' ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} key={props.taskName} >
-                        <ExpandingComponent />
+                        <ExpandingComponent key={props.taskId} taskName={props.taskName} taskId={props.taskId} index={props.index} isAlgoSort={props.isAlgoSort} onComplete={() => completeTask(props.taskId)}/>
                         {/* <img className="logo" src={expand} alt="expand tasks view" /> */}
                         {/* <button className='circleButton'></button> */}
                         {/* <div className='task-header'> */}
@@ -63,31 +63,3 @@ export function TaskView(props: TaskViewProps) {
             </Draggable>
         );
     }
-
-
-
-    // <Accordion sx={taskStyle}>
-    //                         {!props.subTasks! ? (
-    //                             <AccordionSummary sx={taskStyle} expandIcon={<ExpandMoreIcon />} >
-    //                                 {/* <button className='circleButton'></button> */}
-    //                                 <div className='task-header'>
-    //                                     <p>{props.taskName}</p>
-    //                                     {/* {props.isAlgoSort && <Button>✓</Button>}
-    //                                     {!props.isAlgoSort && <Button>✎</Button>} */}
-    //                                 </div>
-    //                                 <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>
-    //                             </AccordionSummary>
-    //                         ) : (
-    //                             <div className='task-header'>
-    //                                 <p>{props.taskName}</p>
-    //                                 {/* {props.isAlgoSort && <Button>✓</Button>}
-    //                                 {!props.isAlgoSort && <Button>✎</Button>} */}
-    //                                 <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>
-    //                             </div>
-                                
-    //                         )}
-    //                         <AccordionDetails sx={taskStyle}>
-    //                             <div>* Subtask 1</div>
-    //                             <div>* Subtask 2</div>
-    //                         </AccordionDetails>
-    //                     </Accordion>

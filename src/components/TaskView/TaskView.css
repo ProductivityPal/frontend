@@ -1,16 +1,15 @@
-.task-body {
+/* .task-body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /* border-radius: 10px; */
     background-color: #E7C3A188;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
     margin-bottom: 5px;
     border: solid #E7C3A1 1px;
     font-size: small;
-}
+} */
 
 .subtask-body {
     display: flex;

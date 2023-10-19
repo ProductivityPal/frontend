@@ -1,16 +1,12 @@
 .expand-container {
     overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    /* border-radius: 10px; */
     background-color: #E7C3A188;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-    text-align: center;
+    text-align: left;
     margin-bottom: 5px;
     border: solid #E7C3A1 1px;
     font-size: small;
+
 }
 
 .expandingComponentHidden {
@@ -20,4 +16,33 @@
 
 .expandingComponentExpanded {
     display: block;
+    margin-left: 5px;
+    /* border: 2px solid red; */
+}
+
+.task-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 1px;
+    height: 1px;
+    transform: scale(0.7);
+}
+
+.category-menu {
+    /* display: block; */
+    width: 80px;
+    height: 50px;
+    position: absolute;
+    background-color: white;
+    padding: 5px;
+    border: 1px solid grey;
+}
+
+.circleButton {
+    margin-bottom: 5px;
 }

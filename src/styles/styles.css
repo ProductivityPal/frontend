@@ -22,13 +22,29 @@
 }
 
 .circleButton {
-    height: 15px;
-    width: 15px;
+    height: 20px;
+    width: 20px;
     background-color: #E7C3A1;
-    border: 0;
+    border: 0.5pk solid black;
     border-radius: 100%;
     margin-right: 5px;
     margin-left: 5px;
+}
+
+.circleButton.default {
+    background-color: var(--primary);
+}
+
+.circleButton.green {
+    background-color: var(--green);
+}
+
+.circleButton.accent {
+    background-color: var(--primary-accent);
+}
+
+.circleButton.grey {
+    background-color: var(--primary-grey);
 }
 
 .ovalActionButton {
