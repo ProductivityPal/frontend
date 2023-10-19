@@ -36,13 +36,19 @@ const genericQuery = (method: string) => <T,R,>(url: string, data: T) => (
     setLoading: (loading: boolean) => void = () => {},
     setError: (error: string) => void = () => {}
 ) => {
+    let token = localStorage.getItem('jwt');
+
+    // Check if token is wrapped in double quotes and remove them.
+    if (token && token.startsWith('"') && token.endsWith('"')) {
+        token = token.substring(1, token.length - 1);
+    }
     
     fetch(url, {
         method,
         body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+            'Authorization': `Bearer ${token}`,
         },
     }).then((response) => {
         console.log('response', response)

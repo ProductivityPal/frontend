@@ -25,51 +25,8 @@ export function TaskContainerView() {
 
     // Tasks / Sorted View
     const { calendar, moveTask, addTask, setTasks } = useContext(TasksCalendarContext);
-    const tasksList = calendar[TASK_LIST_COMPONENT_ID];
+    const tasksList = calendar[TASK_LIST_COMPONENT_ID].filter(task => task.completed == false);
 
-    // useEffect(() => {
-    //     setTasks(TASK_LIST_COMPONENT_ID, [
-    //         {
-    //             id: 1,
-    //             name: "abcd",
-    //             description: "asdasdas",
-    //             priority: 1,
-    //             difficulty: 1,
-    //             likeliness: "like",
-    //             deadline: new Date(),
-    //             timeEstimate: 60,
-    //             isSubtask: false,
-    //             isParent: false,
-    //             isCompleted: false,
-    //         },
-    //         {
-    //             id: 2,
-    //             name: "dsfsd",
-    //             description: "asdasdas",
-    //             priority: 1,
-    //             difficulty: 2,
-    //             likeliness: "like",
-    //             deadline: new Date(),
-    //             timeEstimate: 60,
-    //             isSubtask: false,
-    //             isParent: false,
-    //             isCompleted: false,
-    //         },
-    //         {
-    //             id: 3,
-    //             name: "aasdasdasbcd",
-    //             description: "asdasdas",
-    //             priority: 1,
-    //             difficulty: "medium",
-    //             likeliness: "like",
-    //             deadline: new Date(),
-    //             timeEstimate: 60,
-    //             isSubtask: false,
-    //             isParent: false,
-    //             isCompleted: false,
-    //         }
-    //     ]);
-    // }, [])
     const [currentView, setCurrentView] = useState('ListView');
     const [energyLevelPopupView, setEnergyLevelPopupView] = useState(true);
 
@@ -82,6 +39,11 @@ export function TaskContainerView() {
     const handleAddTaskClose = () => {
         setAnchorEl(null);
         setOpenAddTaskModal(false);
+    };
+    const handleTaskComplete = (taskIndex: number) => {
+        const updatedTasks = [...tasksList];
+        updatedTasks.splice(taskIndex, 1);
+        setTasks(TASK_LIST_COMPONENT_ID, updatedTasks);
     };
 
 
@@ -142,7 +104,7 @@ export function TaskContainerView() {
                 <Droppable droppableId={TASK_LIST_COMPONENT_ID} key={TASK_LIST_COMPONENT_ID}>
                     {(provided) => (
                         <div  {...provided.droppableProps} ref={provided.innerRef} >
-                            {tasksList.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} isAlgoSort={currentView !== 'ListView'} index={index} />))}
+                            {tasksList.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} isAlgoSort={currentView !== 'ListView'} index={index} onComplete={() => handleTaskComplete(index)}/>))}
                             <button onClick={addNewTask} className='ovalActionButton'>Add new task +</button>
                             {provided.placeholder}
                         </div>
