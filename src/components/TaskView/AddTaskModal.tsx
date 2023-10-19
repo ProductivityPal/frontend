@@ -30,7 +30,7 @@ type NewTaskProps = {
     };
 }
 
-const postNewTask = (newTask: NewTaskProps) => postData<{}, number>('http://localhost:8080/task/?id=5', newTask);
+const postNewTask = (newTask: NewTaskProps) => postData<{}, number>('http://localhost:8080/task', newTask);
 
 const selectedButtonStyle = (isSelected: Boolean) => isSelected ? {} : { opacity: 0.5 };
 
