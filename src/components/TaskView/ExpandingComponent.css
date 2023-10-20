@@ -30,6 +30,7 @@
 .logo {
     width: 1px;
     height: 1px;
+    margin-right: -10px;
     transform: scale(0.7);
 }
 
