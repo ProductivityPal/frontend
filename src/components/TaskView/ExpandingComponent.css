@@ -30,13 +30,14 @@
 .logo {
     width: 1px;
     height: 1px;
+    margin-right: -10px;
     transform: scale(0.7);
 }
 
 .category-menu {
     /* display: block; */
-    width: 80px;
-    height: 50px;
+    width: 60px;
+    height: 40px;
     position: absolute;
     background-color: white;
     padding: 5px;

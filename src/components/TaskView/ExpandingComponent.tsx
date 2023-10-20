@@ -6,6 +6,7 @@ import { dividerClasses } from '@mui/material';
 import { putData } from '../../utils/fetchUtils';
 import { Button } from '@mui/material';
 import { Menu } from '@mui/material';
+import { postData } from "../../utils/fetchUtils";
 
 type TaskViewProps = {
     taskName: string;
@@ -15,8 +16,6 @@ type TaskViewProps = {
     index?: number;
     onComplete: () => void;
 }
-
-
 
 
 export function ExpandingComponent(props: TaskViewProps) {
@@ -35,8 +34,21 @@ export function ExpandingComponent(props: TaskViewProps) {
     }
     function addSubtask(subtaskName: string) {
         console.log("SOFIS")
-        // FIX: create new subtask type with subtaskName
-        setSubtasks([...subtasks, subtaskName]);
+        // isSubtask
+        // parentId
+        // name
+        let newSubtask = {
+            isSubtask: true,
+            parentId: props.taskId,
+            name: subtaskName
+        }
+        // todo add category
+
+        setSubtasks([...subtasks, newSubtask]);
+        
+        // send to backend
+        // postData<{}, number>('http://localhost:8080/subtask', newSubtask);
+
         setSubtaskName('')
 
     }
@@ -54,7 +66,7 @@ export function ExpandingComponent(props: TaskViewProps) {
                         <button className='circleButton grey' onClick={() => setCategory('grey')} />
                     </div>}
                 </button>
-                <div>{props.taskName}</div>
+                <div className='task-label'>{props.taskName}</div>
                 <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>
             </div>
 
