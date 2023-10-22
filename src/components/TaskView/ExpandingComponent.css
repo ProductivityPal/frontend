@@ -27,22 +27,21 @@
     justify-content: space-between;
 }
 
-.logo {
-    width: 1px;
-    height: 1px;
-    margin-right: -10px;
-    transform: scale(0.7);
+.expand-icon {
+    width: 25px;
+    height: 25px;
+    margin-right: -5px;
+    /* transform: scale(0.7); */
 }
 
-.category-menu {
-    /* display: block; */
+/* .category-menu {
     width: 60px;
     height: 40px;
     position: absolute;
     background-color: white;
     padding: 5px;
     border: 1px solid grey;
-}
+} */
 
 .circleButton {
     margin-bottom: 5px;
