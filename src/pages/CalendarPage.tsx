@@ -8,11 +8,18 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { useContext, useState } from 'react';
 import { addTask, moveTask, setTasks, TasksCalendarContext } from '../utils/tasksCalendarContext';
 import { CurrentTaskPanel } from '../components/CurrentTaskPanel/CurrentTaskPanel';
+import { fetchData } from '../utils/fetchUtils';
+import { Task } from '../types/Task';
+import { useEffect } from 'react';
 
  function CalendarPage() {
-
+  const fetchTasks = fetchData<Task[]>('http://localhost:8080/calendar/?id=1');
   const [calendar, setCalendar] = useState({ tasksList: [] });
   const calendarContext = { calendar, moveTask: moveTask(setCalendar), addTask: addTask(setCalendar), setTasks: setTasks(setCalendar) }
+
+//   useEffect(() => {
+//     fetchTasks((tasks: Task[]) => setCalendar(tasks));
+// }, []);
 
   return (
     <div className="App">
