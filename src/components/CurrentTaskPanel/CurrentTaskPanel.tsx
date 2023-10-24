@@ -6,7 +6,7 @@ import { fetchData } from '../../utils/fetchUtils';
 import { Task, converDbTaskToTask } from '../../types/Task';
 
 
-const fetchCalendarTasks = fetchData<Task[]>('http://localhost:8080/calendar/1');
+const fetchCalendarTasks = fetchData<Task[]>('http://localhost:8080/calendar/6');
 export function CurrentTaskPanel() {
     const [currentTask, setCurrentTask] = useState<Task>()
     const [nextTask, setNextTask] = useState<Task>()
