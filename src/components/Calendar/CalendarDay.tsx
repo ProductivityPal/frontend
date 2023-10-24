@@ -9,7 +9,7 @@ type CalendarDayProps = {
     isToday?: boolean;
 }
 
-const formatDate = (date: Date) => date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+export const formatDate = (date: Date) => date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
 
 export default function CalendarDay(calendarDayProps: CalendarDayProps) {
     

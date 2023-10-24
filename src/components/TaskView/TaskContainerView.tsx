@@ -15,8 +15,10 @@ import { AddTaskModal } from './AddTaskModal';
 import { Droppable } from 'react-beautiful-dnd';
 import { TasksCalendarContext } from '../../utils/tasksCalendarContext'
 import '../../styles/styles.css'
+import { useNavigate } from 'react-router-dom';
 
 const fetchTasks = fetchData<Task[]>('http://localhost:8080/task');
+const fetchCalendarTasks = fetchData<Task[]>('http://localhost:8080/calendar/6');
 const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort');
 const putEnergyLevel = (energyLevel: String) => putData<{}, number>(`http://localhost:8080/user/energyLevel/${energyLevel}`, {});
 const TASK_LIST_COMPONENT_ID = "tasksList";
@@ -25,10 +27,11 @@ export function TaskContainerView() {
 
     // Tasks / Sorted View
     const { calendar, moveTask, addTask, setTasks } = useContext(TasksCalendarContext);
-    const tasksList = calendar[TASK_LIST_COMPONENT_ID].filter(task => task.completed == false);
-
+    const [usedTasks, setUsedTasks] = useState<number[]>([]);
+    const tasksList = calendar[TASK_LIST_COMPONENT_ID].filter(task => task.completed == false && !usedTasks.includes(task.id));
     const [currentView, setCurrentView] = useState('ListView');
     const [energyLevelPopupView, setEnergyLevelPopupView] = useState(true);
+    const navigate = useNavigate();
 
     // Adding new task
     const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
@@ -84,7 +87,11 @@ export function TaskContainerView() {
     }
 
     useEffect(() => {
-        fetchTasks((tasks: Task[]) => setTasks(TASK_LIST_COMPONENT_ID, tasks), setIsLoading, setErrorMessage);
+        fetchTasks((tasks: Task[]) => setTasks(TASK_LIST_COMPONENT_ID, tasks), setIsLoading, setErrorMessage, navigate);
+        fetchCalendarTasks((calendarTasks: any) => {
+    const tasksList = calendar[TASK_LIST_COMPONENT_ID].filter(task => task.completed == false && !usedTasks.includes(task.id));
+    setUsedTasks(calendarTasks.map((calendartT: any) => calendartT.task.id));
+        })
     }, []);
 
     return (

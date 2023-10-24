@@ -56,3 +56,13 @@
     border-radius: 5px;
 
 }
+
+.category-menu {
+    /* display: block; */
+    width: 60px;
+    height: 40px;
+    position: absolute;
+    background-color: white;
+    padding: 5px;
+    border: 1px solid grey;
+}

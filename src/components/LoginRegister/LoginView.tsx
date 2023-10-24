@@ -11,7 +11,13 @@ export function LoginView() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const clearJwt = () => {
+    localStorage.removeItem('jwt'); 
+  };
+
   function sendLoginRequest() {
+    clearJwt();
+
     console.log("sendLoginRequest", jwt, typeof jwt);
     if (!jwt) {
       const reqBody = {

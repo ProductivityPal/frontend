@@ -9,17 +9,29 @@ import { useContext, useState } from 'react';
 import { addTask, moveTask, setTasks, TasksCalendarContext } from '../utils/tasksCalendarContext';
 import { CurrentTaskPanel } from '../components/CurrentTaskPanel/CurrentTaskPanel';
 import { fetchData } from '../utils/fetchUtils';
-import { Task } from '../types/Task';
+import { Task, converDbTaskToTask } from '../types/Task';
 import { useEffect } from 'react';
+import { converDateToDestinationId } from '../components/Calendar/CalendarHour';
+import { useNavigate } from 'react-router-dom';
 
  function CalendarPage() {
-  const fetchTasks = fetchData<Task[]>('http://localhost:8080/calendar/?id=1');
+  const fetchTasks = fetchData<Task[]>('http://localhost:8080/calendar/6');
   const [calendar, setCalendar] = useState({ tasksList: [] });
   const calendarContext = { calendar, moveTask: moveTask(setCalendar), addTask: addTask(setCalendar), setTasks: setTasks(setCalendar) }
+  const navigate = useNavigate();
 
-//   useEffect(() => {
-//     fetchTasks((tasks: Task[]) => setCalendar(tasks));
-// }, []);
+  useEffect(() => {
+    fetchTasks((tasks: Task[]) => {
+      tasks.forEach((calendarTask: any) => {
+        const task = converDbTaskToTask(calendarTask.task);
+        console.log(new Date(calendarTask.startDate), calendarTask.startDate)
+        const destinationId = converDateToDestinationId(new Date(calendarTask.startDate));
+        console.log({ destinationId, task })
+        calendarContext.addTask(destinationId, task)
+      })
+      console.log(tasks);
+    }, () => {}, () => {}, navigate);
+}, []);
 
   return (
     <div className="App">

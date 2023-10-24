@@ -12,10 +12,31 @@ export type Task = {
     isParent: boolean;
     completed: boolean;
     parentId?: number;
+    category: string;
+    startDate?: Date;
 
     //todo: time estimate can be a sum of subtasks and modified by difficulty
 }
 
+
+export const converDbTaskToTask = (task: any): Task => ({
+    id: task.id,
+    name: task.name,
+    description: task.description,
+    priority: task.priority,
+    difficulty: task.difficulty,
+    likeliness: task.likeliness,
+    deadline: task.deadline,
+    category: task.category,
+    timeEstimate: task.time_estimate,
+    completionTime: task.completion_time,
+    isSubtask: task.subtask,
+    isParent: task.parent,
+    completed: task.completed,
+    parentId: task.parent_id,
+    startDate: task.startDate,
+
+})
 enum Difficulty {
     Easy = 1,
     Medium = 2,

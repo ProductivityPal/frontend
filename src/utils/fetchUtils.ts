@@ -1,7 +1,8 @@
 export const fetchData = <T,>(url: string) => (
     setData: (data: T) => void,
     setLoading: (loading: boolean) => void = () => {},
-    setError: (error: string) => void = () => {}
+    setError: (error: string) => void = () => {},
+    navigate?: any,
 ) => {
     console.log(localStorage.getItem('jwt'))
     let token = localStorage.getItem('jwt');
@@ -19,6 +20,10 @@ export const fetchData = <T,>(url: string) => (
         if(response.ok) {
             return response.json();
         }
+        console.log(response.status)
+        if(response.status == 403) {
+            if(navigate) navigate("/login")
+        }
         setError(response.statusText);
     }).then(data =>{
         console.log('data', data)
@@ -34,7 +39,8 @@ export const fetchData = <T,>(url: string) => (
 const genericQuery = (method: string) => <T,R,>(url: string, data: T) => (
     setData: (data: R) => void = () => {},
     setLoading: (loading: boolean) => void = () => {},
-    setError: (error: string) => void = () => {}
+    setError: (error: string) => void = () => {},
+    navigate?: any
 ) => {
     let token = localStorage.getItem('jwt');
 
@@ -54,6 +60,10 @@ const genericQuery = (method: string) => <T,R,>(url: string, data: T) => (
         console.log('response', response)
         if(response.ok) {
             return response.json();
+        }
+        console.log(response.status)
+        if(response.status == 403) {
+           if(navigate) navigate("/login")
         }
         setError(response.statusText);
     }).then(data =>{

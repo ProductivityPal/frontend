@@ -57,7 +57,7 @@ export function ExpandingComponent(props: TaskViewProps) {
         <div className='expand-container'>
 
             <div className='task-header'>
-                <img className="logo" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />
+                <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />
                 <button className={`circleButton ${category}`} onClick={() => setExpandedCategory(!expandedCategory)}>
                     {expandedCategory && <div className='category-menu'>
                         <button className='circleButton' onClick={() => setCategory('default')} />

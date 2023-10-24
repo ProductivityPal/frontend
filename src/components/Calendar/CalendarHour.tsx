@@ -3,8 +3,11 @@ import './CalendarHour.css';
 import { Droppable } from 'react-beautiful-dnd';
 import { TaskView } from '../TaskView/TaskView'
 import { TasksCalendarContext } from '../../utils/tasksCalendarContext';
+import { formatDate } from './CalendarDay';
 
-const getId = (hour: string, minutes: string, date: string) => `${hour}:${minutes}-${date}`;
+export const getId = (hour: string, minutes: string, date: string) => `${hour}:${minutes === "0" ? "00" : minutes}-${date}`;
+
+export const converDateToDestinationId = (date: Date) => getId(date.getHours().toString(), date.getMinutes().toString(), formatDate(date));
 
 export default function CalendarHour({ hour, date }: { hour: string , date: string }) {
 

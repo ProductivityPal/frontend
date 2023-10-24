@@ -1,6 +1,7 @@
 import { Task } from '../types/Task'
 import { createContext } from 'react';
 import { postData } from './fetchUtils';
+import { duration } from 'moment';
 
 type TasksCalendarContextType = {
     calendar: { [key: string]: Task[], tasksList: Task[] },
@@ -40,7 +41,7 @@ const swapTasks = (arr: Task[], fromIndex: number, toIndex: number) => {
     return arr;
 }
 
-function convertDateFormat(inputDate: string): string {
+function convertDateFormat(inputDate: string, duration = 0): string {
     const parts = inputDate.split('-');
     if (parts.length < 2) {
         throw new Error("Invalid input date format");
@@ -73,7 +74,8 @@ export const moveTask = (setCalendar: any) => (from: { droppableId: string, inde
     console.log(`Add task with id ${taskId} to date ${convertDateFormat(to.droppableId)}`)
 
     // TODO: change to LocalDateTime after logic is updated on the backend side.
-    postData<{}, number>(`http://localhost:8080/calendar/task/${taskId}`, { "startDate": convertDateFormat(to.droppableId), "calendarId": 1 })();
+    postData<{}, number>(`http://localhost:8080/calendar/task/${taskId}`, { "startDate": convertDateFormat(to.droppableId), 
+    /*"endDate": convertDateFormat(to.droppableId, duration_here!), */ })();
 
     if (from && to && from.droppableId == to.droppableId && from.droppableId == "tasksList") {
         setCalendar((cal: any) => ({
