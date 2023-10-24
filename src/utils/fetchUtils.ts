@@ -21,7 +21,7 @@ export const fetchData = <T,>(url: string) => (
             return response.json();
         }
         console.log(response.status)
-        if(response.status == 401) {
+        if(response.status == 403) {
             if(navigate) navigate("/login")
         }
         setError(response.statusText);
@@ -62,7 +62,7 @@ const genericQuery = (method: string) => <T,R,>(url: string, data: T) => (
             return response.json();
         }
         console.log(response.status)
-        if(response.status == 401) {
+        if(response.status == 403) {
            if(navigate) navigate("/login")
         }
         setError(response.statusText);

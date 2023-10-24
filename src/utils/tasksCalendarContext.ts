@@ -75,7 +75,7 @@ export const moveTask = (setCalendar: any) => (from: { droppableId: string, inde
 
     // TODO: change to LocalDateTime after logic is updated on the backend side.
     postData<{}, number>(`http://localhost:8080/calendar/task/${taskId}`, { "startDate": convertDateFormat(to.droppableId), 
-    /*"endDate": convertDateFormat(to.droppableId, duration_here!), */ "calendarId": 1 })();
+    /*"endDate": convertDateFormat(to.droppableId, duration_here!), */ })();
 
     if (from && to && from.droppableId == to.droppableId && from.droppableId == "tasksList") {
         setCalendar((cal: any) => ({
