@@ -3,13 +3,17 @@ import { CurrentTaskView } from './CurrentTaskView';
 import { NextTaskView } from './NextTaskView';
 import './CurrentTaskPanel.css';
 import { fetchData } from '../../utils/fetchUtils';
-import { Task, converDbTaskToTask } from '../../types/Task';
+import { CalendarTask, converDbTaskToTask } from '../../types/Task';
 
 
-const fetchCalendarTasks = fetchData<Task[]>('http://localhost:8080/calendar/7');
+const fetchCalendarTasks = fetchData<CalendarTask[]>('http://localhost:8080/calendar/7');
 export function CurrentTaskPanel() {
-    const [currentTask, setCurrentTask] = useState<Task>()
-    const [nextTask, setNextTask] = useState<Task>()
+    const [currentTask, setCurrentTask] = useState<CalendarTask>()
+    const [nextTask, setNextTask] = useState<CalendarTask>()
+
+    function completeTask() {
+
+    }
 
     useEffect(() => {
 
@@ -17,14 +21,14 @@ export function CurrentTaskPanel() {
 
         // Function to filter out past tasks
         const filterPastTasks = (tasks: any) => {
-            return tasks.filter((task: any) => new Date(task.date) > now);
+            return tasks.filter((task: any) => new Date(task.startDate) > now);
         };
 
         // Function to sort tasks by date
-        const sortTasksByDate = (tasks: Task[]) => {
-            return tasks.sort((a: Task, b: Task) => {
-                const dateA = a.startDate ? new Date(a.startDate) : new Date();
-                const dateB = b.startDate ? new Date(b.startDate) : new Date();
+        const sortTasksByDate = (tasks: any[]) => {
+            return tasks.sort((a: any, b: any) => {
+                const dateA = new Date(a.startDate);
+                const dateB = new Date(b.startDate);
                 return dateA.getTime() - dateB.getTime();
             });
         };
@@ -33,21 +37,26 @@ export function CurrentTaskPanel() {
         // sort by date, and filtering out past tasks
         // check if the first event is happening now
         // get the first / second task from the list ( based on condition before) for nextTaskComponent
-        fetchCalendarTasks((calendarTasksList: Task[]) => {
+        fetchCalendarTasks((calendarTasksList: CalendarTask[]) => {
             calendarTasksList.map((calendarTask: any) => converDbTaskToTask(calendarTask.task))
-            const sortedTasks = filterPastTasks(sortTasksByDate(calendarTasksList))
+            const sortedTasks = sortTasksByDate(calendarTasksList).filter((task: any) => new Date(task.startDate) > now)
+            console.log("SORTED Calendar Tasks: ", sortedTasks)
+            console.log("NOW", now)
+            console.log("FILTERED TAsks:", sortedTasks.filter((task: any) => new Date(task.startDate) > now))
 
+
+            // if now >= startTime && now <= endTime
             if (sortedTasks.length > 0 && new Date(sortedTasks[0].startDate) <= now) {
                 // Get the second task if the first is happening now
                 setCurrentTask(sortedTasks[0])
-                console.log("CURRENT TASK: " + (currentTask ? currentTask.name : ""))
-                setNextTask(sortedTasks[1] || null);
-                console.log("Next TASK: " + (nextTask ? nextTask.name : ""))
+                console.log("CURRENT TASK: " + (currentTask ? currentTask.task.name : ""))
+                setNextTask(sortedTasks[1].task || null);
+                console.log("Next TASK: " + (nextTask ? nextTask.task.name : ""))
 
               } else {
                 // Get the first task
-                setNextTask(sortedTasks[0] || null);
-                console.log("Next TASK: " + (nextTask ? nextTask.name : ""))
+                setNextTask(sortedTasks[0].task || null);
+                console.log("Next TASK: " + (nextTask ? nextTask.task.name : ""))
 
             }
             // TODO: add check for next task of the day / you are caught up for the day!
@@ -56,7 +65,7 @@ export function CurrentTaskPanel() {
 
     return (
         <div className="current-task-panel">
-            <CurrentTaskView />
+            {currentTask && <CurrentTaskView taskName={currentTask.task.name} startTime={currentTask.startTime} onComplete={() => completeTask()}/>}
             <NextTaskView />
         </div>
     );

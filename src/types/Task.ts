@@ -17,7 +17,11 @@ export type Task = {
 
     //todo: time estimate can be a sum of subtasks and modified by difficulty
 }
-
+export type CalendarTask = {
+    startTime: Date;
+    endTime: Date;
+    task: Task;
+}
 
 export const converDbTaskToTask = (task: any): Task => ({
     id: task.id,
