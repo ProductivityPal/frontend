@@ -2,7 +2,15 @@ import React, { useState, useContext } from 'react';
 import './CurrentTaskView.css';
 import { Button } from '@mui/material';
 
-export function CurrentTaskView() {
+type CurrentTaskProps = {
+    taskName?: string;
+    subTasks?: any[];
+    startTime: Date;
+    endTime?: Date;
+    onComplete: () => void;
+}
+
+export function CurrentTaskView(props: CurrentTaskProps) {
     const buttonStyle = {
         backgroundColor: '#F8DEB3',
         color: 'white',
@@ -22,8 +30,8 @@ export function CurrentTaskView() {
         <div className='TaskPanelContainer'>
             <p>Your current task:</p>
             <div>
-                <h1>Create UI</h1>
-                <p className="TimeLabel">11:30AM - 12:30AM</p>
+                <h1>{props.taskName}</h1>
+                <p className="TimeLabel">{props.startTime.getHours()}</p>
             </div>
             <div>---------------------</div>
             <li>Choose color palette</li>
@@ -31,7 +39,7 @@ export function CurrentTaskView() {
             <li>Create components</li>
             <div className='ButtonContainer'>
                 <Button sx={buttonStyle}>Start Timer</Button>
-                <Button sx={buttonStyle}>Add subtask</Button>
+                {/* <Button sx={buttonStyle}>Add subtask</Button> */}
                 <Button sx={buttonStyle}>✔️</Button>
             </div>
         </div>

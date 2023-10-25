@@ -4,8 +4,8 @@ import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
 import { postData } from "../../utils/fetchUtils";
 import './AddTaskModal.css';
-import { N } from "@fullcalendar/core/internal-common";
 import { Task } from "../../types/Task";
+import NumberInput from "../SharedComponents/NumberInput"
 
 
 type AddTaskModalProps = {
@@ -41,7 +41,8 @@ export function AddTaskModal(props: AddTaskModalProps) {
     const [deadline, setDeadline] = React.useState(new Date());
     const [likeliness, setLikeliness] = React.useState('NEUTRAL');
     const [isParent, setIsParent] = React.useState(false);
-    const [timeEstimate, setTimeEstimate] = React.useState(0);
+    // Time Estimate is in minutes!
+    const [timeEstimate, setTimeEstimate] = React.useState(15);
    
     const onSave = () => {
         const newTaskData = {
@@ -102,6 +103,9 @@ export function AddTaskModal(props: AddTaskModalProps) {
         width: '95%',
         padding: '5px',
         margin: '5px',
+    }
+    const handleIncrementChange = (value:any) => {
+        setTimeEstimate(value)
     }
 
 
@@ -168,7 +172,9 @@ export function AddTaskModal(props: AddTaskModalProps) {
                     </div>
                     <div className="add-task-body-row">
                         <div className="add-task-body-row-label">How long will it take?</div>
-                        <Input sx={inputStyle} type="number" value={timeEstimate} onChange={(e) => setTimeEstimate(parseInt(e.target.value))}/>
+                        {/* <NumberInput endAdornment={<InputAdornment>kg</InputAdornment>} /> */}
+                        <NumberInput onIncrementChange={handleIncrementChange}/>
+                        {/* <Input sx={inputStyle} type="number" value={timeEstimate} onChange={(e) => setTimeEstimate(parseInt(e.target.value))}/> */}
                     </div>
                     {/* <div className="add-task-body-row">
                         <Button sx={subtasksButton}>Add Subtaks +</Button>
