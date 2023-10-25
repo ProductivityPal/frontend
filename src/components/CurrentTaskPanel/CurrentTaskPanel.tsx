@@ -42,7 +42,7 @@ export function CurrentTaskPanel() {
             const sortedTasks = sortTasksByDate(calendarTasksList).filter((task: any) => new Date(task.startDate) > now)
             console.log("SORTED Calendar Tasks: ", sortedTasks)
             console.log("NOW", now)
-            console.log("FILTERED TAsks:", sortedTasks.filter((task: any) => new Date(task.startDate) > now))
+            // console.log("FILTERED TAsks:", sortedTasks.filter((task: any) => new Date(task.startDate) > now))
 
 
             // if now >= startTime && now <= endTime
@@ -50,13 +50,13 @@ export function CurrentTaskPanel() {
                 // Get the second task if the first is happening now
                 setCurrentTask(sortedTasks[0])
                 console.log("CURRENT TASK: " + (currentTask ? currentTask.task.name : ""))
-                setNextTask(sortedTasks[1].task || null);
+                setNextTask(sortedTasks[1] || null);
                 console.log("Next TASK: " + (nextTask ? nextTask.task.name : ""))
 
               } else {
                 // Get the first task
-                setNextTask(sortedTasks[0].task || null);
-                console.log("Next TASK: " + (nextTask ? nextTask.task.name : ""))
+                setNextTask(sortedTasks[0] || null);
+                console.log("Next TASK: " + (sortedTasks[0].task.name))
 
             }
             // TODO: add check for next task of the day / you are caught up for the day!
@@ -66,7 +66,7 @@ export function CurrentTaskPanel() {
     return (
         <div className="current-task-panel">
             {currentTask && <CurrentTaskView taskName={currentTask.task.name} startTime={currentTask.startTime} onComplete={() => completeTask()}/>}
-            <NextTaskView />
+            {nextTask && <NextTaskView taskName={nextTask.task.name} startTime={nextTask.startTime}/>}
         </div>
     );
 }
