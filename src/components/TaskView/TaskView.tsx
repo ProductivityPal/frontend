@@ -20,6 +20,7 @@ type TaskViewProps = {
     isAlgoSort?: boolean;
     index?: number;
     onComplete: () => void;
+    duration?: number;
 }
 
 export function TaskView(props: TaskViewProps) {
@@ -49,7 +50,7 @@ export function TaskView(props: TaskViewProps) {
             <Draggable draggableId={(props.taskId).toString()} index={props.index ? props.index : 0} key={props.taskId}>
                 {(provided) => (
                     <div className='task-body' ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} key={props.taskName} >
-                        <ExpandingComponent key={props.taskId} isExpandable={props.isExpandable} taskName={props.taskName} taskId={props.taskId} index={props.index} isAlgoSort={props.isAlgoSort} onComplete={() => completeTask(props.taskId)}/>
+                        <ExpandingComponent duration={props.duration} key={props.taskId} isExpandable={props.isExpandable} taskName={props.taskName} taskId={props.taskId} index={props.index} isAlgoSort={props.isAlgoSort} onComplete={() => completeTask(props.taskId)}/>
                         {/* <img className="logo" src={expand} alt="expand tasks view" /> */}
                         {/* <button className='circleButton'></button> */}
                         {/* <div className='task-header'> */}

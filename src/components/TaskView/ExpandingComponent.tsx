@@ -16,6 +16,7 @@ type TaskViewProps = {
     isAlgoSort?: boolean;
     index?: number;
     onComplete: () => void;
+    duration?: number;
 }
 
 
@@ -48,7 +49,7 @@ export function ExpandingComponent(props: TaskViewProps) {
         setSubtasks([...subtasks, newSubtask]);
         
         // send to backend
-        postData<{}, number>(`http://localhost:8080/subtask`, newSubtask)();
+        postData<{}, number>(`http://localhost:8080/task/subtask`, newSubtask)();
         console.log("SENDING SUBTASK")
 
         setSubtaskName('')
@@ -56,7 +57,7 @@ export function ExpandingComponent(props: TaskViewProps) {
     }
 
     return (
-        <div className='expand-container'>
+        <div className='expand-container' style={ props.duration ? {height: props.duration } : {}}>
 
             <div className='task-header'>
                 {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />}
