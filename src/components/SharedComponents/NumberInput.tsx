@@ -42,8 +42,11 @@ export default function NumberInput({ onIncrementChange }: NumberIncrementProps)
         setTimeEstimate(value)
         onIncrementChange(value)
     }
+    React.useEffect(() => {
+        onIncrementChange(timeEstimate);
+    }, [])
     return (
-        <NumberInputBase min={15} step={(15)} endAdornment={<InputAdornment>min</InputAdornment>} onInputChange={(e) => valueChanged(parseInt(e.target.value))} />
+        <NumberInputBase  value={timeEstimate} min={15} step={(15)} endAdornment={<InputAdornment>min</InputAdornment>} onChange={(e, value) => valueChanged(value ? value : 15)}  />
     );
 }
 

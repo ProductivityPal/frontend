@@ -30,7 +30,7 @@ type NewTaskProps = {
     };
 }
 
-const postNewTask = (newTask: NewTaskProps) => postData<{}, number>('http://localhost:8080/task', newTask);
+const postNewTask = (newTask: NewTaskProps) => postData<{}, number>('http://localhost:8080/task', {...newTask, time_estimate: newTask.timeEstimate});
 
 const selectedButtonStyle = (isSelected: Boolean) => isSelected ? {} : { opacity: 0.5 };
 
@@ -104,10 +104,6 @@ export function AddTaskModal(props: AddTaskModalProps) {
         padding: '5px',
         margin: '5px',
     }
-    const handleIncrementChange = (value:any) => {
-        setTimeEstimate(value)
-    }
-
 
     return (
         <div>
@@ -173,7 +169,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
                     <div className="add-task-body-row">
                         <div className="add-task-body-row-label">How long will it take?</div>
                         {/* <NumberInput endAdornment={<InputAdornment>kg</InputAdornment>} /> */}
-                        <NumberInput onIncrementChange={handleIncrementChange}/>
+                        <NumberInput onIncrementChange={setTimeEstimate}/>
                         {/* <Input sx={inputStyle} type="number" value={timeEstimate} onChange={(e) => setTimeEstimate(parseInt(e.target.value))}/> */}
                     </div>
                     {/* <div className="add-task-body-row">
