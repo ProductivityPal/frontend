@@ -18,7 +18,7 @@ export type Task = {
     //todo: time estimate can be a sum of subtasks and modified by difficulty
 }
 export type CalendarTask = {
-    startTime: Date;
+    startDate: Date;
     endTime: Date;
     task: Task;
 }

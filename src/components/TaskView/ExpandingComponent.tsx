@@ -37,17 +37,18 @@ export function ExpandingComponent(props: TaskViewProps) {
         // isSubtask
         // parentId
         // name
-        let newSubtask = {
+        const newSubtask = {
+            name: subtaskName,
             isSubtask: true,
             parentId: props.taskId,
-            name: subtaskName
         }
         // todo add category
 
         setSubtasks([...subtasks, newSubtask]);
         
         // send to backend
-        // postData<{}, number>('http://localhost:8080/subtask', newSubtask);
+        postData<{}, number>(`http://localhost:8080/subtask`, newSubtask)();
+        console.log("SENDING SUBTASK")
 
         setSubtaskName('')
 
@@ -73,7 +74,7 @@ export function ExpandingComponent(props: TaskViewProps) {
             <div className={expanded ? "expandingComponentExpanded" : "expandingComponentHidden"}>
                 <div>
                     {subtasks && subtasks.map((subtask, index) => (
-                        <p key={index}>{subtask}</p>
+                        <p key={index}>{subtask.name}</p>
                     ))}
                     <form>
                         <input type="text" value={subtaskName} onChange={(e) => setSubtaskName(e.target.value)}/>
