@@ -14,12 +14,19 @@ export type Task = {
     parentId?: number;
     category: string;
     startDate?: Date;
-
+    time_estimate?: number;
     //todo: time estimate can be a sum of subtasks and modified by difficulty
 }
+
+export const convetDbCalendarTaskToCalendarTask = (ct: any): CalendarTask => ({
+    ...ct,
+    endDate: typeof ct.endDate === 'string' ? new Date(ct.endDate) : new Date(new Date(ct.startDate).getTime() + ct.task.time_estimate * 60 * 1000),
+    task: converDbTaskToTask(ct.task)
+})
+
 export type CalendarTask = {
-    startTime: Date;
-    endTime: Date;
+    startDate: Date;
+    endDate: Date;
     task: Task;
 }
 

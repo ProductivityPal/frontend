@@ -9,12 +9,14 @@ import { Menu } from '@mui/material';
 import { postData } from "../../utils/fetchUtils";
 
 type TaskViewProps = {
+    isExpandable: boolean;
     taskName: string;
     taskId: number;
     subTasks?: any[];
     isAlgoSort?: boolean;
     index?: number;
     onComplete: () => void;
+    duration?: number;
 }
 
 
@@ -37,27 +39,28 @@ export function ExpandingComponent(props: TaskViewProps) {
         // isSubtask
         // parentId
         // name
-        let newSubtask = {
+        const newSubtask = {
+            name: subtaskName,
             isSubtask: true,
             parentId: props.taskId,
-            name: subtaskName
         }
         // todo add category
 
         setSubtasks([...subtasks, newSubtask]);
         
         // send to backend
-        // postData<{}, number>('http://localhost:8080/subtask', newSubtask);
+        postData<{}, number>(`http://localhost:8080/task/subtask`, newSubtask)();
+        console.log("SENDING SUBTASK")
 
         setSubtaskName('')
 
     }
 
     return (
-        <div className='expand-container'>
+        <div className='expand-container' style={ props.duration ? {height: props.duration } : {}}>
 
             <div className='task-header'>
-                <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />
+                {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />}
                 <button className={`circleButton ${category}`} onClick={() => setExpandedCategory(!expandedCategory)}>
                     {expandedCategory && <div className='category-menu'>
                         <button className='circleButton' onClick={() => setCategory('default')} />
@@ -67,13 +70,13 @@ export function ExpandingComponent(props: TaskViewProps) {
                     </div>}
                 </button>
                 <div className='task-label'>{props.taskName}</div>
-                <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>
+                {props.isExpandable && <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>}
             </div>
 
             <div className={expanded ? "expandingComponentExpanded" : "expandingComponentHidden"}>
                 <div>
                     {subtasks && subtasks.map((subtask, index) => (
-                        <p key={index}>{subtask}</p>
+                        <p key={index}>{subtask.name}</p>
                     ))}
                     <form>
                         <input type="text" value={subtaskName} onChange={(e) => setSubtaskName(e.target.value)}/>

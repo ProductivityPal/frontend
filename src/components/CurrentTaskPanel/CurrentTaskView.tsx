@@ -1,16 +1,19 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import './CurrentTaskView.css';
-import { Button } from '@mui/material';
+import { Button, dividerClasses } from '@mui/material';
+import { fetchData, putData } from '../../utils/fetchUtils';
+import { Task } from '../../types/Task';
 
 type CurrentTaskProps = {
+    taskId: number;
     taskName?: string;
-    subTasks?: any[];
-    startTime: Date;
+    startTime: string;
     endTime?: Date;
     onComplete: () => void;
 }
 
 export function CurrentTaskView(props: CurrentTaskProps) {
+    const [subtaskList, setSubtaskList] = useState<String[]>([])
     const buttonStyle = {
         backgroundColor: '#F8DEB3',
         color: 'white',
@@ -26,21 +29,29 @@ export function CurrentTaskView(props: CurrentTaskProps) {
 
 
     }
+    useEffect(() => {
+        // const fetchSubtasks = fetchData<Task[]>(`http://localhost:8080/${props.taskId}/task/subtask`)
+        // fetchSubtasks((subtasks: Task[]) => {
+        //     const subtaskList = subtasks.map((subtask) => subtask.name)
+        //     setSubtaskList(subtaskList)
+
+        // })
+    }, []);
+    
     return (
         <div className='TaskPanelContainer'>
             <p>Your current task:</p>
             <div>
                 <h1>{props.taskName}</h1>
-                <p className="TimeLabel">{props.startTime.getHours()}</p>
+                <p className="TimeLabel">{props.startTime}</p>
             </div>
-            <div>---------------------</div>
-            <li>Choose color palette</li>
-            <li>Divide into sections</li>
-            <li>Create components</li>
+            <hr></hr>
+            <div>{subtaskList && subtaskList.map((subtask) => (<li>subtask.name</li>))}</div>
+
             <div className='ButtonContainer'>
                 <Button sx={buttonStyle}>Start Timer</Button>
                 {/* <Button sx={buttonStyle}>Add subtask</Button> */}
-                <Button sx={buttonStyle}>✔️</Button>
+                <Button sx={buttonStyle} onClick={() => props.onComplete()}>✔️</Button>
             </div>
         </div>
         

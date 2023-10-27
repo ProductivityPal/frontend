@@ -62,8 +62,9 @@ export function TaskContainerView() {
         setCurrentView('SortedView');
         // todo: after click on SortedView button, show SortedView and change button color
     }
-    const addNewTask = () => {
+    const addNewTask = (e: any) => {
         setOpenAddTaskModal(true);
+        handleAddTaskClick(e)
         // setTasksList(sortTasksList([...tasksList, mockedNewTask]));
     }
     const showSortedTasksForEnergyLevel = (energyLevel: String) => {
@@ -111,7 +112,7 @@ export function TaskContainerView() {
                 <Droppable droppableId={TASK_LIST_COMPONENT_ID} key={TASK_LIST_COMPONENT_ID}>
                     {(provided) => (
                         <div  {...provided.droppableProps} ref={provided.innerRef} >
-                            {tasksList.map((task, index) => (<TaskView key={task.id} taskName={task.name} taskId={task.id} isAlgoSort={currentView !== 'ListView'} index={index} onComplete={() => handleTaskComplete(index)}/>))}
+                            {tasksList.map((task, index) => (<TaskView isExpandable={true} key={task.id} taskName={task.name} taskId={task.id} isAlgoSort={currentView !== 'ListView'} index={index} onComplete={() => handleTaskComplete(index)}/>))}
                             <button onClick={addNewTask} className='ovalActionButton'>Add new task +</button>
                             {provided.placeholder}
                         </div>
