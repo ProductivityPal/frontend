@@ -30,13 +30,13 @@ export function CurrentTaskView(props: CurrentTaskProps) {
 
     }
     useEffect(() => {
-        // const fetchSubtasks = fetchData<Task[]>(`http://localhost:8080/${props.taskId}/subtask`)
+        // const fetchSubtasks = fetchData<Task[]>(`http://localhost:8080/${props.taskId}/task/subtask`)
         // fetchSubtasks((subtasks: Task[]) => {
         //     const subtaskList = subtasks.map((subtask) => subtask.name)
         //     setSubtaskList(subtaskList)
 
         // })
-    });
+    }, []);
     
     return (
         <div className='TaskPanelContainer'>
