@@ -13,6 +13,7 @@ import { ExpandingComponent } from './ExpandingComponent';
 
 
 type TaskViewProps = {
+    isExpandable: boolean;
     taskName: string;
     taskId: number;
     subTasks?: any[];
@@ -48,7 +49,7 @@ export function TaskView(props: TaskViewProps) {
             <Draggable draggableId={(props.taskId).toString()} index={props.index ? props.index : 0} key={props.taskId}>
                 {(provided) => (
                     <div className='task-body' ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} key={props.taskName} >
-                        <ExpandingComponent key={props.taskId} taskName={props.taskName} taskId={props.taskId} index={props.index} isAlgoSort={props.isAlgoSort} onComplete={() => completeTask(props.taskId)}/>
+                        <ExpandingComponent key={props.taskId} isExpandable={props.isExpandable} taskName={props.taskName} taskId={props.taskId} index={props.index} isAlgoSort={props.isAlgoSort} onComplete={() => completeTask(props.taskId)}/>
                         {/* <img className="logo" src={expand} alt="expand tasks view" /> */}
                         {/* <button className='circleButton'></button> */}
                         {/* <div className='task-header'> */}

@@ -7,7 +7,7 @@ import { Task } from '../../types/Task';
 type CurrentTaskProps = {
     taskId: number;
     taskName?: string;
-    startTime: Date;
+    startTime: string;
     endTime?: Date;
     onComplete: () => void;
 }
@@ -43,7 +43,7 @@ export function CurrentTaskView(props: CurrentTaskProps) {
             <p>Your current task:</p>
             <div>
                 <h1>{props.taskName}</h1>
-                <p className="TimeLabel">{"10"}</p>
+                <p className="TimeLabel">{props.startTime}</p>
             </div>
             <hr></hr>
             <div>{subtaskList && subtaskList.map((subtask) => (<li>subtask.name</li>))}</div>

@@ -17,6 +17,15 @@ export function CurrentTaskPanel() {
         setCurrentTask(null)
     }
 
+    function getTime(startTime: Date, duration: number) {
+        const startFormattedMinutes = String(startTime.getMinutes()).padStart(2, "0");
+        const endFormattedMinutes = String(startTime.getMinutes()).padStart(2, "0");
+        const endTime = new Date(startTime.getTime() + duration*60*1000)
+
+        return startTime.getHours() + ":" + startFormattedMinutes + " - " 
+        + endTime.getHours() + ":" + endFormattedMinutes;
+    }
+
     useEffect(() => {
 
         let now = new Date()
@@ -67,8 +76,8 @@ export function CurrentTaskPanel() {
     return (
         <div className="current-task-panel">
             {/* {nextTask && <CurrentTaskView taskId={nextTask.task.id}taskName={nextTask.task.name} startTime={nextTask.startDate} onComplete={() => completeTask()}/>} */}
-            {currentTask && <CurrentTaskView taskId={currentTask.task.id} taskName={currentTask.task.name} startTime={currentTask.startDate} onComplete={() => handleTaskComplete(currentTask.task.id)}/>}
-            {<NextTaskView taskName={nextTask ? nextTask.task.name : "You have no more tasks!"} startTime={nextTask ? nextTask.startDate.getHours().toString() : ""}/>}
+            {currentTask && <CurrentTaskView taskId={currentTask.task.id} taskName={currentTask.task.name} startTime={getTime(new Date(currentTask.startDate), currentTask.task.timeEstimate)} onComplete={() => handleTaskComplete(currentTask.task.id)}/>}
+            {<NextTaskView taskName={nextTask ? nextTask.task.name : "You have no more tasks!"} startTime={nextTask ? getTime(new Date(nextTask.startDate), nextTask.task.timeEstimate) : ""}/>}
             
         </div>
     );

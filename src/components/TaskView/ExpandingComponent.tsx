@@ -9,6 +9,7 @@ import { Menu } from '@mui/material';
 import { postData } from "../../utils/fetchUtils";
 
 type TaskViewProps = {
+    isExpandable: boolean;
     taskName: string;
     taskId: number;
     subTasks?: any[];
@@ -58,7 +59,7 @@ export function ExpandingComponent(props: TaskViewProps) {
         <div className='expand-container'>
 
             <div className='task-header'>
-                <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />
+                {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />}
                 <button className={`circleButton ${category}`} onClick={() => setExpandedCategory(!expandedCategory)}>
                     {expandedCategory && <div className='category-menu'>
                         <button className='circleButton' onClick={() => setCategory('default')} />
@@ -68,7 +69,7 @@ export function ExpandingComponent(props: TaskViewProps) {
                     </div>}
                 </button>
                 <div className='task-label'>{props.taskName}</div>
-                <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>
+                {props.isExpandable && <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>}
             </div>
 
             <div className={expanded ? "expandingComponentExpanded" : "expandingComponentHidden"}>
