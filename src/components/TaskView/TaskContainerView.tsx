@@ -62,8 +62,9 @@ export function TaskContainerView() {
         setCurrentView('SortedView');
         // todo: after click on SortedView button, show SortedView and change button color
     }
-    const addNewTask = () => {
+    const addNewTask = (e: any) => {
         setOpenAddTaskModal(true);
+        handleAddTaskClick(e)
         // setTasksList(sortTasksList([...tasksList, mockedNewTask]));
     }
     const showSortedTasksForEnergyLevel = (energyLevel: String) => {
