@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import './CurrentTaskView.css';
 import { Button, dividerClasses } from '@mui/material';
-import { fetchData } from '../../utils/fetchUtils';
+import { fetchData, putData } from '../../utils/fetchUtils';
 import { Task } from '../../types/Task';
 
 type CurrentTaskProps = {
@@ -51,7 +51,7 @@ export function CurrentTaskView(props: CurrentTaskProps) {
             <div className='ButtonContainer'>
                 <Button sx={buttonStyle}>Start Timer</Button>
                 {/* <Button sx={buttonStyle}>Add subtask</Button> */}
-                <Button sx={buttonStyle}>✔️</Button>
+                <Button sx={buttonStyle} onClick={() => props.onComplete()}>✔️</Button>
             </div>
         </div>
         

@@ -2,17 +2,19 @@ import React, { useState, useContext, useEffect } from 'react';
 import { CurrentTaskView } from './CurrentTaskView';
 import { NextTaskView } from './NextTaskView';
 import './CurrentTaskPanel.css';
-import { fetchData } from '../../utils/fetchUtils';
+import { fetchData, putData } from '../../utils/fetchUtils';
 import { CalendarTask, converDbTaskToTask, Task } from '../../types/Task';
 
 
 const fetchCalendarTasks = fetchData<CalendarTask[]>('http://localhost:8080/calendar/7');
 export function CurrentTaskPanel() {
-    const [currentTask, setCurrentTask] = useState<CalendarTask>()
+    const [currentTask, setCurrentTask] = useState<CalendarTask | null>()
     const [nextTask, setNextTask] = useState<CalendarTask>()
 
-    function completeTask() {
-
+    function handleTaskComplete(taskId: number) {
+        console.log("complete Task!" + taskId)
+        putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "isCompleted": true })();
+        setCurrentTask(null)
     }
 
     useEffect(() => {
@@ -21,7 +23,7 @@ export function CurrentTaskPanel() {
 
         // Function to filter out past tasks
         const filterPastTasks = (tasks: any) => {
-            return tasks.filter((task: any) => new Date(task.startDate.getTime() + task.timeEstimate*60*1000) > now);
+            return tasks.filter((task: any) => new Date(task.startDate) > now);
         };
 
         // Function to sort tasks by date
@@ -64,8 +66,8 @@ export function CurrentTaskPanel() {
 
     return (
         <div className="current-task-panel">
-            {nextTask && <CurrentTaskView taskId={nextTask.task.id}taskName={nextTask.task.name} startTime={nextTask.startDate} onComplete={() => completeTask()}/>}
-            {/* {currentTask && <CurrentTaskView taskName={currentTask.task.name} startTime={currentTask.startDate} onComplete={() => completeTask()}/>} */}
+            {/* {nextTask && <CurrentTaskView taskId={nextTask.task.id}taskName={nextTask.task.name} startTime={nextTask.startDate} onComplete={() => completeTask()}/>} */}
+            {currentTask && <CurrentTaskView taskId={currentTask.task.id} taskName={currentTask.task.name} startTime={currentTask.startDate} onComplete={() => handleTaskComplete(currentTask.task.id)}/>}
             {<NextTaskView taskName={nextTask ? nextTask.task.name : "You have no more tasks!"} startTime={nextTask ? nextTask.startDate.getHours().toString() : ""}/>}
             
         </div>
