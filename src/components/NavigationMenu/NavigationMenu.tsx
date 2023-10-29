@@ -39,7 +39,7 @@ export function NavigationMenu() {
         <div className='menuContainer energyType'>
             <div className='menuContainer_options'>
                 <img className="logo" src={calendar} alt="Calendar view" onClick={() => { navigate("/calendar") }} />
-                <img className="logo" src={history} alt="Statistics and history" />
+                <img className="logo" src={history} alt="Statistics and history" onClick={() => { navigate("/statistics") }}/>
                 <img className='logo' src={settings} alt="Settings" onClick={() => { navigate("/settings") }} />
                 <img className='logo' src={energy} alt="energy level" onClick={() => { setExpandedEnergyPanel(!expandedEnergyPanel) }} />
                 {expandedEnergyPanel &&
