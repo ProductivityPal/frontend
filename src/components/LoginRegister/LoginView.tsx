@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export function LoginView() {
   const [jwt, setJwt] = useLocalState('', 'jwt');
+  const [calendarId, setCalendarId] = useLocalState('6')
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();

@@ -76,7 +76,7 @@ export function ExpandingComponent(props: TaskViewProps) {
             <div className={expanded ? "expandingComponentExpanded" : "expandingComponentHidden"}>
                 <div>
                     {subtasks && subtasks.map((subtask, index) => (
-                        <p key={index}>{subtask.name}</p>
+                        <p key={index}>* {subtask.name}</p>
                     ))}
                     <form>
                         <input type="text" value={subtaskName} onChange={(e) => setSubtaskName(e.target.value)}/>
