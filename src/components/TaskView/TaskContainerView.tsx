@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 const selectedButtonStyle = (isSelected: Boolean) => isSelected ? {} : { opacity: 0.5 };
 const fetchTasks = fetchData<Task[]>('http://localhost:8080/task');
-const fetchCalendarTasks = fetchData<Task[]>('http://localhost:8080/calendar');
+const fetchCalendarTasks = fetchData<Task[]>('http://localhost:8080/calendar/tasks');
 const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort');
 const putEnergyLevel = (energyLevel: String) => putData<{}, number>(`http://localhost:8080/user/energyLevel/${energyLevel}`, {});
 const TASK_LIST_COMPONENT_ID = "tasksList";
