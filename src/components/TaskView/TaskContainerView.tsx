@@ -17,8 +17,9 @@ import { TasksCalendarContext } from '../../utils/tasksCalendarContext'
 import '../../styles/styles.css'
 import { useNavigate } from 'react-router-dom';
 
+const selectedButtonStyle = (isSelected: Boolean) => isSelected ? {} : { opacity: 0.5 };
 const fetchTasks = fetchData<Task[]>('http://localhost:8080/task');
-const fetchCalendarTasks = fetchData<Task[]>('http://localhost:8080/calendar/7');
+const fetchCalendarTasks = fetchData<Task[]>('http://localhost:8080/calendar');
 const fetchAlgoSortList = (id: String) => fetchData<Task[]>('http://localhost:8080/task/algosort');
 const putEnergyLevel = (energyLevel: String) => putData<{}, number>(`http://localhost:8080/user/energyLevel/${energyLevel}`, {});
 const TASK_LIST_COMPONENT_ID = "tasksList";
@@ -31,6 +32,7 @@ export function TaskContainerView() {
     const tasksList = calendar[TASK_LIST_COMPONENT_ID].filter(task => task.completed == false && !usedTasks.includes(task.id));
     const [currentView, setCurrentView] = useState('ListView');
     const [energyLevelPopupView, setEnergyLevelPopupView] = useState(true);
+    const [isListView, setIsListView] = useState(true);
     const navigate = useNavigate();
 
     // Adding new task
@@ -54,13 +56,15 @@ export function TaskContainerView() {
     const [errorMessage, setErrorMessage] = useState('');
 
     const toggleListView = () => {
+        setTasks(TASK_LIST_COMPONENT_ID, tasksList);
+        setIsListView(true)
         setCurrentView('ListView');
-        // todo: after click on ListView button, show ListView and change button color
+        setEnergyLevelPopupView(true);
     }
     const toggleSortedView = () => {
+        setIsListView(false)
         setTasks(TASK_LIST_COMPONENT_ID, []);
         setCurrentView('SortedView');
-        // todo: after click on SortedView button, show SortedView and change button color
     }
     const addNewTask = (e: any) => {
         setOpenAddTaskModal(true);
@@ -105,8 +109,8 @@ export function TaskContainerView() {
             <div className='tasks-container'>
                 <Stack spacing={2} alignItems="center">
                     <ToggleButtonGroup aria-label="Medium sizes" className="toggle">
-                        <ToggleButton key={1} value="1" onClick={toggleListView}>ListView</ToggleButton>,
-                        <ToggleButton key={2} value="2" onClick={toggleSortedView}>SortedView </ToggleButton>
+                        <ToggleButton style={selectedButtonStyle(isListView)} key={1} value="1" onClick={toggleListView}>ListView</ToggleButton>,
+                        <ToggleButton style={selectedButtonStyle(!isListView)} key={2} value="2" onClick={toggleSortedView}>SortedView </ToggleButton>
                     </ToggleButtonGroup>
                 </Stack>
                 <Droppable droppableId={TASK_LIST_COMPONENT_ID} key={TASK_LIST_COMPONENT_ID}>

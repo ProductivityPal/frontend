@@ -15,7 +15,7 @@ import { converDateToDestinationId } from '../components/Calendar/CalendarHour';
 import { useNavigate } from 'react-router-dom';
 
  function CalendarPage() {
-  const fetchTasks = fetchData<Task[]>('http://localhost:8080/calendar/7');
+  const fetchTasks = fetchData<Task[]>('http://localhost:8080/calendar');
   const [calendar, setCalendar] = useState({ tasksList: [] });
   const calendarContext = { calendar, moveTask: moveTask(setCalendar), addTask: addTask(setCalendar), setTasks: setTasks(setCalendar) }
   const navigate = useNavigate();

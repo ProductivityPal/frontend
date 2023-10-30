@@ -7,7 +7,7 @@ import { CalendarTask, converDbTaskToTask, convetDbCalendarTaskToCalendarTask, T
 import { TasksCalendarContext } from '../../utils/tasksCalendarContext';
 
 
-const fetchCalendarTasks = fetchData<CalendarTask[]>('http://localhost:8080/calendar/7');
+const fetchCalendarTasks = fetchData<CalendarTask[]>('http://localhost:8080/calendar');
 export function CurrentTaskPanel() {
     const [currentTask, setCurrentTask] = useState<CalendarTask | null>()
     const [nextTask, setNextTask] = useState<CalendarTask>()
