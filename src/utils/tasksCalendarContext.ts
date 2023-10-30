@@ -61,7 +61,7 @@ function convertDateFormat(inputDate: string, duration = 0): string {
     const formattedDay = day.toString().padStart(2, '0');
     const formattedTime = time.padStart(5, '0');
 
-    const result = `${year}-${formattedMonth}-${formattedDay}T${formattedTime}`;
+    const result = `${year}-${formattedMonth}-${formattedDay}T${formattedTime}:00.000Z`;
 
     return result;
 }
