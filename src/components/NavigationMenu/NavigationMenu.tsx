@@ -11,7 +11,7 @@ import energy from '../../images/energy_icon.png';
 import Popover from '@mui/material/Popover';
 import DiscreteSliderMarks from '../SharedComponents/EnergyLevelSlider';
 import { Button } from '@mui/material';
-import { postData } from '../../utils/fetchUtils';
+import { postData, putData } from '../../utils/fetchUtils';
 
 
 type ModalProps = {
@@ -25,6 +25,7 @@ type ModalProps = {
 export function NavigationMenu() {
     const navigate = useNavigate();
     const [expandedEnergyPanel, setExpandedEnergyPanel] = useState(false)
+    const [energyLevel, setEnergyLevel] = useState('')
 
     function logoutUser() {
         localStorage.removeItem('jwt');
@@ -32,8 +33,14 @@ export function NavigationMenu() {
     }
 
     function sendEnergyLevel() {
-        // todo
+        setExpandedEnergyPanel(false)
+        putData<{}, number>(`http://localhost:8080/user/energyLevel/${energyLevel}`, energyLevel)();
     }
+
+    const handleEnergyChange = (value: any) => {
+        setEnergyLevel(value);
+        console.log("ENERGY: ", value)
+    };
 
     return (
         <div className='menuContainer energyType'>
@@ -57,8 +64,8 @@ export function NavigationMenu() {
                         }}
                     ><div className='energyModal'>
                         <p>Your current energy level:</p>
-                        <DiscreteSliderMarks></DiscreteSliderMarks>
-                        <Button onClick={() => sendEnergyLevel()}>Update your energy</Button></div></Popover>}
+                        <DiscreteSliderMarks sendEnergy={handleEnergyChange}></DiscreteSliderMarks>
+                        <Button onClick={() => {sendEnergyLevel()}}>Update your energy</Button></div></Popover>}
             </div>
             <img className="logo" src={logout} alt="Logout" onClick={() => { logoutUser() }} />
         </div>);

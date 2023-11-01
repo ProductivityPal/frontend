@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Slider from '@mui/material/Slider';
 
 const marks = [
@@ -15,12 +15,33 @@ const marks = [
       label: 'High',
     },
   ];
-  
-  function valuetext(value: number) {
-    return `${value}`;
-  }
 
-  export default function DiscreteSliderMarks() {
+  type SliderProps = {
+    sendEnergy: (value: any) => void;
+  }
+  
+
+
+  export default function DiscreteSliderMarks(props: SliderProps) {
+    const [energyValue, setEnergyValue] = useState('MEDIUM')
+
+    function valuetext(value: number) {
+      return `${value}`;
+    }
+
+    function convertToEnergy(value: any) {
+      // const mark = marks.find((mark) => mark.value === value);
+      // const label = mark ? mark.label : 'Medium';
+      switch (value) {
+        case 0: 
+          return 0.5
+        case 50:
+          return 1.0
+        case 100:
+          return 1.5
+      }
+    }
+
     return (
         <Slider
           aria-label="Custom marks"
@@ -29,6 +50,7 @@ const marks = [
           step={50}
           valueLabelDisplay="auto"
           marks={marks}
+          onChange={(e, value) => props.sendEnergy(convertToEnergy(value))}
         />
     );
   }

@@ -62,7 +62,7 @@ export function ExpandingComponent(props: TaskViewProps) {
     function addSubtask(subtaskName: string) {
         const newSubtask = {
             name: subtaskName,
-            isSubtask: true,
+            subtask: true,
             parentId: props.taskId,
         }
         // todo add category
