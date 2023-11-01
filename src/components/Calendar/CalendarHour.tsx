@@ -32,28 +32,28 @@ export default function CalendarHour({ hour, date }: { hour: string , date: stri
             <Droppable droppableId={id1} key={id1}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList1.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
+                         {tasksList1.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
                     </div>
                 )}
             </Droppable>
             <Droppable droppableId={id2} key={id2}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList2.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
+                         {tasksList2.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
                     </div>
                 )}
             </Droppable>
             <Droppable droppableId={id3} key={id3}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList3.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
+                         {tasksList3.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
                     </div>
                 )}
             </Droppable>
             <Droppable droppableId={id4} key={id4}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList4.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
+                         {tasksList4.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
                     </div>
                 )}
             </Droppable>

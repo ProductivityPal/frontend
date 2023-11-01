@@ -1,11 +1,17 @@
 .expand-container {
     overflow: hidden;
-    background-color: #E7C3A188;
+    /* background-color: #E7C3A188; */
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
     text-align: left;
     margin-bottom: 5px;
     border: solid #E7C3A1 1px;
     font-size: small;
+    border-radius: 5px;
+    /* padding-left: 2px;
+    padding-right: 2px; */
+    /* display: flex; */
+    align-items: center;
+    /* justify-content: space-between; */
 
 }
 
@@ -25,7 +31,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    }
+}
 
 .expand-icon {
     width: 25px;
