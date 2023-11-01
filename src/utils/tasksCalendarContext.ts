@@ -1,6 +1,6 @@
 import { Task } from '../types/Task'
 import { createContext } from 'react';
-import { postData } from './fetchUtils';
+import { postData, putData } from './fetchUtils';
 import { duration } from 'moment';
 
 type TasksCalendarContextType = {
@@ -61,7 +61,7 @@ function convertDateFormat(inputDate: string, duration = 0): string {
     const formattedDay = day.toString().padStart(2, '0');
     const formattedTime = time.padStart(5, '0');
 
-    const result = `${year}-${formattedMonth}-${formattedDay}T${formattedTime}:00.000Z`;
+    const result = `${year}-${formattedMonth}-${formattedDay}T${formattedTime}`;
 
     return result;
 }
@@ -72,10 +72,14 @@ export const moveTask = (setCalendar: any) => (from: { droppableId: string, inde
     console.log(`Move task with id ${taskId} from ${from.droppableId}`)
     console.log(`Add task with id ${taskId} to date ${to.droppableId}`)
     console.log(`Add task with id ${taskId} to date ${convertDateFormat(to.droppableId)}`)
-
-    // TODO: change to LocalDateTime after logic is updated on the backend side.
-    postData<{}, number>(`http://localhost:8080/calendar/task/${taskId}`, { "startDate": convertDateFormat(to.droppableId), 
-    /*"endDate": convertDateFormat(to.droppableId, duration_here!), */ })();
+   
+    if (from.droppableId != 'tasksList') {
+        putData<{}, number>(`http://localhost:8080/calendar/task/${taskId}`, { "startDate": convertDateFormat(to.droppableId)})();
+    }
+    else {
+        postData<{}, number>(`http://localhost:8080/calendar/task/${taskId}`, { "startDate": convertDateFormat(to.droppableId), 
+        /*"endDate": convertDateFormat(to.droppableId, duration_here!), */ })();
+    }
 
     if (from && to && from.droppableId == to.droppableId && from.droppableId == "tasksList") {
         setCalendar((cal: any) => ({

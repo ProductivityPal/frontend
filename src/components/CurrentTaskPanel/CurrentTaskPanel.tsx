@@ -14,7 +14,7 @@ export function CurrentTaskPanel() {
     const { calendar } = useContext(TasksCalendarContext);
     function handleTaskComplete(taskId: number) {
         console.log("complete Task!" + taskId)
-        putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "isCompleted": true })();
+        putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "completed": true })();
         setCurrentTask(null)
     }
 

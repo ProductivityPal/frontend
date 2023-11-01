@@ -16,6 +16,7 @@ type TaskViewProps = {
     isExpandable: boolean;
     taskName: string;
     taskId: number;
+    completed: boolean;
     subTasks?: any[];
     isAlgoSort?: boolean;
     index?: number;
@@ -41,7 +42,7 @@ export function TaskView(props: TaskViewProps) {
 
         function completeTask(taskId: number) {
             console.log("complete Task!" + taskId)
-            putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "isCompleted": true })();
+            putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "completed": true })();
             // Deleting this task from the TaskContainerView.
             props.onComplete()
 
@@ -50,7 +51,7 @@ export function TaskView(props: TaskViewProps) {
             <Draggable draggableId={(props.taskId).toString()} index={props.index ? props.index : 0} key={props.taskId}>
                 {(provided) => (
                     <div className='task-body' ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} key={props.taskName} >
-                        <ExpandingComponent duration={props.duration} key={props.taskId} isExpandable={props.isExpandable} taskName={props.taskName} taskId={props.taskId} index={props.index} isAlgoSort={props.isAlgoSort} onComplete={() => completeTask(props.taskId)}/>
+                        <ExpandingComponent duration={props.duration} key={props.taskId} isExpandable={props.isExpandable} taskName={props.taskName} completed={props.completed} taskId={props.taskId} index={props.index} isAlgoSort={props.isAlgoSort} onComplete={() => completeTask(props.taskId)}/>
                         {/* <img className="logo" src={expand} alt="expand tasks view" /> */}
                         {/* <button className='circleButton'></button> */}
                         {/* <div className='task-header'> */}

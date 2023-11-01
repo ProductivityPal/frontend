@@ -12,6 +12,7 @@ type TaskViewProps = {
     isExpandable: boolean;
     taskName: string;
     taskId: number;
+    completed: boolean;
     subTasks?: any[];
     isAlgoSort?: boolean;
     index?: number;
@@ -25,20 +26,22 @@ export function ExpandingComponent(props: TaskViewProps) {
     const [expandedCategory, setExpandedCategory] = useState(false)
     const [category, setCategory] = useState('default')
     const [subtaskName, setSubtaskName] = useState('')
-    const [subtasks, setSubtasks] = useState(props.subTasks ? props.subTasks: [])
+    const [subtasks, setSubtasks] = useState(props.subTasks ? props.subTasks : [])
 
     function completeTask(taskId: number) {
         console.log("complete Task!" + taskId)
-        putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "isCompleted": true })();
-        // Deleting this task from the TaskContainerView.
+        putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "completed": true })();
+
         props.onComplete()
 
     }
+    function sendCategory(category: string) {
+        // send category to backend
+        putData<{}, number>(`http://localhost:8080/task/${props.taskId}`, { "category": category })();
+        setCategory(category)
+
+    }
     function addSubtask(subtaskName: string) {
-        console.log("SOFIS")
-        // isSubtask
-        // parentId
-        // name
         const newSubtask = {
             name: subtaskName,
             isSubtask: true,
@@ -47,7 +50,7 @@ export function ExpandingComponent(props: TaskViewProps) {
         // todo add category
 
         setSubtasks([...subtasks, newSubtask]);
-        
+
         // send to backend
         postData<{}, number>(`http://localhost:8080/task/subtask`, newSubtask)();
         console.log("SENDING SUBTASK")
@@ -57,20 +60,23 @@ export function ExpandingComponent(props: TaskViewProps) {
     }
 
     return (
-        <div className='expand-container' style={ props.duration ? {height: props.duration } : {}}>
+        <div className='expand-container' style={props.duration ? { height: props.duration } : {}}>
 
-            <div className='task-header'>
+            <div className='task-header' style={{
+                opacity: props.completed ? 0.5 : 1,
+                // backgroundColor: category,
+            }}>
                 {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />}
                 <button className={`circleButton ${category}`} onClick={() => setExpandedCategory(!expandedCategory)}>
                     {expandedCategory && <div className='category-menu'>
-                        <button className='circleButton' onClick={() => setCategory('default')} />
-                        <button className='circleButton green' onClick={() => setCategory('green')} />
-                        <button className='circleButton accent' onClick={() => setCategory('accent')} />
-                        <button className='circleButton grey' onClick={() => setCategory('grey')} />
+                        <button className='circleButton' onClick={() => sendCategory('default')} />
+                        <button className='circleButton green' onClick={() => sendCategory('green')} />
+                        <button className='circleButton accent' onClick={() => sendCategory('accent')} />
+                        <button className='circleButton grey' onClick={() => sendCategory('grey')} />
                     </div>}
                 </button>
                 <div className='task-label'>{props.taskName}</div>
-                {props.isExpandable && <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>}
+                {!props.completed && <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>}
             </div>
 
             <div className={expanded ? "expandingComponentExpanded" : "expandingComponentHidden"}>
@@ -79,8 +85,8 @@ export function ExpandingComponent(props: TaskViewProps) {
                         <p key={index}>* {subtask.name}</p>
                     ))}
                     <form>
-                        <input type="text" value={subtaskName} onChange={(e) => setSubtaskName(e.target.value)}/>
-                        <button type="button" onClick={() => {addSubtask(subtaskName)}}>Add</button>
+                        <input type="text" value={subtaskName} onChange={(e) => setSubtaskName(e.target.value)} />
+                        <button type="button" onClick={() => { addSubtask(subtaskName) }}>Add</button>
                     </form>
                 </div>
             </div>

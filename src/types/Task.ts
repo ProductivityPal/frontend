@@ -20,7 +20,7 @@ export type Task = {
 
 export const convetDbCalendarTaskToCalendarTask = (ct: any): CalendarTask => ({
     ...ct,
-    endDate: typeof ct.endDate === 'string' ? new Date(ct.endDate) : new Date(new Date(ct.startDate).getTime() + ct.task.time_estimate * 60 * 1000),
+    endDate: new Date(new Date(ct.startDate).getTime() + ct.task.time_estimate * 60 * 1000),
     task: converDbTaskToTask(ct.task)
 })
 

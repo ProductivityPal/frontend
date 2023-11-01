@@ -15,6 +15,7 @@ export const options = {
     isStacked: true,
     legend: "bottom",
     colors: ["#EE7F3B", "#E5E5E5"],
+    backgroundColor: "transparent",
 };
 
 export function BarChart() {

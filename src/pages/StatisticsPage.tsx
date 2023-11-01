@@ -2,8 +2,10 @@ import { Grid } from '@mui/material';
 import React from 'react';
 import { NavigationMenu } from '../components/NavigationMenu/NavigationMenu';
 import { DateFiltering } from '../components/Statistics/DateFiltering';
-import { DonutChart } from '../components/SharedComponents/DonutChart';
-import { BarChart } from '../components/SharedComponents/BarChart';
+import { DonutChart } from '../components/Statistics/DonutChart';
+import { BarChart } from '../components/Statistics/BarChart';
+import { LineChart } from '../components/Statistics/LineChart';
+import './StatisticsPage.css';
 
 function StatisticsPage() {
     return (
@@ -15,14 +17,25 @@ function StatisticsPage() {
                 <Grid xs={4} md={6}>
                     <div className='column-container'>
                         <DateFiltering></DateFiltering>
+                        <div className='chart-container'>
                         <DonutChart></DonutChart>
-                        <BarChart></BarChart>
+
+
+                        </div>
+                        <div className='chart-container'>
+                            <BarChart></BarChart>
+
+                        </div>
+                        
                     </div>
                 </Grid>
                 <Grid xs={4} md={5}>
-                <div className='column-container'>Column 2
-                        
+                    <div className='column-container'>
+                    <div className='chart-container'>
+                        <LineChart></LineChart>
+                    </div>
 
+                        
                     </div>
                 </Grid>
             </Grid>

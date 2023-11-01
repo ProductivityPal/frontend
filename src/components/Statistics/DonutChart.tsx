@@ -1,5 +1,6 @@
 import React from "react";
 import { Chart } from "react-google-charts";
+import './DonutChart.css';
 
 export const data = [
     ["Task", "Hours per Day"],
@@ -17,18 +18,26 @@ export const data = [
         1: { color: "#E5E5E5" },
     },
     pieStartAngle: 0,
-    background: "red",
+    backgroundColor: "transparent",
   };
+
 
   export function DonutChart() {
     return (
+      <div className="donut-chart-container">
         <Chart
         chartType="PieChart"
         width="100%"
-        height="400px"
+        height="300px"
         data={data}
         options={options}
-        style={{ backgroundColor: "red" }}
       />
+      <div className="centered-text">
+        <h1>37%</h1>
+        <p>Tasks Done</p>
+        </div>
+
+      </div>
+        
     );
   }
