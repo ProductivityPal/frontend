@@ -3,6 +3,7 @@ import './CurrentTaskView.css';
 import { Button, dividerClasses } from '@mui/material';
 import { fetchData, putData } from '../../utils/fetchUtils';
 import { Task } from '../../types/Task';
+import { PomodoroPanel } from './PomodoroPanel';
 
 type CurrentTaskProps = {
     taskId: number;
@@ -14,20 +15,19 @@ type CurrentTaskProps = {
 
 export function CurrentTaskView(props: CurrentTaskProps) {
     const [subtaskList, setSubtaskList] = useState<String[]>([])
+    const [pomodoroPanel, setPomodoroPanel] = useState(false)
     const buttonStyle = {
         backgroundColor: '#F8DEB3',
-        color: 'white',
-        width: '30%',
+        color: '#81897d',
+        width: '40%',
         'border-radius': '50px',
         'font-size': 'x-small',
         'margin-right': '2px',
         height: '30px',
         'line-height': '12px',
-        // 'font-style': 'normal'
         'margin-top': '5px',
-        'margin-bottom': '5px'
-
-
+        'margin-bottom': '5px',
+        "&:hover": {backgroundColor: "#FFFFFF50", 'border': '1px solid #F8DEB3'},
     }
     useEffect(() => {
         // const fetchSubtasks = fetchData<Task[]>(`http://localhost:8080/${props.taskId}/task/subtask`)
@@ -37,6 +37,14 @@ export function CurrentTaskView(props: CurrentTaskProps) {
 
         // })
     }, []);
+
+    function startPomodoro() {
+        setPomodoroPanel(true)
+        // send Pomodoro start to backend
+        // start Timer
+        // after 20 minutes break
+
+    }
     
     return (
         <div className='TaskPanelContainer'>
@@ -49,9 +57,10 @@ export function CurrentTaskView(props: CurrentTaskProps) {
             <div>{subtaskList && subtaskList.map((subtask) => (<li>subtask.name</li>))}</div>
 
             <div className='ButtonContainer'>
-                <Button sx={buttonStyle}>Start Timer</Button>
+                {!pomodoroPanel && <Button sx={buttonStyle} onClick={() => startPomodoro()}>Pomodoro</Button>}
+                {pomodoroPanel && <PomodoroPanel closePanel={() =>setPomodoroPanel(false)}></PomodoroPanel>}
                 {/* <Button sx={buttonStyle}>Add subtask</Button> */}
-                <Button sx={buttonStyle} onClick={() => props.onComplete()}>✔️</Button>
+                {!pomodoroPanel && <Button sx={buttonStyle} onClick={() => props.onComplete()}>✔️</Button>}
             </div>
         </div>
         

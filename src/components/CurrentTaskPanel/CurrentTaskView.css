@@ -11,7 +11,9 @@
 
 .ButtonContainer {
     display: flex;
-    display: inline;
+    flex-direction: row;
+    justify-content: center;
+    /* display: inline; */
 }
 
 .TimeLabel {
