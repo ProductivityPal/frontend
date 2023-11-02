@@ -11,3 +11,8 @@
     text-align: center;
     /* Add other styles for the centered text */
 }
+
+.label {
+    margin-left: 20px;
+    margin-right: 20px;
+}

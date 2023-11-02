@@ -1,12 +1,7 @@
 import React from "react";
+import { useState } from "react";
 import { Chart } from "react-google-charts";
 import './DonutChart.css';
-
-export const data = [
-    ["Task", "Hours per Day"],
-    ["Done", 12],
-    ["Not Done", 20],
-  ];
   
   export const options = {
     title: "Tasks Status",
@@ -21,19 +16,32 @@ export const data = [
     backgroundColor: "transparent",
   };
 
+  type DonutChartProps = {
+    doneTasks: number,
+    notDoneTasks: number,
+  }
 
   export function DonutChart() {
+    const [doneTasks, setDoneTasks] = useState(12)
+    const [notDoneTasks, setNotDoneTasks] = useState(20)
+
+    const data = [
+    ["Task", "Hours per Day"],
+    ["Done", doneTasks],
+    ["Not Done", 20],
+    ];
+
     return (
       <div className="donut-chart-container">
         <Chart
         chartType="PieChart"
         width="100%"
-        height="300px"
+        height="280px"
         data={data}
         options={options}
       />
       <div className="centered-text">
-        <h1>37%</h1>
+        <h1>{doneTasks / (doneTasks+notDoneTasks)*100}%</h1>
         <p>Tasks Done</p>
         </div>
 
