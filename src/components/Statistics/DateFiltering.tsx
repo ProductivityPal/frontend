@@ -41,7 +41,7 @@ export function DateFiltering() {
                 onChange={handleStartDateChange}
                 format="DD/MM/YY"
             />
-            <span> - </span>
+            <div className="label"> - </div>
             <DatePicker
                 value={endDate}
                 onChange={handleEndDateChange}

@@ -37,7 +37,7 @@ type NumberIncrementProps = {
 };
 
 export default function NumberInput({ onIncrementChange }: NumberIncrementProps) {
-    const [timeEstimate, setTimeEstimate] = React.useState(15);
+    const [timeEstimate, setTimeEstimate] = React.useState(30);
     function valueChanged(value: number) {
         setTimeEstimate(value)
         onIncrementChange(value)
@@ -46,7 +46,7 @@ export default function NumberInput({ onIncrementChange }: NumberIncrementProps)
         onIncrementChange(timeEstimate);
     }, [])
     return (
-        <NumberInputBase  value={timeEstimate} min={15} step={(15)} endAdornment={<InputAdornment>min</InputAdornment>} onChange={(e, value) => valueChanged(value ? value : 15)}  />
+        <NumberInputBase  value={timeEstimate} min={30} step={(15)} endAdornment={<InputAdornment>min</InputAdornment>} onChange={(e, value) => valueChanged(value ? value : 30)}  />
     );
 }
 

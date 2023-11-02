@@ -77,6 +77,11 @@ export function ExpandingComponent(props: TaskViewProps) {
 
     }
 
+    const buttonLowStyle = {
+        color: 'black',
+        "&:hover": {backgroundColor: "#FFFFFF50"},
+    }
+
     return (
         <div className='expand-container' style={{
             height: props.duration ? props.duration : 'auto',
@@ -99,7 +104,7 @@ export function ExpandingComponent(props: TaskViewProps) {
                     </div>}
                 </button>
                 <div className='task-label'>{props.taskName}</div>
-                {!props.completed && <Button className='basicButton' onClick={() => { completeTask(props.taskId) }}>✓</Button>}
+                {!props.completed && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.taskId) }}>✓</Button>}
                 {props.completed && <div/>}
             </div>
 

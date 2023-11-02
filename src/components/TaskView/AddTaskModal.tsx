@@ -56,7 +56,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
             timeEstimate,
             isSubtask: false,
             completed: false,
-            category: "", // TO DO CHANGE IT
+            category: "", 
             appUser: {
                 id: 5,
             },
@@ -66,15 +66,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
                 id,
                 ...newTaskData 
             });
-        
         });
-        
-        // setTaskName('');
-        // setPriority(1);
-        // setDifficulty('MEDIUM');
-        // setDeadline(new Date());
-        // setLikeliness('NEUTRAL');
-        // setIsParent(false);
         props.handleClose();
     };
 
@@ -146,7 +138,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
                             <Button style={selectedButtonStyle(difficulty == 'EASY')}  sx={buttonLowStyle} onClick={() => {setDifficulty("EASY")}} variant="contained">Easy</Button>
                             <Button style={selectedButtonStyle(difficulty == 'MEDIUM')}  sx={buttonMediumStyle} onClick={() => {setDifficulty("MEDIUM")}}>Medium</Button>
                             <Button style={selectedButtonStyle(difficulty == 'HARD')}  sx={buttonImportantStyle} onClick={() => {setDifficulty("HARD")}}>Hard</Button>
-                            <Button style={selectedButtonStyle(difficulty == 'EXTRA HARD')}  sx={buttonImportantStyle} onClick={() => {setDifficulty("EXTRA HARD")}}>Extra Hard</Button>
+                            <Button style={selectedButtonStyle(difficulty == 'EXTRA_HARD')}  sx={buttonImportantStyle} onClick={() => {setDifficulty("EXTRA_HARD")}}>Extra Hard</Button>
                         </div>   
                          
                     </div>
