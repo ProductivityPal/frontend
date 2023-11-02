@@ -34,11 +34,11 @@ const marks = [
       // const label = mark ? mark.label : 'Medium';
       switch (value) {
         case 0: 
-          return 0.5
+          return "LOW"
         case 50:
-          return 1.0
+          return "MEDIUM"
         case 100:
-          return 1.5
+          return "HIGH"
       }
     }
 
