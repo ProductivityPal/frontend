@@ -58,7 +58,7 @@ export function CurrentTaskView(props: CurrentTaskProps) {
 
             <div className='ButtonContainer'>
                 {!pomodoroPanel && <Button sx={buttonStyle} onClick={() => startPomodoro()}>Pomodoro</Button>}
-                {pomodoroPanel && <PomodoroPanel closePanel={() =>setPomodoroPanel(false)}></PomodoroPanel>}
+                {pomodoroPanel && <PomodoroPanel taskId={props.taskId} closePanel={() =>setPomodoroPanel(false)}></PomodoroPanel>}
                 {/* <Button sx={buttonStyle}>Add subtask</Button> */}
                 {!pomodoroPanel && <Button sx={buttonStyle} onClick={() => props.onComplete()}>✔️</Button>}
             </div>

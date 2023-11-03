@@ -2,9 +2,11 @@ import { Button } from "@mui/material"
 import React, { useEffect } from "react"
 import { useState } from "react"
 import './PomodoroPanel.css'
+import { postData } from "../../utils/fetchUtils"
 
 type PomdoroProps = {
-    closePanel: () => void
+    taskId: number;
+    closePanel: () => void;
 }
 
 export function PomodoroPanel(props: PomdoroProps) {
@@ -13,9 +15,9 @@ export function PomodoroPanel(props: PomdoroProps) {
     const [pomodoroIcon, setPomodoroIcon] = useState(isPomodoro ? "🍅" : "☕️")
     const [pomodoroLabel, setPomodoroLabel] = useState(isPomodoro ? "break" : "pomodoro")
 
-    var pomodoroTimeSum = 0
-    const initialTime = 1 * 60
-    const breakTime = 1 * 60
+    // var pomodoroTimeSum = 0
+    const initialTime = 25 * 60
+    const breakTime = 5 * 60
     const [time, setTime] = useState(initialTime)
     const [timerRunning, setTimerRunning] = useState(false)
     const [pomodoroTime, setPomodoroTime] = useState(0)
@@ -58,9 +60,13 @@ export function PomodoroPanel(props: PomdoroProps) {
     const endTimer = () => {
         setTimerRunning(false)
         // TODO: FIX time sum bug
-        pomodoroTimeSum += (isPomodoro ? (initialTime - time) : 0)
+        const pomodoroTimeSum = (pomodoroTime + (isPomodoro ? (initialTime - time) : 0)) / 60
+        setPomodoroTime(pomodoroTimeSum)
         console.log("Pomodoro time 2: ", pomodoroTimeSum)
+
         // TODO: send to backend
+        postData<{}, number>(`http://localhost:8080/task/pomodoro`, {taskId: props.taskId, completionTime: pomodoroTimeSum})();
+        // divide time by 60
         props.closePanel()
     }
 
@@ -68,7 +74,8 @@ export function PomodoroPanel(props: PomdoroProps) {
         setIsPomodoro(!isPomodoro)
         setPomodoroStart(timerRunning ? !pomodoroStart : pomodoroStart)
         // TODO: FIX time sum bug
-        pomodoroTimeSum += (isPomodoro ? (initialTime-time) : 0)
+        const pomodoroTimeSum = pomodoroTime + (isPomodoro ? (initialTime-time) : 0)
+        setPomodoroTime(pomodoroTimeSum)
         console.log("Pomodoro time 3: ", pomodoroTimeSum)
         const timeLen = type == "pomodoro" ? initialTime : breakTime
         setPomodoroIcon(isPomodoro ? "☕️" : "🍅")
