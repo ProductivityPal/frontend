@@ -4,6 +4,8 @@ import '../../styles/styles.css'
 import { Navigate } from "react-router-dom";
 import { useLocalState } from '../../utils/useLocalStorage';
 import { useNavigate } from "react-router-dom";
+import {useGoogleLogin} from "@react-oauth/google";
+
 
 export function LoginView() {
   const [jwt, setJwt] = useLocalState('', 'jwt');
@@ -11,6 +13,13 @@ export function LoginView() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  const login = useGoogleLogin({
+    onSuccess: tokenResponse => {
+      console.log(tokenResponse)
+      // sendLoginRequest()
+    },
+  });
 
   const clearJwt = () => {
     localStorage.removeItem('jwt'); 
@@ -61,7 +70,7 @@ export function LoginView() {
         <input className='loginForm__input' type='password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
       </div>
       <div className='logingFormContainer__actionButtonsRow'>
-        <button className='googleLogin'>Sign with Google</button>
+        <button className='googleLogin' onClick={() => login()}>Sign with Google</button>
         <button className='loginButton' onClick={() => { sendLoginRequest() }} >Login me</button>
       </div>
     </div>
