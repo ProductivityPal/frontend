@@ -1,4 +1,4 @@
-export const fetchData = <T,>(url: string) => (
+export const fetchData = <T,>(url: string, queryParams?: Record<string, string>) => (
     setData: (data: T) => void,
     setLoading: (loading: boolean) => void = () => {},
     setError: (error: string) => void = () => {},
@@ -11,6 +11,14 @@ export const fetchData = <T,>(url: string) => (
     if (token && token.startsWith('"') && token.endsWith('"')) {
         token = token.substring(1, token.length - 1);
     }
+
+    if (queryParams) {
+        const queryString = Object.keys(queryParams)
+            .map((key) => `${key}=${queryParams[key]}`)
+            .join('&');
+        url += `?${queryString}`;
+    }
+
     fetch(url, {
         headers : {
             'Authorization': `Bearer ${token}`,
@@ -22,7 +30,7 @@ export const fetchData = <T,>(url: string) => (
         }
         console.log(response.status)
         if(response.status == 401) {
-            if(navigate) navigate("/login")
+            if(navigate) navigate("/loggedOut")
         }
         setError(response.statusText);
     }).then(data =>{
@@ -63,7 +71,7 @@ const genericQuery = (method: string) => <T,R,>(url: string, data: T) => (
         }
         console.log(response.status)
         if(response.status == 401) {
-           if(navigate) navigate("/login")
+           if(navigate) navigate("/loggedOut")
         }
         setError(response.statusText);
     }).then(data =>{
@@ -80,3 +88,4 @@ const genericQuery = (method: string) => <T,R,>(url: string, data: T) => (
 export const postData = genericQuery('POST');
 export const putData = genericQuery('PUT');
 export const deleteData = genericQuery('DELETE');
+
