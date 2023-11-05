@@ -18,17 +18,15 @@ import './DonutChart.css';
 
   type DonutChartProps = {
     doneTasks: number,
-    notDoneTasks: number,
+    undoneTasks: number,
   }
 
-  export function DonutChart() {
-    const [doneTasks, setDoneTasks] = useState(12)
-    const [notDoneTasks, setNotDoneTasks] = useState(20)
+  export function DonutChart(props: DonutChartProps) {
 
     const data = [
     ["Task", "Hours per Day"],
-    ["Done", doneTasks],
-    ["Not Done", 20],
+    ["Done", props.doneTasks],
+    ["Not Done", props.undoneTasks],
     ];
 
     return (
@@ -41,7 +39,10 @@ import './DonutChart.css';
         options={options}
       />
       <div className="centered-text">
-        <h1>{doneTasks / (doneTasks+notDoneTasks)*100}%</h1>
+      {((props.doneTasks + props.undoneTasks) != 0) &&<h1>{(props.doneTasks / (props.doneTasks + props.undoneTasks)) * 100}%</h1>}
+      {((props.doneTasks + props.undoneTasks) == 0) &&<h1>0%</h1>}
+        
+
         <p>Tasks Done</p>
         </div>
 

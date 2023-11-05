@@ -75,6 +75,12 @@
     color: #8F745D;
 }
 
+.loginForm__title.logged {
+    margin-top: 5vw;
+    text-align: center;
+    margin-left: 0;
+}
+
 .loginForm__input {
     height: 4vh;
     width: 20vw;

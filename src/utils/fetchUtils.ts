@@ -88,4 +88,3 @@ const genericQuery = (method: string) => <T,R,>(url: string, data: T) => (
 export const postData = genericQuery('POST');
 export const putData = genericQuery('PUT');
 export const deleteData = genericQuery('DELETE');
-

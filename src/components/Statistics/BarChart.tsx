@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Chart } from "react-google-charts";
 
 // export const data = [
@@ -28,7 +28,7 @@ export function BarChart(props: BarChartProps) {
             chartType="BarChart"
             width="100%"
             height="400px"
-            data={props.data}
+            data={[["Category", "Done Tasks", "Not done tasks"], ...props.data]}
             options={options}
         />
     );
