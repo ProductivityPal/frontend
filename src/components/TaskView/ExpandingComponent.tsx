@@ -3,7 +3,7 @@ import { useState } from 'react'
 import expand from '../../images/expand_icon.svg'
 import './ExpandingComponent.css';
 import { dividerClasses } from '@mui/material';
-import { putData } from '../../utils/fetchUtils';
+import { deleteData, putData } from '../../utils/fetchUtils';
 import { Button } from '@mui/material';
 import { Menu } from '@mui/material';
 import { postData } from "../../utils/fetchUtils";
@@ -14,10 +14,13 @@ type TaskViewProps = {
     taskId: number;
     category: string;
     completed: boolean;
+    isEditView: boolean;
     subTasks?: any[];
     isAlgoSort?: boolean;
     index?: number;
     onComplete: () => void;
+    openTaskModal: () => void;
+    onDelete: () => void;
     duration?: number;
 }
 
@@ -35,6 +38,13 @@ export function ExpandingComponent(props: TaskViewProps) {
         putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "completed": true })();
 
         props.onComplete()
+
+    }
+    function deleteTask(taskId: number) {
+        console.log("delete Task!" + taskId)
+        deleteData<{}, number>(`http://localhost:8080/task/${taskId}`, {})();
+
+        props.onDelete()
 
     }
     function convertCategoryToColor(category: string) {
@@ -79,6 +89,8 @@ export function ExpandingComponent(props: TaskViewProps) {
 
     const buttonLowStyle = {
         color: 'black',
+        maxWidth: '6px',
+        minWidth: '6px',
         "&:hover": {backgroundColor: "#FFFFFF50"},
     }
 
@@ -94,17 +106,19 @@ export function ExpandingComponent(props: TaskViewProps) {
             style={{
                 opacity: props.completed ? 0.5 : 1,
             }}>
+                <Button sx={buttonLowStyle} onClick={() => deleteTask(props.taskId)}>x</Button>
                 {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />}
                 <button className={`circleButton ${category}`} onClick={() => setExpandedCategory(!expandedCategory)}>
                     {expandedCategory && <div className='category-menu'>
-                        <button className='circleButton' onClick={() => sendCategory('default')} />
+                        <button className='circleButton' onClick={() => sendCategory('beige')} />
                         <button className='circleButton green' onClick={() => sendCategory('green')} />
                         <button className='circleButton accent' onClick={() => sendCategory('accent')} />
                         <button className='circleButton grey' onClick={() => sendCategory('grey')} />
                     </div>}
                 </button>
                 <div className='task-label'>{props.taskName}</div>
-                {!props.completed && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.taskId) }}>✓</Button>}
+                {!props.completed && !props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.taskId) }}>✓</Button>}
+                {props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { props.openTaskModal }}>✎</Button>}
                 {props.completed && <div/>}
             </div>
 

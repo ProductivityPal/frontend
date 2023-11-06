@@ -15,7 +15,11 @@ export default function CalendarHour({ hour, date }: { hour: string , date: stri
 
     const handleTaskComplete = (taskIndex: number) => {
         // TODO
-    };
+        // delete this task from calendar
+    }
+    const openTaskModal = (taskIndex: number) => {
+        // TODO
+    }
 
     const id1 = getId(hour, "00", date);
     const id2 = getId(hour, "15", date);
@@ -32,28 +36,28 @@ export default function CalendarHour({ hour, date }: { hour: string , date: stri
             <Droppable droppableId={id1} key={id1}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList1.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
+                         {tasksList1.map((task, index) => (<TaskView isExpandable={false} isEditView={true} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} openTaskModal={() => openTaskModal(index)} onDelete={() => handleTaskComplete(index)}/>))}
                     </div>
                 )}
             </Droppable>
             <Droppable droppableId={id2} key={id2}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList2.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
+                         {tasksList2.map((task, index) => (<TaskView isExpandable={false} isEditView={true} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} openTaskModal={() => openTaskModal(index)} onDelete={() => handleTaskComplete(index)}/>))}
                     </div>
                 )}
             </Droppable>
             <Droppable droppableId={id3} key={id3}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList3.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
+                         {tasksList3.map((task, index) => (<TaskView isExpandable={false} isEditView={true} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} openTaskModal={() => openTaskModal(index)} onDelete={() => handleTaskComplete(index)}/>))}
                     </div>
                 )}
             </Droppable>
             <Droppable droppableId={id4} key={id4}>
                 {(provided) => (
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
-                         {tasksList4.map((task, index) => (<TaskView isExpandable={false} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} />))}
+                         {tasksList4.map((task, index) => (<TaskView isExpandable={false} isEditView={true} key={task.id} duration={task.timeEstimate ? task.timeEstimate : task.time_estimate} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} index={index} onComplete={() => handleTaskComplete(index)} openTaskModal={() => openTaskModal(index)} onDelete={() => handleTaskComplete(index)}/>))}
                     </div>
                 )}
             </Droppable>

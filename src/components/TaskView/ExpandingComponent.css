@@ -37,6 +37,7 @@
     width: 25px;
     height: 25px;
     margin-right: -5px;
+    margin-left: -2vw;
     /* transform: scale(0.7); */
 }
 
@@ -51,4 +52,5 @@
 
 .circleButton {
     margin-bottom: 5px;
+    margin-left: -2vw;
 }
