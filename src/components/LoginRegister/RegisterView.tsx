@@ -54,7 +54,7 @@ export function RegisterView() {
         <input className='loginForm__input' type='password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
       </div>
       <div className='logingFormContainer__actionButtonsRow'>
-        <button className='googleLogin'>Sign with Google</button>
+        {/* <button className='googleLogin'>Sign with Google</button> */}
         <button className='loginButton' onClick={() => sendRegisterRequest()} >Register me</button>
       </div>
     </div>
