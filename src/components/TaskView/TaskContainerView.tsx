@@ -5,7 +5,6 @@ import Stack from '@mui/material/Stack';
 import './TaskContainerView.css';
 import { TaskView } from './TaskView';
 import { Button } from '@mui/material';
-import { tasksList as mockedTasksList } from '../../data/tasks';
 import { Task } from '../../types/Task';
 import { useEffect } from 'react';
 import { fetchData, putData } from '../../utils/fetchUtils';
