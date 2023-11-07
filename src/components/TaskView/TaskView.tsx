@@ -49,7 +49,7 @@ export function TaskView(props: TaskViewProps) {
         <Draggable draggableId={(props.taskId).toString()} index={props.index ? props.index : 0} key={props.taskId}>
             {(provided) => (
                 <div className='task-body' ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} key={props.taskName} >
-                    <ExpandingComponent duration={props.duration} key={props.taskId} isExpandable={props.isExpandable} taskName={props.taskName} category={props.category} isEditView={props.isEditView} completed={props.completed} taskId={props.taskId} index={props.index} isAlgoSort={props.isAlgoSort} onComplete={() => props.onComplete()} openTaskModal={() => props.openTaskModal()} onDelete={() => props.onDelete} />
+                    <ExpandingComponent duration={props.duration} key={props.taskId} isExpandable={props.isExpandable} taskName={props.taskName} category={props.category} isEditView={props.isEditView} completed={props.completed} taskId={props.taskId} index={props.index} isAlgoSort={props.isAlgoSort} onComplete={() => props.onComplete()} openTaskModal={() => props.openTaskModal()} onDelete={() => props.onDelete} updateCategory={() => console.log("update category todo")}/>
                     {/* <img className="logo" src={expand} alt="expand tasks view" /> */}
                     {/* <button className='circleButton'></button> */}
                     {/* <div className='task-header'> */}
