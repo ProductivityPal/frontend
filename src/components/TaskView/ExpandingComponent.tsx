@@ -21,6 +21,7 @@ type TaskViewProps = {
     onComplete: () => void;
     openTaskModal: () => void;
     onDelete: () => void;
+    // updateCategory: () => void;
     duration?: number;
 }
 
