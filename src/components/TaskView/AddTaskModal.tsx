@@ -67,12 +67,12 @@ export function AddTaskModal(props: AddTaskModalProps) {
                 ...newTaskData 
             });
         });
-        props.handleClose();
+        props.handleClose()
         setTaskName('')
         setPriority(1)
         setDifficulty('MEDIUM')
         setDeadline(new Date())
-        setLikeliness("NEUTRAL")
+        setLikeliness('NEUTRAL')
         setTimeEstimate(30)
 
     };
