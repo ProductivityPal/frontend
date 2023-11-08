@@ -34,6 +34,9 @@ export function TaskContainerView() {
     const [isListView, setIsListView] = useState(true);
     const navigate = useNavigate();
 
+    // Editing task
+    const [editView, setEditView] = useState(false)
+
     // Adding new task
     const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -57,23 +60,37 @@ export function TaskContainerView() {
     const toggleListView = () => {
         setTasks(TASK_LIST_COMPONENT_ID, tasksList);
         setIsListView(true)
-        setCurrentView('ListView');
-        setEnergyLevelPopupView(true);
+        setCurrentView('ListView')
+        setEnergyLevelPopupView(true)
     }
     const toggleSortedView = () => {
         setIsListView(false)
-        setTasks(TASK_LIST_COMPONENT_ID, []);
-        setCurrentView('SortedView');
+        // setTasks(TASK_LIST_COMPONENT_ID, []);
+        setCurrentView('SortedView')
     }
-    const addNewTask = (e: any) => {
-        setOpenAddTaskModal(true);
+    const addNewTaskAction = (e: any) => {
+        setOpenAddTaskModal(true)
         handleAddTaskClick(e)
-        // setTasksList(sortTasksList([...tasksList, mockedNewTask]));
+    }
+    function editTaskAction(taskId: number) {
+        setOpenAddTaskModal(true)
+        // handleAddTaskClick(e)
     }
     const showSortedTasksForEnergyLevel = (energyLevel: String) => {
         putEnergyLevel(energyLevel)();
-        fetchAlgoSortList(energyLevel)((tasks) => setTasks(TASK_LIST_COMPONENT_ID, tasks), setIsLoading, setErrorMessage);
+        setTasks(TASK_LIST_COMPONENT_ID, []);
+        // fetchAlgoSortList(energyLevel)((tasks) => setTasks(TASK_LIST_COMPONENT_ID, tasks.filter(task => task.completed == false && !usedTasks.includes(task.id))), setIsLoading, setErrorMessage);
         setEnergyLevelPopupView(false);
+
+        fetchAlgoSortList(energyLevel)((tasks: Task[]) => {
+            fetchCalendarTasks((calendarTasks: any[]) => {
+                // const tasksList = calendar[TASK_LIST_COMPONENT_ID]
+                // .filter(task => task.completed == false && !usedTasks.includes(task.id));
+
+                setTasks(TASK_LIST_COMPONENT_ID, tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false && !usedTasks.includes(task.id)))
+                setUsedTasks(calendarTasks.map((calendartT: any) => calendartT.task.id));
+            })
+        }, setIsLoading, setErrorMessage, navigate)
 
     }
 
@@ -91,20 +108,24 @@ export function TaskContainerView() {
     }
 
     useEffect(() => {
-        fetchTasks((tasks: Task[]) => setTasks(TASK_LIST_COMPONENT_ID, tasks), setIsLoading, setErrorMessage, navigate);
-        fetchCalendarTasks((calendarTasks: any) => {
-    const tasksList = calendar[TASK_LIST_COMPONENT_ID].filter(task => task.completed == false && !usedTasks.includes(task.id));
-    setUsedTasks(calendarTasks.map((calendartT: any) => calendartT.task.id));
-        })
+        fetchTasks((tasks: Task[]) => {
+            console.log("FETCH TASKS!")
+            fetchCalendarTasks((calendarTasks: any[]) => {
+                // const tasksList = calendar[TASK_LIST_COMPONENT_ID]
+                // .filter(task => task.completed == false && !usedTasks.includes(task.id));
+
+                setTasks(TASK_LIST_COMPONENT_ID, tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false))
+                console.log("tasks test", tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false && !usedTasks.includes(task.id)))
+                console.log("tasks test", tasks)
+                console.log("tasks test", calendarTasks)
+                setUsedTasks(calendarTasks.map((calendartT: any) => calendartT.task.id));
+            })
+        }, setIsLoading, setErrorMessage, navigate)
+
     }, []);
 
     return (
         <div className="task-view">
-            {/* todo: add subtasks, 
-            add scroll to task container, 
-            refresh tasks after adding new task, 
-            check-off buttons, 
-            make smaller toggle button */}
             <div className='tasks-container'>
                 <Stack spacing={2} alignItems="center">
                     <ToggleButtonGroup aria-label="Medium sizes" className="toggle">
@@ -112,14 +133,30 @@ export function TaskContainerView() {
                         <ToggleButton style={selectedButtonStyle(!isListView)} key={2} value="2" onClick={toggleSortedView}>SortedView </ToggleButton>
                     </ToggleButtonGroup>
                 </Stack>
+                {currentView === 'SortedView' && <div>
+                    {energyLevelPopupView && <div className='energyPopupContainer'>Select your current energy level:
+                        <br></br>
+                        <Button style={energyButtonLow} onClick={() => showSortedTasksForEnergyLevel('LOW')}>Low</Button>
+                        <Button style={energyButtonMedium} onClick={() => showSortedTasksForEnergyLevel('MEDIUM')}>Medium</Button>
+                        <Button style={energyButtonHigh} onClick={() => showSortedTasksForEnergyLevel('HIGH')}>High</Button>
+                    </div>}
+                </div>}
                 <Droppable droppableId={TASK_LIST_COMPONENT_ID} key={TASK_LIST_COMPONENT_ID}>
                     {(provided) => (
                         <div  {...provided.droppableProps} ref={provided.innerRef} >
-                            {tasksList.map((task, index) => (<TaskView isExpandable={true} key={task.id} taskName={task.name} taskId={task.id} category={task.category} completed={task.completed} isAlgoSort={currentView !== 'ListView'} index={index} onComplete={() => handleTaskComplete(index)}/>))}
-                            <button onClick={addNewTask} className='ovalActionButton'>Add new task +</button>
+                            {tasksList.map((task, index) => (
+                                <TaskView isExpandable={true}
+                                    key={task.id}
+                                    taskName={task.name}
+                                    taskId={task.id}
+                                    category={task.category} isEditView={editView} completed={task.completed} isAlgoSort={currentView !== 'ListView'} index={index}
+                                    onComplete={() => handleTaskComplete(index)}
+                                    openTaskModal={() => editTaskAction(task.id)} />))}
+                            <button onClick={addNewTaskAction} className='ovalActionButton'>Add new task +</button>
+                            <button onClick={() => setEditView(!editView)} className='ovalActionButton'>Edit Tasks</button>
                             {provided.placeholder}
                         </div>
-                        
+
                     )}
                 </Droppable>
                 <AddTaskModal
@@ -128,18 +165,9 @@ export function TaskContainerView() {
                     anchorEl={anchorEl}
                     setAnchorEl={setAnchorEl}
                     handleClose={handleAddTaskClose}
-                    addTask={(task: Task) => addTask(TASK_LIST_COMPONENT_ID, task)}
+                    addTask={(task: Task) => { addTask(TASK_LIST_COMPONENT_ID, task) }}
                 />
-                {currentView === 'SortedView' && <div>
-                    {energyLevelPopupView && <div className='energyPopupContainer'>Select your current energy level:
-                        <br></br>
-                        <Button style={energyButtonLow} onClick={() => showSortedTasksForEnergyLevel('LOW')}>Low</Button>
-                        <Button style={energyButtonMedium} onClick={() => showSortedTasksForEnergyLevel('MEDIUM')}>Medium</Button>
-                        <Button style={energyButtonHigh} onClick={() => showSortedTasksForEnergyLevel('HIGH')}>High</Button>
-                    </div>}
 
-                    { /*algoSortList.map((task) => (<TaskView key={task.id} taskId={task.id} taskName={task.name} isAlgoSort={true} />)) */}
-                </div>}
 
             </div>
         </div>

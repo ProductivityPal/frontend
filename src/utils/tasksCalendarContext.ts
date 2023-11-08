@@ -110,6 +110,7 @@ export const addTask = (setCalendar: any) => (destinationId: string, task: Task)
         if (!newCal[destinationId]) {
             newCal[destinationId] = []
         }
+        console.log("Sophie", task)
         newCal[destinationId].push(task);
         return newCal;
     })
