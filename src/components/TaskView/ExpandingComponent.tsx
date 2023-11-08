@@ -20,7 +20,6 @@ type TaskViewProps = {
     index?: number;
     onComplete: () => void;
     openTaskModal: () => void;
-    onDelete: () => void;
     duration?: number;
 }
 
@@ -38,14 +37,12 @@ export function ExpandingComponent(props: TaskViewProps) {
         putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "completed": true })();
 
         props.onComplete()
-
     }
     function deleteTask(taskId: number) {
         console.log("delete Task!" + taskId)
         deleteData<{}, number>(`http://localhost:8080/task/${taskId}`, {})();
 
-        props.onDelete()
-
+        props.onComplete()
     }
     function convertCategoryToColor(category: string) {
         switch (category) {
