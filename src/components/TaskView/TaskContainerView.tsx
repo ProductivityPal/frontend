@@ -88,9 +88,6 @@ export function TaskContainerView() {
                 // .filter(task => task.completed == false && !usedTasks.includes(task.id));
 
                 setTasks(TASK_LIST_COMPONENT_ID, tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false && !usedTasks.includes(task.id)))
-                console.log("tasks test", tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false && !usedTasks.includes(task.id)))
-                console.log("tasks test", tasks)
-                console.log("tasks test", calendarTasks)
                 setUsedTasks(calendarTasks.map((calendartT: any) => calendartT.task.id));
             })
         }, setIsLoading, setErrorMessage, navigate)

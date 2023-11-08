@@ -95,12 +95,7 @@ export const moveTask = (setCalendar: any) => (from: { droppableId: string, inde
             if (!newCal[to.droppableId]) {
                 newCal[to.droppableId] = []
             }
-            console.log("baby", newCal[from.droppableId][from.index])
-            console.log("baby", from.droppableId, from.index)
-            console.log("baby", newCal)
             newCal[to.droppableId].splice(to.index, 0, newCal[from.droppableId][from.index]);
-            console.log("baby2", newCal)
-            console.log("baby3", newCal[from.droppableId].filter((task: Task) => task.id != taskId))
             return {
                 ...newCal,
                 [from.droppableId]: newCal[from.droppableId].filter((task: Task) => task.id != taskId),
