@@ -150,9 +150,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
                          
                     </div>
                     <div className="add-task-body-row">
-                        <div className="add-task-body-row-label">When is the deadline?</div>
-                        <Input sx={inputStyle} type="date" onChange={(e) => setDeadline(new Date(e.target.value))} />
-                         
+                        <Input sx={inputStyle} type="date" value={deadline.toISOString().split('T')[0]} onChange={(e) => setDeadline(new Date(e.target.value))} /> 
                     </div>
                     <div className="add-task-body-row">
                         <div className="add-task-body-row-label">How much do you like this task?</div>
