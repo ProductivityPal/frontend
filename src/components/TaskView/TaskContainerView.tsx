@@ -26,7 +26,7 @@ const TASK_LIST_COMPONENT_ID = "tasksList";
 export function TaskContainerView() {
 
     // Tasks / Sorted View
-    const { calendar, moveTask, addTask, setTasks } = useContext(TasksCalendarContext);
+    const { calendar, moveTask, addTask, setTasks, modifyTask } = useContext(TasksCalendarContext);
     const [usedTasks, setUsedTasks] = useState<number[]>([]);
     const tasksList = calendar[TASK_LIST_COMPONENT_ID].filter(task => task.completed == false && !usedTasks.includes(task.id));
     const [currentView, setCurrentView] = useState('ListView');
@@ -155,10 +155,7 @@ export function TaskContainerView() {
                                     onComplete={() => handleTaskComplete(index)}
                                     openTaskModal={() => editTaskAction(task.id)} 
                                     onUpdateTask={(newTask: Task) => {
-                                        const updatedTasksList = [...calendar[TASK_LIST_COMPONENT_ID]]; 
-                                        const originalIndex = calendar[TASK_LIST_COMPONENT_ID].findIndex(t => t.id === task.id);
-                                        updatedTasksList[originalIndex] = newTask;                      
-                                        setTasks({ ...calendar, [TASK_LIST_COMPONENT_ID]: updatedTasksList });  
+                                        const updateTaskInCalendar = modifyTask(TASK_LIST_COMPONENT_ID, task.id, newTask);
                                       }}/>))}
                             <button onClick={addNewTaskAction} className='ovalActionButton'>Add new task +</button>
                             <button onClick={() => setEditView(!editView)} className='ovalActionButton'>Edit Tasks</button>

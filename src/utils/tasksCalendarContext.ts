@@ -11,6 +11,7 @@ type TasksCalendarContextType = {
     addTask: any,
     // for adding multiple tasks from backend to calendar
     setTasks: any,
+    modifyTask: any,
 }
 
 export const TasksCalendarContext = createContext<TasksCalendarContextType>({
@@ -19,7 +20,9 @@ export const TasksCalendarContext = createContext<TasksCalendarContextType>({
     },
     moveTask: () => { },
     addTask: () => { },
-    setTasks: () => { }
+    setTasks: () => { },
+    modifyTask: () => { }
+
 });
 
 
@@ -123,3 +126,20 @@ export const setTasks = (setCalendar: any) => (destinationId: string, tasks: Tas
         return newCal;
     })
 }
+
+export const modifyTask = (setCalendar: any) => (destinationId: string, taskId: number, updatedTask: Task) => {
+    setCalendar((cal: any) => {
+      const newCal = { ...cal };
+  
+      if (newCal[destinationId]) {
+        const originalIndex = newCal[destinationId].findIndex((t: Task) => t.id === taskId);
+  
+        if (originalIndex !== -1) {
+          newCal[destinationId][originalIndex] = { ...newCal[destinationId][originalIndex], ...updatedTask };
+        }
+      }
+  
+      return newCal;
+    });
+  }
+  

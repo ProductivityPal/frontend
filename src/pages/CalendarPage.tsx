@@ -6,7 +6,7 @@ import { NavigationMenu } from '../components/NavigationMenu/NavigationMenu';
 import { Grid } from '@mui/material';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useContext, useState } from 'react';
-import { addTask, moveTask, setTasks, TasksCalendarContext } from '../utils/tasksCalendarContext';
+import { addTask, modifyTask, moveTask, setTasks, TasksCalendarContext } from '../utils/tasksCalendarContext';
 import { CurrentTaskPanel } from '../components/CurrentTaskPanel/CurrentTaskPanel';
 import { fetchData } from '../utils/fetchUtils';
 import { Task, converDbTaskToTask } from '../types/Task';
@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
  function CalendarPage() {
   const fetchTasks = fetchData<Task[]>('http://localhost:8080/calendar/tasks');
   const [calendar, setCalendar] = useState({ tasksList: [] });
-  const calendarContext = { calendar, moveTask: moveTask(setCalendar), addTask: addTask(setCalendar), setTasks: setTasks(setCalendar) }
+  const calendarContext = { calendar, moveTask: moveTask(setCalendar), addTask: addTask(setCalendar), setTasks: setTasks(setCalendar), modifyTask: modifyTask(setCalendar) }
   const navigate = useNavigate();
 
   useEffect(() => {
