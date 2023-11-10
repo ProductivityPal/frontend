@@ -7,19 +7,19 @@ import { deleteData, putData } from '../../utils/fetchUtils';
 import { Button } from '@mui/material';
 import { Menu } from '@mui/material';
 import { postData } from "../../utils/fetchUtils";
+import { AddTaskModal } from './AddTaskModal';
+import { Task } from '../../types/Task';
 
 type TaskViewProps = {
+    task: Task;
     isExpandable: boolean;
-    taskName: string;
-    taskId: number;
-    category: string;
-    completed: boolean;
     isEditView: boolean;
     subTasks?: any[];
     isAlgoSort?: boolean;
     index?: number;
     onComplete: () => void;
     openTaskModal: () => void;
+    onUpdateTask: (task: Task) => void;
     duration?: number;
 }
 
@@ -27,10 +27,25 @@ type TaskViewProps = {
 export function ExpandingComponent(props: TaskViewProps) {
     const [expanded, setExpanded] = useState(false)
     const [expandedCategory, setExpandedCategory] = useState(false)
-    const [category, setCategory] = useState(props.category)
-    const [taskColor, setTaskColor] = useState(convertCategoryToColor(props.category))
+    const [category, setCategory] = useState(props.task.category)
+    const [taskColor, setTaskColor] = useState(convertCategoryToColor(props.task.category))
     const [subtaskName, setSubtaskName] = useState('')
     const [subtasks, setSubtasks] = useState(props.subTasks ? props.subTasks : [])
+    const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
+    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+
+    const handleAddTaskClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const addNewTaskAction = (e: React.MouseEvent<HTMLButtonElement>) => {
+        setOpenAddTaskModal(true);
+        handleAddTaskClick(e);
+    }
+    const handleAddTaskClose = () => {
+        setAnchorEl(null);
+        setOpenAddTaskModal(false);
+    }
 
     function completeTask(taskId: number) {
         console.log("complete Task!" + taskId)
@@ -44,6 +59,10 @@ export function ExpandingComponent(props: TaskViewProps) {
 
         props.onComplete()
     }
+    const handleUpdateTask = (updatedTask: Task) => {
+        props.onUpdateTask(updatedTask);
+    }
+
     function convertCategoryToColor(category: string) {
         switch (category) {
             case 'green':
@@ -59,7 +78,7 @@ export function ExpandingComponent(props: TaskViewProps) {
     }
     function sendCategory(category: string) {
         // send category to backend
-        putData<{}, number>(`http://localhost:8080/task/${props.taskId}`, { "category": category })();
+        putData<{}, number>(`http://localhost:8080/task/${props.task.id}`, { "category": category })();
         setCategory(category)
         setTaskColor(convertCategoryToColor(category))
 
@@ -70,7 +89,7 @@ export function ExpandingComponent(props: TaskViewProps) {
         const newSubtask = {
             name: subtaskName,
             subtask: true,
-            parentId: props.taskId,
+            parentId: props.task.id,
         }
         // todo add category
 
@@ -88,22 +107,22 @@ export function ExpandingComponent(props: TaskViewProps) {
         color: 'black',
         maxWidth: '6px',
         minWidth: '6px',
-        "&:hover": {backgroundColor: "#FFFFFF50"},
+        "&:hover": { backgroundColor: "#FFFFFF50" },
     }
 
     return (
         <div className='expand-container' style={{
             height: props.duration ? props.duration : 'auto',
-            opacity: props.completed ? 0.5 : 1,
+            opacity: props.task.completed ? 0.5 : 1,
             backgroundColor: taskColor + '88',
             border: '2px solid ' + taskColor,
         }}>
 
-            <div className='task-header' 
-            style={{
-                opacity: props.completed ? 0.5 : 1,
-            }}>
-                <Button sx={buttonLowStyle} onClick={() => deleteTask(props.taskId)}>x</Button>
+            <div className='task-header'
+                style={{
+                    opacity: props.task.completed ? 0.5 : 1,
+                }}>
+                <Button sx={buttonLowStyle} onClick={() => deleteTask(props.task.id)}>x</Button>
                 {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />}
                 <button className={`circleButton ${category}`} onClick={() => setExpandedCategory(!expandedCategory)}>
                     {expandedCategory && <div className='category-menu'>
@@ -113,10 +132,19 @@ export function ExpandingComponent(props: TaskViewProps) {
                         <button className='circleButton grey' onClick={() => sendCategory('grey')} />
                     </div>}
                 </button>
-                <div className='task-label'>{props.taskName}</div>
-                {!props.completed && !props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.taskId) }}>✓</Button>}
-                {props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { props.openTaskModal }}>✎</Button>}
-                {props.completed && <div/>}
+                <div className='task-label'>{props.task.name}</div>
+                {!props.task.completed && !props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.task.id) }}>✓</Button>}
+                {props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={addNewTaskAction}>✎</Button>}
+                {props.task.completed && <div />}
+                <AddTaskModal
+                    open={openAddTaskModal}
+                    setOpen={setOpenAddTaskModal}
+                    anchorEl={anchorEl}
+                    setAnchorEl={setAnchorEl}
+                    handleClose={handleAddTaskClose}
+                    addTask={() => console.log("")}
+                    currentTask={props.task}
+                    updateTask={(task: Task) => handleUpdateTask(task)}></AddTaskModal>
             </div>
 
             <div className={expanded ? "expandingComponentExpanded" : "expandingComponentHidden"}>
@@ -129,7 +157,11 @@ export function ExpandingComponent(props: TaskViewProps) {
                         <button type="button" onClick={() => { addSubtask(subtaskName) }}>Add</button>
                     </form>
                 </div>
+
+
             </div>
+
+
         </div>
     );
 }

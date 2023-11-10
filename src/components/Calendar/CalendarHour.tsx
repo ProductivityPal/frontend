@@ -4,6 +4,7 @@ import { Droppable } from 'react-beautiful-dnd';
 import { TaskView } from '../TaskView/TaskView'
 import { TasksCalendarContext } from '../../utils/tasksCalendarContext';
 import { formatDate } from './CalendarDay';
+import { Task } from '../../types/Task';
 
 export const getId = (hour: string, minutes: string, date: string) => `${hour}:${minutes === "0" ? "00" : minutes}-${date}`;
 
@@ -12,6 +13,21 @@ export const converDateToDestinationId = (date: Date) => getId(date.getHours().t
 export default function CalendarHour({ hour, date }: { hour: string, date: string }) {
 
     const { calendar, moveTask, addTask, setTasks } = useContext(TasksCalendarContext);
+    const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
+    const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+
+    function editTaskAction(taskId: number) {
+        setOpenAddTaskModal(true)
+        // handleAddTaskClick(e)
+    }
+    
+    const handleAddTaskClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleAddTaskClose = () => {
+        setAnchorEl(null);
+        setOpenAddTaskModal(false);
+    };
 
     const handleTaskComplete = (taskId: number) => {
         const task = calendar.tasksList.filter(t => t.id == taskId).map(t => t.completed = true)
@@ -19,9 +35,9 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
     const handleTaskDelete = (taskIndex: number) => {
         // TODO
     }
-    const handleEditModal = (taskIndex: number) => {
-        // TODO
-    }
+    const handleUpdateTask = (updatedTask: Task) => {
+        setTasks(updatedTask);
+    };
 
     const id1 = getId(hour, "00", date);
     const id2 = getId(hour, "15", date);
@@ -40,15 +56,16 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
                         {tasksList1.map((task, index) => (
                             <TaskView
-                                isExpandable={false}
+                            task={task}    
+                            isExpandable={false}
                                 isEditView={false}
                                 key={task.id}
                                 duration={task.timeEstimate ? task.timeEstimate : task.time_estimate}
-                                taskName={task.name} taskId={task.id} category={task.category}
-                                completed={task.completed}
                                 index={index}
                                 onComplete={() => handleTaskComplete(task.id)}
-                                openTaskModal={() => handleEditModal(index)} />))}
+                                openTaskModal={() => editTaskAction(task.id)}
+                                onUpdateTask={handleUpdateTask}
+                                 />))}
                     </div>
                 )}
             </Droppable>
@@ -57,15 +74,14 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
                         {tasksList2.map((task, index) => (
                             <TaskView
-                                isExpandable={false}
+                            task={task}    
+                            isExpandable={false}
                                 isEditView={false} key={task.id}
                                 duration={task.timeEstimate ? task.timeEstimate : task.time_estimate}
-                                taskName={task.name} taskId={task.id}
-                                category={task.category}
-                                completed={task.completed}
                                 index={index}
                                 onComplete={() => handleTaskComplete(index)}
-                                openTaskModal={() => handleEditModal(index)} />))}
+                                openTaskModal={() => editTaskAction(task.id)}
+                                onUpdateTask={handleUpdateTask} />))}
                     </div>
                 )}
             </Droppable>
@@ -74,17 +90,15 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
                         {tasksList3.map((task, index) => (
                             <TaskView
-                                isExpandable={false}
+                            task={task}    
+                            isExpandable={false}
                                 isEditView={false}
                                 key={task.id}
                                 duration={task.timeEstimate ? task.timeEstimate : task.time_estimate}
-                                taskName={task.name}
-                                taskId={task.id}
-                                category={task.category}
-                                completed={task.completed}
                                 index={index}
                                 onComplete={() => handleTaskComplete(index)}
-                                openTaskModal={() => handleEditModal(index)} />))}
+                                openTaskModal={() => editTaskAction(task.id)}
+                                onUpdateTask={handleUpdateTask} />))}
                     </div>
                 )}
             </Droppable>
@@ -93,17 +107,17 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
                         {tasksList4.map((task, index) => (
                             <TaskView
-                                isExpandable={false}
+                            task={task}    
+                            isExpandable={false}
                                 isEditView={false}
                                 key={task.id}
                                 duration={task.timeEstimate ? task.timeEstimate : task.time_estimate}
-                                taskName={task.name}
-                                taskId={task.id}
-                                category={task.category}
-                                completed={task.completed}
                                 index={index}
                                 onComplete={() => handleTaskComplete(index)}
-                                openTaskModal={() => handleEditModal(index)} />))}
+                                openTaskModal={() => editTaskAction(task.id)}
+                                onUpdateTask={handleUpdateTask}
+                                />))}
+                                
                     </div>
                 )}
             </Droppable>

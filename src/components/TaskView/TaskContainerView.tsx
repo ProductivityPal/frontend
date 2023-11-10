@@ -145,13 +145,21 @@ export function TaskContainerView() {
                     {(provided) => (
                         <div  {...provided.droppableProps} ref={provided.innerRef} >
                             {tasksList.map((task, index) => (
+                                
                                 <TaskView isExpandable={true}
                                     key={task.id}
-                                    taskName={task.name}
-                                    taskId={task.id}
-                                    category={task.category} isEditView={editView} completed={task.completed} isAlgoSort={currentView !== 'ListView'} index={index}
+                                    task={task}
+                                    isEditView={editView} 
+                                    isAlgoSort={currentView !== 'ListView'}
+                                     index={index}
                                     onComplete={() => handleTaskComplete(index)}
-                                    openTaskModal={() => editTaskAction(task.id)} />))}
+                                    openTaskModal={() => editTaskAction(task.id)} 
+                                    onUpdateTask={(newTask: Task) => {
+                                        const updatedTasksList = [...calendar[TASK_LIST_COMPONENT_ID]]; 
+                                        const originalIndex = calendar[TASK_LIST_COMPONENT_ID].findIndex(t => t.id === task.id);
+                                        updatedTasksList[originalIndex] = newTask;                      
+                                        setTasks({ ...calendar, [TASK_LIST_COMPONENT_ID]: updatedTasksList });  
+                                      }}/>))}
                             <button onClick={addNewTaskAction} className='ovalActionButton'>Add new task +</button>
                             <button onClick={() => setEditView(!editView)} className='ovalActionButton'>Edit Tasks</button>
                             {provided.placeholder}
@@ -166,6 +174,7 @@ export function TaskContainerView() {
                     setAnchorEl={setAnchorEl}
                     handleClose={handleAddTaskClose}
                     addTask={(task: Task) => { addTask(TASK_LIST_COMPONENT_ID, task) }}
+                    updateTask={(task: Task) => { setTasks(TASK_LIST_COMPONENT_ID, task) }}
                 />
 
 
