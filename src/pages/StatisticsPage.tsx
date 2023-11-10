@@ -10,36 +10,32 @@ import { fetchData } from '../utils/fetchUtils';
 import dayjs, { Dayjs } from 'dayjs';
 import { Stats, StatsCategory } from '../types/Stats';
 
+const energyStats = fetchData('http://localhost:8080/statistic/energyLevel')
+const fetchStatistics = (params: any) => fetchData<Stats>('http://localhost:8080/statistic', params);
 function StatisticsPage() {
     const [doneTasks, setDoneTasks] = useState(0)
     const [undoneTasks, setUndoneTasks] = useState(0)
     const [categoryTasks, setCategoryTasks] = useState<any[]>([])
     const [averageTimeTasks, setAverageTimeTasks] = useState<any[]>([])
+    const [dates, setDates] = useState({
+        start_date: String(dayjs().subtract(1, 'month').format('YYYY-MM-DD')) + "T00:00",
+        end_date: String(dayjs().format('YYYY-MM-DD')) + "T23:59",
+    })
 
-
-    const categoryData = [
-        ["Category", "Done Tasks", "Not done tasks"],
-        ["Category 1", 100, 80],
-        ["Category 2", 50, 60],
-        ["Category 3", 70, 10],
-        ["Category 4", 10, 90],
-    ];
-
-    const averageTimeData = [
-        ["Category", "Average Time"],
-        ["Category 1", 120],
-        ["Category 2", 90],
-        ["Category 3", 200],
-        ["Category 4", 30],
-    ];
     useEffect(() => {
-        const queryParams = {
-            start_date: String(dayjs().subtract(1, 'month').format('YYYY-MM-DD')) + "T00:00",
-            end_date: String(dayjs().format('YYYY-MM-DD')) + "T23:59",
-        };
-        const fetchStatistics2 = fetchData<Stats>('http://localhost:8080/statistic', queryParams);
+        updatingStatistics()
 
-        fetchStatistics2((stats: Stats) => {
+        energyStats((stats: any) => {
+            console.log("energy stats: ", stats)
+        })
+
+    }, []);
+
+    function updatingStatistics(newDates?: any) {
+        const updatedDates = newDates ? newDates : dates
+        console.log("updatedDates: ", updatedDates)
+
+        fetchStatistics(updatedDates)((stats: Stats) => {
             setDoneTasks(stats.done)
             setUndoneTasks(stats.undone)
 
@@ -58,8 +54,13 @@ function StatisticsPage() {
             setAverageTimeTasks(averageTimeTasks);
         })
         console.log("STATY: ", categoryTasks, averageTimeTasks)
+    }
 
-    }, []);
+    function updateStatsDates(dates: any) {
+        console.log('Dates in parent:', dates);
+        setDates(dates)
+        updatingStatistics(dates)
+    }
     return (
         <div>
             <Grid container spacing={0}>
@@ -68,7 +69,7 @@ function StatisticsPage() {
                 </Grid>
                 <Grid xs={4} md={6}>
                     <div className='column-container'>
-                        <DateFiltering></DateFiltering>
+                        <DateFiltering onDatesUpdate={(dates) => updateStatsDates(dates)} ></DateFiltering>
                         <div className='chart-container'>
                             <DonutChart doneTasks={doneTasks} undoneTasks={undoneTasks}></DonutChart>
 

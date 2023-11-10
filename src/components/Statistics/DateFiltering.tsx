@@ -8,8 +8,10 @@ import { Button } from "@mui/material";
 import './DateFiltering.css';
 import { putData } from "../../utils/fetchUtils";
 
-
-export function DateFiltering() {
+type DateStatProps = {
+    onDatesUpdate: (dates: any) => void;
+}
+export function DateFiltering(props: DateStatProps) {
     const [startDate, setStartDate] = useState<Dayjs>(dayjs().subtract(1, 'month'));
     const [endDate, setEndDate] = useState<Dayjs>(dayjs());
 
@@ -29,8 +31,10 @@ export function DateFiltering() {
     }
 
     function updateDateRange() {
-        // a moze get?
-        // putData<{}, number>(`http://localhost:8080/dateRange`, { "startDate": startDate, "endDate": endDate })();
+        console.log('Updating date range...', String(startDate.format('YYYY-MM-DD')) + "T00:00",String(endDate.format('YYYY-MM-DD')) + "T23:59");
+        props.onDatesUpdate({
+            start_date: String(startDate.format('YYYY-MM-DD')) + "T00:00",
+            end_date: String(endDate.format('YYYY-MM-DD')) + "T23:59"})
     }
 
     return (
