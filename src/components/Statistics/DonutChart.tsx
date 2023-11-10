@@ -39,7 +39,7 @@ import './DonutChart.css';
         options={options}
       />
       <div className="centered-text">
-      {((props.doneTasks + props.undoneTasks) != 0) &&<h1>{(props.doneTasks / (props.doneTasks + props.undoneTasks)) * 100}%</h1>}
+      {((props.doneTasks + props.undoneTasks) != 0) &&<h1>{((props.doneTasks / (props.doneTasks + props.undoneTasks)) * 100).toFixed(2)}%</h1>}
       {((props.doneTasks + props.undoneTasks) == 0) &&<h1>0%</h1>}
         
 
