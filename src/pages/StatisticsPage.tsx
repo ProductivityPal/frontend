@@ -17,6 +17,7 @@ function StatisticsPage() {
     const [undoneTasks, setUndoneTasks] = useState(0)
     const [categoryTasks, setCategoryTasks] = useState<any[]>([])
     const [averageTimeTasks, setAverageTimeTasks] = useState<any[]>([])
+    const [energyStatsData, setEnergyStatsData] = useState<any[]>([])
     const [dates, setDates] = useState({
         start_date: String(dayjs().subtract(1, 'month').format('YYYY-MM-DD')) + "T00:00",
         end_date: String(dayjs().format('YYYY-MM-DD')) + "T23:59",
@@ -26,7 +27,7 @@ function StatisticsPage() {
         updatingStatistics()
 
         energyStats((stats: any) => {
-            console.log("energy stats: ", stats)
+            setEnergyStatsData(stats)
         })
 
     }, []);
@@ -56,6 +57,24 @@ function StatisticsPage() {
         console.log("STATY: ", categoryTasks, averageTimeTasks)
     }
 
+    const transformedData = energyStatsData.map(entry => {
+        const notificationTime = new Date(entry.notificationTime);
+        const endTime = new Date(notificationTime);
+        endTime.setHours(notificationTime.getHours() + 1);
+      
+        return [
+          getDayOfWeek(notificationTime.getDay()),
+          entry.energyLevel,
+          notificationTime,
+          endTime
+        ];
+      });
+      
+      function getDayOfWeek(dayIndex: any) {
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        return daysOfWeek[dayIndex];
+      }
+
     function updateStatsDates(dates: any) {
         console.log('Dates in parent:', dates);
         setDates(dates)
@@ -72,8 +91,6 @@ function StatisticsPage() {
                         <DateFiltering onDatesUpdate={(dates) => updateStatsDates(dates)} ></DateFiltering>
                         <div className='chart-container'>
                             <DonutChart doneTasks={doneTasks} undoneTasks={undoneTasks}></DonutChart>
-
-
                         </div>
                         <div className='chart-container'>
                             {categoryTasks.length > 0 && <BarChart title={"Tasks per category"} data={categoryTasks}></BarChart>}
@@ -86,14 +103,14 @@ function StatisticsPage() {
                     <div className='column-container'>
                         <div className='chart-container timeline'>
                             <h5>Energy Levels</h5>
-                            <EnergyChart></EnergyChart>
+                            <EnergyChart data={transformedData}></EnergyChart>
+                            {transformedData.length > 0 && <EnergyChart data={transformedData}></EnergyChart>}
+                            {transformedData.length == 0 && <h1 className='title'>No Data yet</h1>}
                         </div>
                         <div className='chart-container'>
                             {averageTimeTasks.length > 0 && <BarChart title={"Average estimated time per category"} data={averageTimeTasks}></BarChart>}
                             {averageTimeTasks.length == 0 && <h1 className='title'>No Data yet</h1>}
                         </div>
-
-
                     </div>
                 </Grid>
             </Grid>
