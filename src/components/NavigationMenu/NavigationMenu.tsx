@@ -25,7 +25,7 @@ type ModalProps = {
 export function NavigationMenu() {
     const navigate = useNavigate();
     const [expandedEnergyPanel, setExpandedEnergyPanel] = useState(false)
-    const [energyLevel, setEnergyLevel] = useState('')
+    const [energyLevel, setEnergyLevel] = useState('MEDIUM')
 
     function logoutUser() {
         localStorage.removeItem('jwt');
