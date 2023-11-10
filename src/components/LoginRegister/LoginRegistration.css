@@ -56,7 +56,7 @@
 .logingFormContainer {
     justify-content: center;
     align-items: center;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 
 .loginForm__title {
@@ -118,6 +118,11 @@
     font-weight: 700;
     font-style: normal;
     color: #8F745D;
+}
+
+.loginButton.disabled {
+    background: #EED5B180;
+    color: #8F745D50;
 }
 
 .googleLogin {

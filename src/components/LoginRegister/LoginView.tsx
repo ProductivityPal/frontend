@@ -9,12 +9,26 @@ export function LoginView() {
   const [jwt, setJwt] = useLocalState('', 'jwt');
   const [calendarId, setCalendarId] = useLocalState('6')
   const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const clearJwt = () => {
     localStorage.removeItem('jwt'); 
   };
+
+  function handleEmailChange(value: any) {
+    setEmail(value)
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!emailRegex.test(value)) {
+      setEmailError('Invalid email format');
+    } else {
+      setEmailError('');
+    }
+
+  }
 
   function sendLoginRequest() {
     clearJwt();
@@ -54,7 +68,8 @@ export function LoginView() {
     <div className='logingFormContainer'>
       <div className='logingFormContainer__loginForm'>
         <p className='loginForm__title'>email</p>
-        <input className='loginForm__input' type='text' value={email} onChange={(e) => setEmail(e.target.value)}></input>
+        <input className='loginForm__input' type='text' value={email} pattern="[^\s@]+@[^\s@]+\.[^\s@]+"  onChange={(e) => handleEmailChange(e.target.value)}></input>
+        {emailError && <p style={{ color: 'red', fontSize: 'small' }}>{emailError}</p>}
       </div>
       <div className='logingFormContainer__loginForm'>
         <p className='loginForm__title'>password</p>
