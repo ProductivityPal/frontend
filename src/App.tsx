@@ -33,7 +33,7 @@ function App() {
             <Route path="/calendar" Component={CalendarPage} />
             <Route path="/settings" Component={SettingsPage} />
             <Route path="/statistics" Component={StatisticsPage} />
-            <Route path="/email/verification" Component={EmailConfirmedView} />
+            <Route path="/email/verification/verify" Component={EmailConfirmedView} />
 
         </Routes>
     );
