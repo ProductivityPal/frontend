@@ -34,11 +34,17 @@ export const data = [
 ];
 
 export function EnergyChart(props: EnergyProps) {
-  return <Chart chartType="Timeline" data={props.data ? props.data : data} width="95%" height="100%" options={{
+  const dataUsed = props.data ? [[
+    { type: "string", id: "Position" },
+    { type: "string", id: "Name" },
+    { type: "date", id: "Start" },
+    { type: "date", id: "End" },
+  ], ...props.data] : data
+  return <Chart chartType="Timeline" data={dataUsed} width="95%" height="100%" options={{
     title: "Energy Levels",
     timeline: { colorByRowLabel: false },
     backgroundColor: "transparent",
-    margin: "50px" 
+    margin: "50px"
   }}/>;
 }
 
