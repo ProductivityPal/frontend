@@ -17,25 +17,26 @@ import SettingsPage from "./pages/SettingsPage";
 import StatisticsPage from "./pages/StatisticsPage";
 import { useLocalState } from './utils/useLocalStorage';
 import { LoggedOutView } from './components/LoginRegister/LoggedOutView';
+import { EmailConfirmedView } from './components/LoginRegister/EmailConfirmedView';
 
+function App() {
 
- function App() {
+    // const [calendar, setCalendar] = useState({ tasksList: [] });
+    // const calendarContext = { calendar, moveTask: moveTask(setCalendar), addTask: addTask(setCalendar), setTasks: setTasks(setCalendar) }
+    const [calendarId, setCalendarId] = useState()
+    return (
+        <Routes>
+            <Route path="/" element={<Navigate to="/register" />} />
+            <Route path="/login" Component={LoginPage} />
+            <Route path="/loggedOut" Component={LoggedOutView} />
+            <Route path="/register" Component={RegistrationPage} />
+            <Route path="/calendar" Component={CalendarPage} />
+            <Route path="/settings" Component={SettingsPage} />
+            <Route path="/statistics" Component={StatisticsPage} />
+            <Route path="/email/verification/verify" Component={EmailConfirmedView} />
 
-  // const [calendar, setCalendar] = useState({ tasksList: [] });
-  // const calendarContext = { calendar, moveTask: moveTask(setCalendar), addTask: addTask(setCalendar), setTasks: setTasks(setCalendar) }
-  const [calendarId, setCalendarId] = useState()
-  return (
-    <Routes>
-        <Route path="/" element={<Navigate to="/register" />} />
-        <Route path="/login" Component={LoginPage} />
-        <Route path="/loggedOut" Component={LoggedOutView} />
-        <Route path="/register" Component={RegistrationPage} />
-        <Route path="/calendar" Component={CalendarPage} />
-        <Route path="/settings" Component={SettingsPage} />
-        <Route path="/statistics" Component={StatisticsPage} />
-
-  </Routes>
-  );
+        </Routes>
+    );
 }
 
 export default App;
