@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { NavigationMenu } from '../components/NavigationMenu/NavigationMenu';
 import { DateFiltering } from '../components/Statistics/DateFiltering';
 import { DonutChart } from '../components/Statistics/DonutChart';
@@ -9,6 +9,9 @@ import './StatisticsPage.css';
 import { fetchData } from '../utils/fetchUtils';
 import dayjs, { Dayjs } from 'dayjs';
 import { Stats, StatsCategory } from '../types/Stats';
+import { Button } from "@mui/material";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const energyStats = fetchData('http://localhost:8080/statistic/energyLevel')
 const fetchStatistics = (params: any) => fetchData<Stats>('http://localhost:8080/statistic', params);
@@ -22,6 +25,31 @@ function StatisticsPage() {
         start_date: String(dayjs().subtract(1, 'month').format('YYYY-MM-DD')) + "T00:00",
         end_date: String(dayjs().format('YYYY-MM-DD')) + "T23:59",
     })
+
+    // pdf generator
+    const pdfRef : React.RefObject<HTMLDivElement> = useRef(null);
+    const downloadPDF = () => {
+        const input = pdfRef.current;
+        if (input){
+            html2canvas(input).then((canvas: HTMLCanvasElement) => {
+                const pdf = new jsPDF('p', 'mm', 'a4', true);
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = 210;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                pdf.save('productivity_pal_report.pdf');
+            })
+        }
+
+    }
+
+    const subtasksButton = {
+        backgroundColor: '#EE7F3B',
+        color: 'white',
+        "&:hover": {backgroundColor: "#F8DEB3"},
+        // width: '100%',
+    }
 
     useEffect(() => {
         updatingStatistics()
@@ -81,12 +109,12 @@ function StatisticsPage() {
         updatingStatistics(dates)
     }
     return (
-        <div>
+        <div ref={pdfRef}>
             <Grid container spacing={0}>
                 <Grid xs={0.5} md={0.5}>
                     <NavigationMenu />
                 </Grid>
-                <Grid xs={4} md={6}>
+                <Grid xs={4} md={6} >
                     <div className='column-container'>
                         <DateFiltering onDatesUpdate={(dates) => updateStatsDates(dates)} ></DateFiltering>
                         <div className='chart-container'>
@@ -100,6 +128,7 @@ function StatisticsPage() {
                     </div>
                 </Grid>
                 <Grid xs={4} md={5}>
+                    <Button sx={subtasksButton} onClick={downloadPDF}>Download PDF</Button>
                     <div className='column-container'>
                         <div className='chart-container timeline'>
                             <h5>Energy Levels</h5>
