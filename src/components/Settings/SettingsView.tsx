@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import './SettingsView.css'
+import { deleteData, postData } from '../../utils/fetchUtils';
 
 function Settings() {
     const [username, setUsername] = useState<string>('');
@@ -14,14 +15,28 @@ function Settings() {
 
     const handleSaveUserSettings = () => {
         // API call
+        const newLoginData = {
+            username: username,
+            password: password,
+        }
+
+        postData<{}, number>(`http://localhost:8080/settings/login`, newLoginData)();
     }
 
     const handleSaveCategorySettings = () => {
         // API call
+        postData<{}, number>(`http://localhost:8080/settings/category`, categoryNames)();
     }
 
     const handleAccountDeletion = () => {
         // API call
+        // const account = {
+        //     username: username,
+        //     password: password,
+        // }
+        // deleteData<{}, number>(`http://localhost:8080/settings/deleteAccount`, account)();
+        localStorage.removeItem('jwt');
+        window.location.href = "/register";
     }
 
     const sumbitButton = {
@@ -58,23 +73,23 @@ function Settings() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <Button variant="contained" sx={sumbitButton} onClick={handleSaveUserSettings}>
+            <Button variant="contained" sx={sumbitButton} onClick={handleSaveUserSettings} disabled={!username && !password}>
                 Save User Changes
             </Button>
             {/* <Typography className='title-label' variant="h5" gutterBottom>
                 Category names
             </Typography> */}
             <h3 className='title-label'>Category names </h3>
-            {Object.values(categoryNames).map((category) => (
+            {Object.keys(categoryNames).map((category) => (
                 <div className='category-container'>
-                    <div className={`circleButton settings ${category}`} />
+                    <div className={`circleButton settings ${categoryNames[category as keyof typeof categoryNames]}`} />
                     <TextField
                         key={category}
-                        label={`Name for ${category}`}
+                        label={`Name for ${categoryNames[category as keyof typeof categoryNames]}`}
                         variant="outlined"
                         fullWidth
                         margin="normal"
-                        //   value={categoryNames[category]}
+                        // value={category}
                         onChange={(e) =>
                             setCategoryNames((prevCategoryNames) => ({
                                 ...prevCategoryNames,
