@@ -132,7 +132,6 @@ function StatisticsPage() {
                     <div className='column-container'>
                         <div className='chart-container timeline'>
                             <h5>Energy Levels</h5>
-                            <EnergyChart data={transformedData}></EnergyChart>
                             {transformedData.length > 0 && <EnergyChart data={transformedData}></EnergyChart>}
                             {transformedData.length == 0 && <h1 className='title'>No Data yet</h1>}
                         </div>
