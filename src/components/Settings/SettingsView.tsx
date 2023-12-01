@@ -14,7 +14,6 @@ function Settings() {
     });
 
     const handleSaveUserSettings = () => {
-        // API call
         const newLoginData = {
             username: username,
             password: password,
@@ -24,17 +23,11 @@ function Settings() {
     }
 
     const handleSaveCategorySettings = () => {
-        // API call
         postData<{}, number>(`http://localhost:8080/settings/category`, categoryNames)();
     }
 
     const handleAccountDeletion = () => {
-        // API call
-        // const account = {
-        //     username: username,
-        //     password: password,
-        // }
-        // deleteData<{}, number>(`http://localhost:8080/settings/deleteAccount`, account)();
+        deleteData(`http://localhost:8080/settings/deleteAccount`, {})();
         localStorage.removeItem('jwt');
         window.location.href = "/register";
     }
