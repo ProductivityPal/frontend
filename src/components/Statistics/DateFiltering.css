@@ -1,6 +1,13 @@
-.container {
+.date-container {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     margin-bottom: 2vh;
+
 }
