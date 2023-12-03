@@ -124,7 +124,6 @@ function StatisticsPage() {
                             {categoryTasks.length > 0 && <BarChart title={"Tasks per category"} data={categoryTasks}></BarChart>}
                             {categoryTasks.length == 0 && <h1 className='title'>No Data yet</h1>}
                         </div>
-
                     </div>
                 </Grid>
                 <Grid xs={4} md={5}>
