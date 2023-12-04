@@ -9,7 +9,6 @@ import { Menu } from '@mui/material';
 import { postData } from "../../utils/fetchUtils";
 import { AddTaskModal } from './AddTaskModal';
 import { Task } from '../../types/Task';
-import {getTodayDate} from "@mui/x-date-pickers/internals";
 
 type TaskViewProps = {
     task: Task;
@@ -115,8 +114,8 @@ export function ExpandingComponent(props: TaskViewProps) {
         <div className='expand-container' style={{
             height: props.duration ? props.duration : 'auto',
             opacity: props.task.completed ? 0.5 : 1,
-            backgroundColor: props.task.deadline < new Date() ? taskColor + '88' : "#eb4034",
-            border: '2px solid ' + taskColor,
+            backgroundColor: taskColor + '88',
+            border: (props.task.deadline >= new Date()) ? ('2px solid ' + taskColor) :  ('2px solid ' + "#eb403488"),
         }}>
 
             <div className='task-header'

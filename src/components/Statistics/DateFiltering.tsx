@@ -40,6 +40,7 @@ export function DateFiltering(props: DateStatProps) {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <div className="container">
+            <div className="date-container">
             <DatePicker
                 value={startDate}
                 onChange={handleStartDateChange}
@@ -52,6 +53,9 @@ export function DateFiltering(props: DateStatProps) {
                 minDate={startDate}
                 format="DD/MM/YY"
             />
+
+            </div>
+            
             <Button sx={subtasksButton} disabled={endDate < startDate} onClick={() => updateDateRange()}>Update</Button>
         </div>
         </LocalizationProvider>

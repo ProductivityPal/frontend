@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavigationMenu } from '../components/NavigationMenu/NavigationMenu';
 import { DateFiltering } from '../components/Statistics/DateFiltering';
 import { DonutChart } from '../components/Statistics/DonutChart';
@@ -27,10 +27,10 @@ function StatisticsPage() {
     })
 
     // pdf generator
-    const pdfRef : React.RefObject<HTMLDivElement> = useRef(null);
+    const pdfRef: React.RefObject<HTMLDivElement> = useRef(null);
     const downloadPDF = () => {
         const input = pdfRef.current;
-        if (input){
+        if (input) {
             html2canvas(input).then((canvas: HTMLCanvasElement) => {
                 const pdf = new jsPDF('p', 'mm', 'a4', true);
                 const imgData = canvas.toDataURL('image/png');
@@ -47,7 +47,7 @@ function StatisticsPage() {
     const subtasksButton = {
         backgroundColor: '#EE7F3B',
         color: 'white',
-        "&:hover": {backgroundColor: "#F8DEB3"},
+        "&:hover": { backgroundColor: "#F8DEB3" },
         // width: '100%',
     }
 
@@ -89,19 +89,19 @@ function StatisticsPage() {
         const notificationTime = new Date(entry.notificationTime);
         const endTime = new Date(notificationTime);
         endTime.setHours(notificationTime.getHours() + 1);
-      
+
         return [
-          getDayOfWeek(notificationTime.getDay()),
-          entry.energyLevel,
-          notificationTime,
-          endTime
+            getDayOfWeek(notificationTime.getDay()),
+            entry.energyLevel,
+            notificationTime,
+            endTime
         ];
-      });
-      
-      function getDayOfWeek(dayIndex: any) {
+    });
+
+    function getDayOfWeek(dayIndex: any) {
         const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         return daysOfWeek[dayIndex];
-      }
+    }
 
     function updateStatsDates(dates: any) {
         console.log('Dates in parent:', dates);
@@ -124,12 +124,13 @@ function StatisticsPage() {
                             {categoryTasks.length > 0 && <BarChart title={"Tasks per category"} data={categoryTasks}></BarChart>}
                             {categoryTasks.length == 0 && <h1 className='title'>No Data yet</h1>}
                         </div>
-
                     </div>
                 </Grid>
                 <Grid xs={4} md={5}>
-                    <Button sx={subtasksButton} onClick={downloadPDF}>Download PDF</Button>
                     <div className='column-container'>
+                        <div className='pdf-container'>
+                            <Button sx={subtasksButton} onClick={downloadPDF}>Download PDF</Button>
+                        </div>
                         <div className='chart-container timeline'>
                             <h5>Energy Levels</h5>
                             {transformedData.length > 0 && <EnergyChart data={transformedData}></EnergyChart>}
