@@ -157,8 +157,8 @@ export function TaskContainerView() {
                                     onUpdateTask={(newTask: Task) => {
                                         const updateTaskInCalendar = modifyTask(TASK_LIST_COMPONENT_ID, task.id, newTask);
                                       }}/>))}
-                            <button onClick={addNewTaskAction} className='ovalActionButton'>Add new task +</button>
-                            <button onClick={() => setEditView(!editView)} className='ovalActionButton'>Edit Tasks</button>
+                            <button onClick={addNewTaskAction} className='linedActionButton'>Add new task +</button>
+                            {/* <button onClick={() => setEditView(!editView)} className='linedActionButton'>Edit Tasks</button> */}
                             {provided.placeholder}
                         </div>
 

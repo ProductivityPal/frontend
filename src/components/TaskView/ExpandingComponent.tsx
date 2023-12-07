@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react'
 import expand from '../../images/expand_icon.svg'
 import './ExpandingComponent.css';
-import { dividerClasses } from '@mui/material';
+import { Popover, dividerClasses } from '@mui/material';
 import { deleteData, putData } from '../../utils/fetchUtils';
 import { Button } from '@mui/material';
 import { Menu } from '@mui/material';
@@ -46,6 +46,17 @@ export function ExpandingComponent(props: TaskViewProps) {
         setAnchorEl(null);
         setOpenAddTaskModal(false);
     }
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
     function completeTask(taskId: number) {
         console.log("complete Task!" + taskId)
@@ -110,21 +121,51 @@ export function ExpandingComponent(props: TaskViewProps) {
         "&:hover": { backgroundColor: "#FFFFFF50" },
     }
 
+    const accentStyle = {
+        color: '#EE7F3B',
+        // backgroundColor: "#EE7F3B20",
+        "&:hover": { backgroundColor: "#EE7F3B50" },
+    }
+    const dangerStyle = {
+        color: '#D83C1A',
+        // backgroundColor: "#D83C1A20",
+        "&:hover": { backgroundColor: "#D83C1A50" },
+    }
+
     return (
         <div className='expand-container' style={{
             height: props.duration ? props.duration : 'auto',
             opacity: props.task.completed ? 0.5 : 1,
             backgroundColor: taskColor + '88',
-            border: (props.task.deadline >= new Date()) ? ('2px solid ' + taskColor) :  ('2px solid ' + "#eb403488"),
+            border: (props.task.deadline >= new Date()) ? ('2px solid ' + taskColor) : ('2px solid ' + "#eb403488"),
         }}>
 
             <div className='task-header'
                 style={{
                     opacity: props.task.completed ? 0.5 : 1,
                 }}>
-                <Button sx={buttonLowStyle} onClick={() => deleteTask(props.task.id)}>x</Button>
-                {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />}
+                {/* <Button sx={buttonLowStyle} onClick={() => deleteTask(props.task.id)}>x</Button> */}
+                {/* {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />} */}
+                {!props.task.completed && !props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.task.id) }}>✓</Button>}
                 <button className={`circleButton ${category}`} onClick={() => setExpandedCategory(!expandedCategory)}>
+                <Popover
+                    open={open}
+                    onClose={handleClose}
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                        vertical: 'center',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'center',
+                        horizontal: 'left',
+                    }}
+                >
+                    <div className='popover-menu'>
+                        <Button sx={accentStyle} onClick={addNewTaskAction}>Edit</Button>
+                        <Button sx={dangerStyle} onClick={() => deleteTask(props.task.id)}>Delete</Button>
+                    </div>
+                </Popover>
                     {expandedCategory && <div className='category-menu'>
                         <button className='circleButton' onClick={() => sendCategory('beige')} />
                         <button className='circleButton green' onClick={() => sendCategory('green')} />
@@ -133,8 +174,27 @@ export function ExpandingComponent(props: TaskViewProps) {
                     </div>}
                 </button>
                 <div className='task-label'>{props.task.name}</div>
-                {!props.task.completed && !props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.task.id) }}>✓</Button>}
-                {props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={addNewTaskAction}>✎</Button>}
+                {/* {props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={addNewTaskAction}>✎</Button>} */}
+                <Button sx={buttonLowStyle} aria-describedby={id} onClick={handleClick}>...</Button>
+                <Popover
+                    open={open}
+                    onClose={handleClose}
+                    anchorEl={anchorEl}
+                    anchorOrigin={{
+                        vertical: 'center',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'center',
+                        horizontal: 'left',
+                    }}
+                >
+                    <div className='popover-menu'>
+                        <Button sx={accentStyle} onClick={addNewTaskAction}>Edit</Button>
+                        <Button sx={dangerStyle} onClick={() => deleteTask(props.task.id)}>Delete</Button>
+                    </div>
+                </Popover>
+
                 {props.task.completed && <div />}
                 <AddTaskModal
                     open={openAddTaskModal}

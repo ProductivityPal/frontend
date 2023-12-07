@@ -31,14 +31,16 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
+    /* white-space: nowrap; */
+    text-overflow: ellipsis;
 }
+
 
 .expand-icon {
     width: 25px;
     height: 25px;
-    margin-right: -5px;
-    margin-left: -2vw;
-    /* transform: scale(0.7); */
 }
 
 /* .category-menu {
@@ -52,5 +54,9 @@
 
 .circleButton {
     margin-bottom: 5px;
-    margin-left: -2vw;
+}
+
+.popover-menu {
+    display: flex;
+    flex-direction: column;
 }
