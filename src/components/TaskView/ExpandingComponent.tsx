@@ -148,24 +148,6 @@ export function ExpandingComponent(props: TaskViewProps) {
                 {/* {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />} */}
                 {!props.task.completed && !props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.task.id) }}>✓</Button>}
                 <button className={`circleButton ${category}`} onClick={() => setExpandedCategory(!expandedCategory)}>
-                <Popover
-                    open={open}
-                    onClose={handleClose}
-                    anchorEl={anchorEl}
-                    anchorOrigin={{
-                        vertical: 'center',
-                        horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                        vertical: 'center',
-                        horizontal: 'left',
-                    }}
-                >
-                    <div className='popover-menu'>
-                        <Button sx={accentStyle} onClick={addNewTaskAction}>Edit</Button>
-                        <Button sx={dangerStyle} onClick={() => deleteTask(props.task.id)}>Delete</Button>
-                    </div>
-                </Popover>
                     {expandedCategory && <div className='category-menu'>
                         <button className='circleButton' onClick={() => sendCategory('beige')} />
                         <button className='circleButton green' onClick={() => sendCategory('green')} />
@@ -182,7 +164,7 @@ export function ExpandingComponent(props: TaskViewProps) {
                     anchorEl={anchorEl}
                     anchorOrigin={{
                         vertical: 'center',
-                        horizontal: 'right',
+                        horizontal: 'left',
                     }}
                     transformOrigin={{
                         vertical: 'center',
