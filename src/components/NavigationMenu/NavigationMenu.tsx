@@ -42,6 +42,12 @@ export function NavigationMenu() {
         console.log("ENERGY: ", value)
     };
 
+    const accentStyle = {
+        color: '#EE7F3B',
+        // backgroundColor: "#EE7F3B20",
+        "&:hover": { backgroundColor: "#EE7F3B20" },
+    }
+
     return (
         <div className='menuContainer energyType'>
             <div className='menuContainer_options'>
@@ -65,7 +71,7 @@ export function NavigationMenu() {
                     ><div className='energyModal'>
                         <p>Your current energy level:</p>
                         <DiscreteSliderMarks sendEnergy={handleEnergyChange}></DiscreteSliderMarks>
-                        <Button onClick={() => {sendEnergyLevel()}}>Update your energy</Button></div></Popover>}
+                        <Button sx={accentStyle} onClick={() => {sendEnergyLevel()}}>Update your energy</Button></div></Popover>}
             </div>
             <img className="logo" src={logout} alt="Logout" onClick={() => { logoutUser() }} />
         </div>);

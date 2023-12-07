@@ -42,8 +42,13 @@ const marks = [
       }
     }
 
+    const accentStyle = {
+      color: '#EE7F3B',
+  }
+
     return (
         <Slider
+        sx={accentStyle}
           aria-label="Custom marks"
           defaultValue={50}
           getAriaValueText={valuetext}
