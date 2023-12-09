@@ -61,6 +61,20 @@
     border-radius: 5px;
 }
 
+.linedActionButton {
+    margin-top: 5px;
+    font-size: medium;
+    border: dashed var(--primary-accent) 1px;
+    color: var(--primary-accent);
+    padding: 6px;
+    width: 100%;
+    background-color: transparent;
+    border-radius: 5px;
+}
+.linedActionButton:hover {
+    background-color: #EE7F3B20;
+}
+
 .category-menu {
     display: flex;
     justify-content: space-between;
