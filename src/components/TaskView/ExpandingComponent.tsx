@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ExpandingComponent.css';
 import { Popover, Button } from '@mui/material';
-import { deleteData, putData, postData } from '../../utils/fetchUtils';
+import { deleteData, putData, postData, fetchData } from '../../utils/fetchUtils';
 import { AddTaskModal } from './AddTaskModal';
 import { Task } from '../../types/Task';
+import expand from '../../images/expand_icon.svg'
 
 type TaskViewProps = {
     task: Task;
@@ -59,6 +60,15 @@ export function ExpandingComponent(props: TaskViewProps) {
         setAnchorEl(event.currentTarget)
     }
 
+    useEffect(() => {
+        const fetchSubtasks = fetchData<Task[]>(`http://localhost:8080/task/${props.task.id}/subtask`)
+        fetchSubtasks((subtasks: Task[]) => {
+            const subtaskList = subtasks.map((subtask) => subtask.name)
+            // setSubtaskList(subtaskList)
+            setSubtasks(subtasks)
+        })
+    }, []);
+
     function completeTask(taskId: number) {
         console.log("complete Task!" + taskId)
         putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "completed": true })();
@@ -78,7 +88,6 @@ export function ExpandingComponent(props: TaskViewProps) {
     }
 
     function sendCategory(category: string) {
-        // send category to backend
         putData<{}, number>(`http://localhost:8080/task/${props.task.id}`, { "category": category })();
         setCategory(category)
         setTaskColor(convertCategoryToColor(category))
@@ -88,7 +97,7 @@ export function ExpandingComponent(props: TaskViewProps) {
         const newSubtask = {
             name: subtaskName,
             subtask: true,
-            parentId: props.task.id,
+            parent_id: props.task.id,
         }
         // todo add category
 
@@ -96,8 +105,6 @@ export function ExpandingComponent(props: TaskViewProps) {
 
         // send to backend
         postData<{}, number>(`http://localhost:8080/task/subtask`, newSubtask)();
-        console.log("SENDING SUBTASK")
-
         setSubtaskName('')
 
     }
@@ -139,7 +146,12 @@ export function ExpandingComponent(props: TaskViewProps) {
                         </div>
                     </Popover>
                 </button>
-                <div className='task-label'>{props.task.name}</div>
+                <div className='task-title-container'>
+                    <div className='task-label'>{props.task.name}</div>
+                    {/* {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />} */}
+                    {props.isExpandable && <Button sx={subtaskButtonLowStyle} onClick={() => setExpanded(!expanded)}><img className="expand-icon material-icons grey-text" src={expand} />Subtasks</Button>}
+
+                </div>
                 {/* {props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={addNewTaskAction}>✎</Button>} */}
                 <Button sx={buttonLowStyle} onClick={handleClick}>...</Button>
                 <Popover
@@ -175,12 +187,12 @@ export function ExpandingComponent(props: TaskViewProps) {
 
             <div className={expanded ? "expandingComponentExpanded" : "expandingComponentHidden"}>
                 <div>
-                    {subtasks && subtasks.map((subtask, index) => (
-                        <p key={index}>* {subtask.name}</p>
-                    ))}
-                    <form>
-                        <input type="text" value={subtaskName} onChange={(e) => setSubtaskName(e.target.value)} />
-                        <button type="button" onClick={() => { addSubtask(subtaskName) }}>Add</button>
+
+                    <div className='subtasks'>{subtasks && subtasks.map((subtask) => (<li>{subtask.name}</li>))}</div>
+
+                    <form className='subtask-form'>
+                        <input type="text" className="input-style" value={subtaskName} onChange={(e) => setSubtaskName(e.target.value)} />
+                        <Button type="button" sx={subtaskButtonLowStyle} onClick={() => { addSubtask(subtaskName) }}>Add</Button>
                     </form>
                 </div>
 
@@ -209,6 +221,17 @@ const buttonLowStyle = {
     color: 'black',
     maxWidth: '6px',
     minWidth: '6px',
+    "&:hover": { backgroundColor: "#FFFFFF50" },
+}
+
+const subtaskButtonLowStyle = {
+    color: 'grey',
+    // maxWidth: '12px',
+    // minWidth: '12px',
+    // maxHeight: '6px',
+    // minHeight: '6px',
+    fontSize: '12px',
+    textTransform: 'none',
     "&:hover": { backgroundColor: "#FFFFFF50" },
 }
 

@@ -30,12 +30,12 @@ export function CurrentTaskView(props: CurrentTaskProps) {
         "&:hover": {backgroundColor: "#FFFFFF50", 'border': '1px solid #F8DEB3'},
     }
     useEffect(() => {
-        // const fetchSubtasks = fetchData<Task[]>(`http://localhost:8080/${props.taskId}/task/subtask`)
-        // fetchSubtasks((subtasks: Task[]) => {
-        //     const subtaskList = subtasks.map((subtask) => subtask.name)
-        //     setSubtaskList(subtaskList)
+        const fetchSubtasks = fetchData<Task[]>(`http://localhost:8080/task/${props.taskId}/subtask`)
+        fetchSubtasks((subtasks: Task[]) => {
+            const subtaskList = subtasks.map((subtask) => subtask.name)
+            setSubtaskList(subtaskList)
 
-        // })
+        })
     }, []);
 
     function startPomodoro() {
@@ -54,7 +54,7 @@ export function CurrentTaskView(props: CurrentTaskProps) {
                 <p className="TimeLabel">{props.startTime}</p>
             </div>
             <hr></hr>
-            <div>{subtaskList && subtaskList.map((subtask) => (<li>subtask.name</li>))}</div>
+            <div>{subtaskList && subtaskList.map((subtask) => (<li>{subtask}</li>))}</div>
 
             <div className='ButtonContainer'>
                 {!pomodoroPanel && <Button sx={buttonStyle} onClick={() => startPomodoro()}>Pomodoro</Button>}
