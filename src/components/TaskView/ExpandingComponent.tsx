@@ -122,7 +122,7 @@ export function ExpandingComponent(props: TaskViewProps) {
             height: props.duration ? props.duration : 'auto',
             opacity: props.task.completed ? 0.5 : 1,
             backgroundColor: taskColor + '88',
-            border: (props.task.deadline >= new Date()) ? ('2px solid ' + taskColor) : ('2px solid ' + "#eb403488"),
+            border: (new Date(props.task.deadline) >= new Date()) ? ('2px solid ' + taskColor) : ('2px solid ' + "#eb403488"),
         }}>
 
             <div className='task-header'
