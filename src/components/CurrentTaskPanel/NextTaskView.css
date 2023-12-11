@@ -7,9 +7,10 @@
     align-self: center;
     color: rgb(106, 117, 105);
     margin-top: 20px;
+    padding-bottom: 20px;
 }
 
 .TimeLabel {
     font-size: small;
-    margin-top: -2vh;
+    margin-top: -6%;
 }

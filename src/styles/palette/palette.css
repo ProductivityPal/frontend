@@ -1,8 +1,12 @@
 :root {
     /* Primary colors */
     --primary: #F8DEB3;
+    --primary-80: #F8DEB380;
     --secondary: #D5C7AE;
+    --secondary-80: #D5C7AE80;
     --green: #707247;
+    --green-80: #70724780;
+
 
     /* Whites */
     --primary-white: #FCF5E5;
@@ -10,9 +14,11 @@
     /* Blacks */
     --primary-black: #333333;
     --primary-grey:  #E5E5E5;
+    --primary-grey-80:  #E5E5E580;
 
     /* Accent */
     --primary-accent: #EE7F3B;
+    --primary-accent-80: #EE7F3B80;
 
     /* Login Pallete:  */
 
