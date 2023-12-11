@@ -9,6 +9,7 @@ import { TasksCalendarContext } from '../../utils/tasksCalendarContext';
 
 const fetchCalendarTasks = fetchData<CalendarTask[]>('http://localhost:8080/calendar/tasks');
 export function CurrentTaskPanel() {
+    const [currentTime, setCurrentTime] = useState(new Date());
     const [currentTask, setCurrentTask] = useState<CalendarTask | null>()
     const [nextTask, setNextTask] = useState<CalendarTask>()
     const { calendar } = useContext(TasksCalendarContext);
@@ -25,10 +26,19 @@ export function CurrentTaskPanel() {
         return startTime.getHours() + ":" + startFormattedMinutes + " - " 
         + endTime.getHours() + ":" + endFormattedMinutes;
     }
+    useEffect(() => {
+        // Update current time every second
+        const intervalId = setInterval(() => {
+          setCurrentTime(new Date());
+        }, 60000);
+    
+        // Clear interval on component unmount
+        return () => clearInterval(intervalId);
+      }, []);
 
     useEffect(() => {
 
-        let now = new Date()
+        let now = currentTime
 
         // Function to filter out past tasks
         const filterPastTasks = (tasks: any) => {
@@ -71,7 +81,7 @@ export function CurrentTaskPanel() {
             }
             // TODO: add check for next task of the day / you are caught up for the day!
     })
-    }, [calendar]);
+    }, [calendar, currentTime]);
 
     return (
         <div className="current-task-panel">

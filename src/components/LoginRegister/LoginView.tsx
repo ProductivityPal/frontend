@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import './LoginRegistration.css';
 import '../../styles/styles.css'
 import { Navigate } from "react-router-dom";
 import { useLocalState } from '../../utils/useLocalStorage';
 import { useNavigate } from "react-router-dom";
+import { CategoryContext, CategoryProvider } from '../../utils/CategoryContext';
 
 export function LoginView() {
   const [jwt, setJwt] = useLocalState('', 'jwt');
+  const categoryContext = useContext(CategoryContext)
   const [calendarId, setCalendarId] = useLocalState('6')
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -52,6 +54,20 @@ export function LoginView() {
       }).then(body => {
         console.log("body", body);
         setJwt(body.token);
+        // Fetch category names after successful login
+        fetch('http://localhost:8080/settings/category', {
+          headers: {
+            Authorization: `Bearer ${body.token}`
+          }
+        })
+          .then(res => res.json())
+          .then(categoryNames => {
+            categoryContext.updateCategoryNames(categoryNames)
+            console.log("categoryNames", categoryNames)
+          })
+          .catch(err => {
+            console.log("Error fetching category names", err);
+          });
         navigate("/calendar");
       }).catch(err => {
         console.log("err", err);

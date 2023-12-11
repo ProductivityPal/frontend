@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import { TextField, Button, Container, Typography } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import { TextField, Button, Container, Typography, useColorScheme } from '@mui/material';
 import './SettingsView.css'
 import { deleteData, postData } from '../../utils/fetchUtils';
+import { CategoryContext, CategoryProvider } from '../../utils/CategoryContext';
 
 function Settings() {
+    const categoryContext = useContext(CategoryContext)
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [categoryNames, setCategoryNames] = useState({
-        category1: 'default',
-        category2: 'accent',
-        category3: 'green',
-        category4: 'grey',
+        beige: 'beige',
+        accent: 'accent',
+        green: 'green',
+        grey: 'grey',
     });
 
     const handleSaveUserSettings = () => {
@@ -24,6 +26,8 @@ function Settings() {
 
     const handleSaveCategorySettings = () => {
         postData<{}, number>(`http://localhost:8080/settings/category`, categoryNames)();
+        categoryContext.updateCategoryNames(categoryNames)
+        console.log("categoryNames", categoryNames)
     }
 
     const handleAccountDeletion = () => {
@@ -45,6 +49,17 @@ function Settings() {
         "&:hover": {backgroundColor: "#C4453680"},
         width: '100%',
     }
+
+    useEffect(() => {
+        const categories = categoryContext.getCategoryNames();
+        const updatedCategoryNames: { beige: string; accent: string; green: string; grey: string; } = {
+            beige: categories.beige,
+            accent: categories.category2,
+            green: categories.category3,
+            grey: categories.category4,
+        };
+        setCategoryNames(updatedCategoryNames);
+    }, []);
 
     return (
         <Container maxWidth="sm">

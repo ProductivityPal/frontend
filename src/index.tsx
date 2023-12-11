@@ -4,13 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Router } from "react-router-dom";
+import { CategoryProvider } from './utils/CategoryContext';
 
 const root = document.getElementById('root') as HTMLElement;
 ReactDOM.render(
-<BrowserRouter>
-    <App />
-</BrowserRouter>,
- root);
+    <BrowserRouter>
+        <CategoryProvider>
+            <App />
+        </CategoryProvider>
+    </BrowserRouter>,
+    root);
 
 
 
