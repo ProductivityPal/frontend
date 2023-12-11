@@ -39,14 +39,14 @@ function Settings() {
     const sumbitButton = {
         backgroundColor: '#EE7F3B',
         color: 'white',
-        "&:hover": {backgroundColor: "#EE7F3B80"},
+        "&:hover": { backgroundColor: "#EE7F3B80" },
         width: '100%',
     }
 
     const dangerButton = {
         backgroundColor: '#C44536',
         color: 'white',
-        "&:hover": {backgroundColor: "#C4453680"},
+        "&:hover": { backgroundColor: "#C4453680" },
         width: '100%',
     }
 

@@ -21,6 +21,10 @@
 
 }
 
+.primaryText {
+    color: var(--primary);
+}
+
 .circleButton {
     height: 15px;
     width: 15px;
@@ -31,25 +35,32 @@
     margin-left: 5px;
 }
 
+.circleButton.oval {
+    height: 20px;
+    width: 60px;
+    border-radius: 12px;
+    border: 0;
+}
+
 .circleButton.settings {
     height: 20px;
     width: 20px;
 }
 
 .circleButton.default {
-    background-color: var(--primary);
+    background-color: var(--primary-80);
 }
 
 .circleButton.green {
-    background-color: var(--green);
+    background-color: var(--green-80);
 }
 
 .circleButton.accent {
-    background-color: var(--primary-accent);
+    background-color: var(--primary-accent-80);
 }
 
 .circleButton.grey {
-    background-color: var(--primary-grey);
+    background-color: var(--primary-grey-80);
 }
 
 .ovalActionButton {
