@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './ExpandingComponent.css';
 import { Popover, Button } from '@mui/material';
 import { deleteData, putData, postData, fetchData } from '../../utils/fetchUtils';
 import { AddTaskModal } from './AddTaskModal';
 import { Task } from '../../types/Task';
 import expand from '../../images/expand_icon.svg'
+import { CategoryContext } from '../../utils/CategoryContext';
 
 type TaskViewProps = {
     task: Task;
@@ -20,6 +21,7 @@ type TaskViewProps = {
 }
 
 export function ExpandingComponent(props: TaskViewProps) {
+    const categoryContext = useContext(CategoryContext)
     const [expanded, setExpanded] = useState(false)
     const [expandedCategory, setExpandedCategory] = useState(false)
     const [category, setCategory] = useState(props.task.category)
@@ -88,7 +90,9 @@ export function ExpandingComponent(props: TaskViewProps) {
     }
 
     function sendCategory(category: string) {
-        putData<{}, number>(`http://localhost:8080/task/${props.task.id}`, { "category": category })();
+        // get name for category
+        const categoryName = categoryContext.getNameForCategory(category)
+        putData<{}, number>(`http://localhost:8080/task/${props.task.id}`, { "category": categoryName })();
         setCategory(category)
         setTaskColor(convertCategoryToColor(category))
     }

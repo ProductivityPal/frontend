@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import './TaskContainerView.css';
 import { TaskView } from './TaskView';
 import { Button } from '@mui/material';
-import { Task } from '../../types/Task';
+import { Task, converDbTaskToTask } from '../../types/Task';
 import { useEffect } from 'react';
 import { fetchData, putData } from '../../utils/fetchUtils';
 import { postData } from '../../utils/fetchUtils';
@@ -111,10 +111,17 @@ export function TaskContainerView() {
         fetchTasks((tasks: Task[]) => {
             console.log("FETCH TASKS!")
             fetchCalendarTasks((calendarTasks: any[]) => {
-                // const tasksList = calendar[TASK_LIST_COMPONENT_ID]
-                // .filter(task => task.completed == false && !usedTasks.includes(task.id));
+                // setTasks(TASK_LIST_COMPONENT_ID, tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false && task.isSubtask == true))
+                const filteredTasks = tasks.filter(task => {
+                    const isTaskInCalendar = calendarTasks.find(ct => ct.task.id === task.id);
+                    const isSubtask = converDbTaskToTask(task).isSubtask;
+                  
+                    const shouldIncludeTask = !isTaskInCalendar && task.completed === false && isSubtask === false;
+                    return shouldIncludeTask;
+                  });
 
-                setTasks(TASK_LIST_COMPONENT_ID, tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false))
+                  setTasks(TASK_LIST_COMPONENT_ID, filteredTasks);
+
                 console.log("tasks test", tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false && !usedTasks.includes(task.id)))
                 console.log("tasks test", tasks)
                 console.log("tasks test", calendarTasks)
