@@ -84,10 +84,17 @@ export function TaskContainerView() {
 
         fetchAlgoSortList(energyLevel)((tasks: Task[]) => {
             fetchCalendarTasks((calendarTasks: any[]) => {
+                const filteredTasks = tasks.filter(task => {
+                    const isTaskInCalendar = calendarTasks.find(ct => ct.task.id === task.id);
+                    const isSubtask = converDbTaskToTask(task).isSubtask;
+                  
+                    const shouldIncludeTask = !isTaskInCalendar && task.completed === false && isSubtask === false;
+                    return shouldIncludeTask;
+                  });
                 // const tasksList = calendar[TASK_LIST_COMPONENT_ID]
                 // .filter(task => task.completed == false && !usedTasks.includes(task.id));
 
-                setTasks(TASK_LIST_COMPONENT_ID, tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false && !usedTasks.includes(task.id)))
+                setTasks(TASK_LIST_COMPONENT_ID, filteredTasks)
                 setUsedTasks(calendarTasks.map((calendartT: any) => calendartT.task.id));
             })
         }, setIsLoading, setErrorMessage, navigate)
