@@ -54,9 +54,9 @@ function Settings() {
         const categories = categoryContext.getCategoryNames();
         const updatedCategoryNames: { beige: string; accent: string; green: string; grey: string; } = {
             beige: categories.beige,
-            accent: categories.category2,
-            green: categories.category3,
-            grey: categories.category4,
+            accent: categories.accent,
+            green: categories.green,
+            grey: categories.grey,
         };
         setCategoryNames(updatedCategoryNames);
     }, []);
@@ -88,27 +88,29 @@ function Settings() {
                 Category names
             </Typography> */}
             <h3 className='title-label'>Category names </h3>
-            {Object.keys(categoryNames).map((category) => (
-                <div className='category-container'>
-                    <div className={`circleButton settings ${categoryNames[category as keyof typeof categoryNames]}`} />
-                    <TextField
-                        key={category}
-                        label={`Name for ${categoryNames[category as keyof typeof categoryNames]}`}
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        // value={category}
-                        onChange={(e) =>
-                            setCategoryNames((prevCategoryNames) => ({
-                                ...prevCategoryNames,
-                                [category]: e.target.value,
-                            }))
-                        }
-                    />
-
-                </div>
-
-            ))}
+            {Object.entries(categoryNames).map(([category, value]) => {
+                console.log(category, value);
+                return (
+                    <div className='category-container'>
+                        <div className={`circleButton settings ${category}`} />
+                        <TextField
+                            key={category}
+                            label={`Name for ${value}`}
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            // value={category}
+                            onChange={(e) =>
+                                setCategoryNames((prevCategoryNames) => ({
+                                    ...prevCategoryNames,
+                                    [category]: e.target.value,
+                                }))
+                            }
+                        />
+    
+                    </div>
+                )
+            })}
             <Button variant="contained" sx={sumbitButton} onClick={handleSaveCategorySettings}>
                 Save Category Changes
             </Button>

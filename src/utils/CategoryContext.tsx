@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { fetchData } from './fetchUtils';
 
 type CategoryContextType = {
     categoryNames: { [key: string]: string },
@@ -33,6 +34,14 @@ export const CategoryProvider = ({ children }: { children: React.ReactNode }) =>
     const getNameForCategory = (category: string) => {
         return categoryNames[category]
     }
+
+    useEffect(() => {
+        const fetchCategories = fetchData<any>(`http://localhost:8080/settings/category`)
+        fetchCategories((categories: any) => {
+            updateCategoryNames(categories)
+        })
+      }, [updateCategoryNames]);
+
 
     return <CategoryContext.Provider value={{ categoryNames, updateCategoryNames, getCategoryNames, getNameForCategory }}>
         {children}

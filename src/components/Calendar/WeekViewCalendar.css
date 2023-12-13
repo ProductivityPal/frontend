@@ -12,7 +12,7 @@
 .calendar-container {
   overflow-x: auto;
   overflow-y: scroll;
-  height: 100vh;
+  height: 88vh;
 }
 
 .calendar-header {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import CalendarDay from './CalendarDay';
 import './WeekViewCalendar.css';
@@ -23,6 +23,10 @@ export default function WeekViewCalendar() {
     let [todayDate, setTodayDate] = useState(new Date());
     let daysOfTheWeek = getDaysOfTheWeek();
 
+    useEffect(() => {
+            document.getElementById('calendar-container')!.scrollTop = 450;
+    }, []);
+
     return (
         <div className="week-view-calendar">
             <div className="calendar-header">
@@ -36,7 +40,7 @@ export default function WeekViewCalendar() {
                         </div>
                     </Grid>
                     {Array.from(Array(4)).map((_, index) => (
-                        <Grid item xs={0} sm={2} md={2} key={index}>
+                        <Grid item xs={0} sm={0} md={2} key={index}>
                             <div className="calendar-day__header__day-of-the-week">
                                 {daysOfTheWeek[index + 1].toLocaleString('default', { weekday: 'long' })}
                             </div>
@@ -48,10 +52,10 @@ export default function WeekViewCalendar() {
                 </Grid>
 
             </div>
-            <Grid container className='calendar-container'>
+            <Grid container className='calendar-container' id='calendar-container'>
                 <Grid xs={0.3} md={0.3}>
                     {Array.from(Array(24)).map((_, index) => (
-                        <Grid item xs={0} sm={2} md={2} key={index} style={{height: 61}}>
+                        <Grid item xs={0} sm={0} md={2} key={index} style={{height: 61}}>
                             <div className="calendar-hour__header">
                                 {index}
                             </div>
@@ -61,7 +65,7 @@ export default function WeekViewCalendar() {
                     <CalendarDay date={todayDate} isToday={true} />
                 </Grid>
                 {Array.from(Array(4)).map((_, index) => (
-                    <Grid item xs={0} sm={2} md={2} key={index}>
+                    <Grid item xs={0} sm={0} md={2} key={index}>
                         <CalendarDay date={daysOfTheWeek[index + 1]} isToday={false} />
                     </Grid>
                 ))}
