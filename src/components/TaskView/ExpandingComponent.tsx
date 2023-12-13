@@ -29,6 +29,7 @@ export function ExpandingComponent(props: TaskViewProps) {
     const [expanded, setExpanded] = useState(false)
     const [expandedCategory, setExpandedCategory] = useState(false)
     const [category, setCategory] = useState(props.task.category)
+    const [categoryName, setCategoryName] = useState(props.task.category)
     const [taskColor, setTaskColor] = useState(convertCategoryToColor(props.task.category))
     const [subtaskName, setSubtaskName] = useState('')
     const [subtasks, setSubtasks] = useState(props.subTasks ? props.subTasks : [])
@@ -96,8 +97,10 @@ export function ExpandingComponent(props: TaskViewProps) {
     function sendCategory(category: string) {
         // get name for category
         const categoryName = categoryContext.getNameForCategory(category)
+        console.log("CategoryName!",categoryName)
         putData<{}, number>(`http://localhost:8080/task/${props.task.id}`, { "category": categoryName })();
         setCategory(category)
+        setCategoryName(categoryName)
         setTaskColor(convertCategoryToColor(category))
     }
 
@@ -132,29 +135,7 @@ export function ExpandingComponent(props: TaskViewProps) {
                 {/* <Button sx={buttonLowStyle} onClick={() => deleteTask(props.task.id)}>x</Button> */}
                 {/* {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />} */}
                 {/* {!props.task.completed && !props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.task.id) }}><img className="expand-icon" src={done} /></Button>} */}
-                <button className={`circleButton ${category} oval`} onClick={handlePopover}>
-                    <Popover
-                        open={Boolean(anchorElCategory)}
-                        onClose={handleCloseCategory}
-                        anchorEl={anchorElCategory}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                        transformOrigin={{
-                            vertical: 'center',
-                            horizontal: 'left',
-                        }}
-                    >
-                        <div className='popover-menu'>
-                            <button className='circleButton' onClick={() => sendCategory('beige')} />
-                            <button className='circleButton green' onClick={() => sendCategory('green')} />
-                            <button className='circleButton accent' onClick={() => sendCategory('accent')} />
-                            <button className='circleButton grey' onClick={() => sendCategory('grey')} />
-                        </div>
-                    </Popover>
-                    {category}
-                </button>
+                
                 <div className='task-title-container'>
                     <h2 className='task-label'>{props.task.name}</h2>
                     {/* {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />} */}
@@ -184,6 +165,28 @@ export function ExpandingComponent(props: TaskViewProps) {
 
             </div>
             <div className='subtasks-button'>
+                <button className={`circleButton ${category} oval`} onClick={handlePopover}>
+                    <Popover
+                        open={Boolean(anchorElCategory)}
+                        onClose={handleCloseCategory}
+                        anchorEl={anchorElCategory}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        transformOrigin={{
+                            vertical: 'center',
+                            horizontal: 'left',
+                        }}
+                    >
+                        <div className='popover-menu'>
+                            <button className='circleButton' onClick={() => sendCategory('beige')} />
+                            <button className='circleButton green' onClick={() => sendCategory('green')} />
+                            <button className='circleButton accent' onClick={() => sendCategory('accent')} />
+                            <button className='circleButton grey' onClick={() => sendCategory('grey')} />
+                        </div>
+                    </Popover>
+                </button>
                 {props.isExpandable && <Button sx={subtaskButtonLowStyle} onClick={() => setExpanded(!expanded)}><img className="expand-icon material-icons grey-text" src={expand} />Subtasks</Button>}
             </div>
 

@@ -141,7 +141,7 @@ export function TaskContainerView() {
     return (
         <div className="task-view">
             <div className='tasks-container'>
-                <Stack spacing={2} alignItems="center">
+                <Stack spacing={2} alignItems="center" className='taks-container-switch' >
                     <ToggleButtonGroup aria-label="Medium sizes" className="toggle">
                         <ToggleButton style={selectedButtonStyle(isListView)} key={1} value="1" onClick={toggleListView}>ListView</ToggleButton>,
                         <ToggleButton style={selectedButtonStyle(!isListView)} key={2} value="2" onClick={toggleSortedView}>SortedView </ToggleButton>
@@ -171,7 +171,6 @@ export function TaskContainerView() {
                                     onUpdateTask={(newTask: Task) => {
                                         const updateTaskInCalendar = modifyTask(TASK_LIST_COMPONENT_ID, task.id, newTask);
                                       }}/>))}
-                            <button onClick={addNewTaskAction} className='linedActionButton'>Add new task +</button>
                             {/* <button onClick={() => setEditView(!editView)} className='linedActionButton'>Edit Tasks</button> */}
                             {provided.placeholder}
                         </div>
@@ -190,6 +189,7 @@ export function TaskContainerView() {
 
 
             </div>
+            <button onClick={addNewTaskAction} className='linedActionButton'>Add new task +</button>
         </div>
     );
 }

@@ -45,14 +45,14 @@ import { useNavigate } from 'react-router-dom';
         }
       }}>
         <TasksCalendarContext.Provider value={calendarContext}>
-          <Grid container spacing={0}>
-            <Grid xs={0.5} md={0.5}>
+          <Grid container spacing={0.5}>
+            <Grid xs={0.6} md={0.5}>
               <NavigationMenu />
             </Grid>
             <Grid xs={4} md={2}>
               <TaskContainerView />
             </Grid>
-            <Grid xs={2} md={7}>
+            <Grid xs={3} md={7}>
               <WeekViewCalendar />
             </Grid>
             <Grid xs={4} md={2}>
