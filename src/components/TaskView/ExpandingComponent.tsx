@@ -72,6 +72,7 @@ export function ExpandingComponent(props: TaskViewProps) {
         const fetchSubtasks = fetchData<Task[]>(`http://localhost:8080/task/${props.task.id}/subtask`)
         fetchSubtasks((subtasks: Task[]) => {
             const subtaskList = subtasks.map((subtask) => subtask.name)
+            // setSubtaskList(subtaskList)
             setSubtasks(subtasks)
         })
     }, []);
@@ -97,6 +98,7 @@ export function ExpandingComponent(props: TaskViewProps) {
     }
 
     function sendCategory(category: string) {
+        // get name for category
         const categoryName = categoryContext.getNameForCategory(category)
         console.log("CategoryName!", categoryName)
         putData<{}, number>(`http://localhost:8080/task/${props.task.id}`, { "category": categoryName })();
@@ -111,8 +113,11 @@ export function ExpandingComponent(props: TaskViewProps) {
             subtask: true,
             parent_id: props.task.id,
         }
+        // todo add category
 
         setSubtasks([...subtasks, newSubtask]);
+
+        // send to backend
         postData<{}, number>(`http://localhost:8080/task/subtask`, newSubtask)();
         setSubtaskName('')
 
@@ -130,8 +135,6 @@ export function ExpandingComponent(props: TaskViewProps) {
                 style={{
                     opacity: isCompleted ? 0.5 : 1,
                 }}>
-                {!props.task.completed && !props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.task.id) }}><img className="expand-icon" src={done} /></Button>} */}
-
                 <div className='task-title-container'>
                     <h2 className='task-label'>{props.task.name}</h2>
                 </div>
