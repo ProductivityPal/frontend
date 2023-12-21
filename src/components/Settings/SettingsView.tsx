@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { TextField, Button, Container, Typography, useColorScheme } from '@mui/material';
 import './SettingsView.css'
-import { deleteData, postData } from '../../utils/fetchUtils';
+import {deleteData, postData, putData} from '../../utils/fetchUtils';
 import { CategoryContext, CategoryProvider } from '../../utils/CategoryContext';
 
 function Settings() {
@@ -21,11 +21,11 @@ function Settings() {
             password: password,
         }
 
-        postData<{}, number>(`http://localhost:8080/settings/login`, newLoginData)();
+        putData<{}, number>(`http://localhost:8080/settings/login`, newLoginData)();
     }
 
     const handleSaveCategorySettings = () => {
-        postData<{}, number>(`http://localhost:8080/settings/category`, categoryNames)();
+        putData<{}, number>(`http://localhost:8080/settings/category`, categoryNames)();
         categoryContext.updateCategoryNames(categoryNames)
         console.log("categoryNames", categoryNames)
     }
