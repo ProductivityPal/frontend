@@ -44,7 +44,6 @@ export function NavigationMenu() {
 
     const accentStyle = {
         color: '#EE7F3B',
-        // backgroundColor: "#EE7F3B20",
         "&:hover": { backgroundColor: "#EE7F3B20" },
     }
 
@@ -52,7 +51,7 @@ export function NavigationMenu() {
         <div className='menuContainer energyType'>
             <div className='menuContainer_options'>
                 <img className="logo" src={calendar} alt="Calendar view" onClick={() => { navigate("/calendar") }} />
-                <img className="logo" src={history} alt="Statistics and history" onClick={() => { navigate("/statistics") }}/>
+                <img className="logo" src={history} alt="Statistics and history" onClick={() => { navigate("/statistics") }} />
                 <img className='logo' src={settings} alt="Settings" onClick={() => { navigate("/settings") }} />
                 <img className='logo' src={energy} alt="energy level" onClick={() => { setExpandedEnergyPanel(!expandedEnergyPanel) }} />
                 {expandedEnergyPanel &&
@@ -69,9 +68,9 @@ export function NavigationMenu() {
                             horizontal: 'left',
                         }}
                     ><div className='energyModal'>
-                        <p>Your current energy level:</p>
-                        <DiscreteSliderMarks sendEnergy={handleEnergyChange}></DiscreteSliderMarks>
-                        <Button sx={accentStyle} onClick={() => {sendEnergyLevel()}}>Update your energy</Button></div></Popover>}
+                            <p>Your current energy level:</p>
+                            <DiscreteSliderMarks sendEnergy={handleEnergyChange}></DiscreteSliderMarks>
+                            <Button sx={accentStyle} onClick={() => { sendEnergyLevel() }}>Update your energy</Button></div></Popover>}
             </div>
             <img className="logo" src={logout} alt="Logout" onClick={() => { logoutUser() }} />
         </div>);

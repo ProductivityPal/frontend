@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { TextField, Button, Container, Typography, useColorScheme } from '@mui/material';
 import './SettingsView.css'
-import {deleteData, postData, putData} from '../../utils/fetchUtils';
+import { deleteData, postData, putData } from '../../utils/fetchUtils';
 import { CategoryContext, CategoryProvider } from '../../utils/CategoryContext';
 
 function Settings() {
@@ -84,9 +84,6 @@ function Settings() {
             <Button variant="contained" sx={sumbitButton} onClick={handleSaveUserSettings} disabled={!username && !password}>
                 Save User Changes
             </Button>
-            {/* <Typography className='title-label' variant="h5" gutterBottom>
-                Category names
-            </Typography> */}
             <h3 className='title-label'>Category names </h3>
             {Object.entries(categoryNames).map(([category, value]) => {
                 console.log(category, value);
@@ -99,7 +96,6 @@ function Settings() {
                             variant="outlined"
                             fullWidth
                             margin="normal"
-                            // value={category}
                             onChange={(e) =>
                                 setCategoryNames((prevCategoryNames) => ({
                                     ...prevCategoryNames,
@@ -107,7 +103,7 @@ function Settings() {
                                 }))
                             }
                         />
-    
+
                     </div>
                 )
             })}

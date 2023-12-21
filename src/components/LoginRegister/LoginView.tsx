@@ -16,14 +16,14 @@ export function LoginView() {
   const navigate = useNavigate();
 
   const clearJwt = () => {
-    localStorage.removeItem('jwt'); 
+    localStorage.removeItem('jwt');
   };
 
   function handleEmailChange(value: any) {
     setEmail(value)
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     if (!emailRegex.test(value)) {
       setEmailError('Invalid email format');
     } else {
@@ -54,20 +54,6 @@ export function LoginView() {
       }).then(body => {
         console.log("body", body);
         setJwt(body.token);
-        // Fetch category names after successful login
-        // fetch('http://localhost:8080/settings/category', {
-        //   headers: {
-        //     Authorization: `Bearer ${body.token}`
-        //   }
-        // })
-          // .then(res => res.json())
-          // .then(categoryNames => {
-          //   categoryContext.updateCategoryNames(categoryNames)
-          //   console.log("categoryNames", categoryNames)
-          // })
-          // .catch(err => {
-          //   console.log("Error fetching category names", err);
-          // });
         navigate("/calendar");
       }).catch(err => {
         console.log("err", err);
@@ -84,7 +70,7 @@ export function LoginView() {
     <div className='logingFormContainer'>
       <div className='logingFormContainer__loginForm'>
         <p className='loginForm__title'>email</p>
-        <input className='loginForm__input' type='text' value={email} pattern="[^\s@]+@[^\s@]+\.[^\s@]+"  onChange={(e) => handleEmailChange(e.target.value)}></input>
+        <input className='loginForm__input' type='text' value={email} pattern="[^\s@]+@[^\s@]+\.[^\s@]+" onChange={(e) => handleEmailChange(e.target.value)}></input>
         {emailError && <p style={{ color: 'red', fontSize: 'small' }}>{emailError}</p>}
       </div>
       <div className='logingFormContainer__loginForm'>
@@ -92,7 +78,6 @@ export function LoginView() {
         <input className='loginForm__input' type='password' value={password} onChange={(e) => setPassword(e.target.value)}></input>
       </div>
       <div className='logingFormContainer__actionButtonsRow'>
-        {/* <button className='googleLogin'>Sign with Google</button> */}
         <button className='loginButton' onClick={() => { sendLoginRequest() }} >Login me</button>
       </div>
     </div>

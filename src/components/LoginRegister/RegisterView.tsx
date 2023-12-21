@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import '../LoginRegister/LoginRegistration.css';
 import { useLocalState } from '../../utils/useLocalStorage';
 import { useNavigate } from "react-router-dom";
-import { postData } from '../../utils/fetchUtils';
 
 export function RegisterView() {
   const [jwt, setJwt] = useLocalState('', 'jwt');
@@ -14,16 +13,13 @@ export function RegisterView() {
 
   function handleEmailChange(value: any) {
     setEmail(value)
-    
-
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    
+
     if (!emailRegex.test(value)) {
       setEmailError('Invalid email format');
     } else {
       setEmailError('');
     }
-
   }
 
   const clearJwt = () => {
@@ -52,27 +48,18 @@ export function RegisterView() {
         body: JSON.stringify(reqBody)
       }).then(res => res.json()).then(body => {
         console.log("body", body);
-        // setJwt(body.token);
         fetch('http://localhost:8080/email/verification/send', {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${body.token}`,
-        },
-        method: 'POST',
-        body: JSON.stringify(reqBody)
-      });
-      alert("Verify your email!")
-      navigate("/login")
-
-
-        // navigate("/calendar");
-
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${body.token}`,
+          },
+          method: 'POST',
+          body: JSON.stringify(reqBody)
+        });
+        alert("Verify your email!")
+        navigate("/login")
       });
     }
-    // if (jwt != "") {
-    //   alert("You are logged in! Logging you out!")
-    //   navigate("/login");
-    // }
   }
 
   return (
@@ -92,11 +79,10 @@ export function RegisterView() {
       </div>
       <span></span>
       <div className='logingFormContainer__actionButtonsRow'>
-        {/* <button className='googleLogin'>Sign with Google</button> */}
-        <button 
-        className={emailError === '' ? 'loginButton' : 'loginButton disabled' } 
-        disabled={email == ''} 
-        onClick={() => sendRegisterRequest()} >Register me</button>
+        <button
+          className={emailError === '' ? 'loginButton' : 'loginButton disabled'}
+          disabled={email == ''}
+          onClick={() => sendRegisterRequest()} >Register me</button>
       </div>
     </div>
   );

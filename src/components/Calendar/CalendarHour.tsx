@@ -18,9 +18,8 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
 
     function editTaskAction(taskId: number) {
         setOpenAddTaskModal(true)
-        // handleAddTaskClick(e)
     }
-    
+
     const handleAddTaskClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -56,8 +55,8 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
                         {tasksList1.map((task, index) => (
                             <TaskView
-                            task={task}    
-                            isExpandable={false}
+                                task={task}
+                                isExpandable={false}
                                 isEditView={false}
                                 key={task.id}
                                 duration={task.timeEstimate ? task.timeEstimate : task.time_estimate}
@@ -65,7 +64,7 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                                 onComplete={() => handleTaskComplete(task.id)}
                                 openTaskModal={() => editTaskAction(task.id)}
                                 onUpdateTask={handleUpdateTask}
-                                 />))}
+                            />))}
                     </div>
                 )}
             </Droppable>
@@ -74,8 +73,8 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
                         {tasksList2.map((task, index) => (
                             <TaskView
-                            task={task}    
-                            isExpandable={false}
+                                task={task}
+                                isExpandable={false}
                                 isEditView={false} key={task.id}
                                 duration={task.timeEstimate ? task.timeEstimate : task.time_estimate}
                                 index={index}
@@ -90,8 +89,8 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
                         {tasksList3.map((task, index) => (
                             <TaskView
-                            task={task}    
-                            isExpandable={false}
+                                task={task}
+                                isExpandable={false}
                                 isEditView={false}
                                 key={task.id}
                                 duration={task.timeEstimate ? task.timeEstimate : task.time_estimate}
@@ -107,8 +106,8 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                     <div className='fifteen-min-block' ref={provided.innerRef} {...provided.droppableProps} >
                         {tasksList4.map((task, index) => (
                             <TaskView
-                            task={task}    
-                            isExpandable={false}
+                                task={task}
+                                isExpandable={false}
                                 isEditView={false}
                                 key={task.id}
                                 duration={task.timeEstimate ? task.timeEstimate : task.time_estimate}
@@ -116,8 +115,8 @@ export default function CalendarHour({ hour, date }: { hour: string, date: strin
                                 onComplete={() => handleTaskComplete(index)}
                                 openTaskModal={() => editTaskAction(task.id)}
                                 onUpdateTask={handleUpdateTask}
-                                />))}
-                                
+                            />))}
+
                     </div>
                 )}
             </Droppable>

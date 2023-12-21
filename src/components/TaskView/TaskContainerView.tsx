@@ -96,16 +96,6 @@ export function TaskContainerView() {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
-        }).then((response) => {
-            console.log('response', response)
-            if (response.ok) {
-                return response.json();
-            }
-            console.log(response.status)
-            if (response.status == 401) {
-                if (navigate) navigate("/loggedOut")
-            }
-
         }).then(data => {
             fetchAlgoSortList(energyLevel)((tasks: Task[]) => {
                 fetchCalendarTasks((calendarTasks: any[]) => {
@@ -199,7 +189,6 @@ export function TaskContainerView() {
                                     onUpdateTask={(newTask: Task) => {
                                         const updateTaskInCalendar = modifyTask(TASK_LIST_COMPONENT_ID, task.id, newTask);
                                     }} />))}
-                            {/* <button onClick={() => setEditView(!editView)} className='linedActionButton'>Edit Tasks</button> */}
                             {provided.placeholder}
                         </div>
 

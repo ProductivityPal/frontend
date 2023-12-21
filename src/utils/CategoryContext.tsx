@@ -28,24 +28,16 @@ export const CategoryProvider = ({ children }: { children: React.ReactNode }) =>
     }
 
     const getCategoryNames = () => {
-        const fetchCategories = fetchData<any>(`http://localhost:8080/settings/category`)
-        fetchCategories((categories: any) => {
-            setCategoryNames(categories)
-        })
+        // const fetchCategories = fetchData<any>(`http://localhost:8080/settings/category`)
+        // fetchCategories((categories: any) => {
+        //     setCategoryNames(categories)
+        // })
         return categoryNames
     }
 
     const getNameForCategory = (category: string) => {
         return categoryNames[category]
     }
-
-    // useEffect(() => {
-    //     const fetchCategories = fetchData<any>(`http://localhost:8080/settings/category`)
-    //     fetchCategories((categories: any) => {
-    //         updateCategoryNames(categories)
-    //     })
-    //   }, [updateCategoryNames]);
-
 
     return <CategoryContext.Provider value={{ categoryNames, updateCategoryNames, getCategoryNames, getNameForCategory }}>
         {children}

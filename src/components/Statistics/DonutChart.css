@@ -1,6 +1,5 @@
 .donut-chart-container {
     position: relative;
-    /* Add other styles for the chart container */
 }
 
 .centered-text {
@@ -9,7 +8,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    /* Add other styles for the centered text */
 }
 
 .label {

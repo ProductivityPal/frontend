@@ -17,14 +17,12 @@ const getDaysOfTheWeek = () => {
     return daysOfTheWeek;
 }
 
-// todo; add a button to go to the next week
-
 export default function WeekViewCalendar() {
     let [todayDate, setTodayDate] = useState(new Date());
     let daysOfTheWeek = getDaysOfTheWeek();
 
     useEffect(() => {
-            document.getElementById('calendar-container')!.scrollTop = 450;
+        document.getElementById('calendar-container')!.scrollTop = 450;
     }, []);
 
     return (
@@ -55,11 +53,11 @@ export default function WeekViewCalendar() {
             <Grid container className='calendar-container' id='calendar-container'>
                 <Grid xs={0.3} md={0.3}>
                     {Array.from(Array(24)).map((_, index) => (
-                        <Grid item xs={0} sm={0} md={2} key={index} style={{height: 61}}>
+                        <Grid item xs={0} sm={0} md={2} key={index} style={{ height: 61 }}>
                             <div className="calendar-hour__header">
                                 {index}
                             </div>
-                            </Grid>))}
+                        </Grid>))}
                 </Grid>
                 <Grid xs={11.7} md={3.7}>
                     <CalendarDay date={todayDate} isToday={true} />
