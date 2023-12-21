@@ -27,7 +27,7 @@ export function CurrentTaskView(props: CurrentTaskProps) {
         'line-height': '12px',
         'margin-top': '5px',
         'margin-bottom': '5px',
-        "&:hover": {backgroundColor: "#FFFFFF50", 'border': '1px solid #F8DEB3'},
+        "&:hover": { backgroundColor: "#FFFFFF50", 'border': '1px solid #F8DEB3' },
     }
     useEffect(() => {
         const fetchSubtasks = fetchData<Task[]>(`http://localhost:8080/task/${props.taskId}/subtask`)
@@ -43,9 +43,8 @@ export function CurrentTaskView(props: CurrentTaskProps) {
         // send Pomodoro start to backend
         // start Timer
         // after 20 minutes break
-
     }
-    
+
     return (
         <div className='TaskPanelContainer'>
             <p>Your current task:</p>
@@ -58,11 +57,10 @@ export function CurrentTaskView(props: CurrentTaskProps) {
 
             <div className='ButtonContainer'>
                 {!pomodoroPanel && <Button sx={buttonStyle} onClick={() => startPomodoro()}>Pomodoro</Button>}
-                {pomodoroPanel && <PomodoroPanel taskId={props.taskId} closePanel={() =>setPomodoroPanel(false)}></PomodoroPanel>}
-                {/* <Button sx={buttonStyle}>Add subtask</Button> */}
+                {pomodoroPanel && <PomodoroPanel taskId={props.taskId} closePanel={() => setPomodoroPanel(false)}></PomodoroPanel>}
                 {!pomodoroPanel && <Button sx={buttonStyle} onClick={() => props.onComplete()}>✔️</Button>}
             </div>
         </div>
-        
+
     );
 }

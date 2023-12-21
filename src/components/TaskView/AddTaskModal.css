@@ -7,7 +7,6 @@
     width: 380px;
     padding: 10px;
     border-bottom: solid gray 1px;
-    /* background-color: blueviolet; */
 }
 
 .add-task-body {
@@ -28,5 +27,4 @@
     align-items: center;
     height: 50px;
     width: 380px;
-    /* padding: 10px; */
 }

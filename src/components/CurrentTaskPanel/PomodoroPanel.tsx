@@ -15,7 +15,6 @@ export function PomodoroPanel(props: PomdoroProps) {
     const [pomodoroIcon, setPomodoroIcon] = useState(isPomodoro ? "🍅" : "☕️")
     const [pomodoroLabel, setPomodoroLabel] = useState(isPomodoro ? "break" : "pomodoro")
 
-    // var pomodoroTimeSum = 0
     const initialTime = 25 * 60
     const breakTime = 5 * 60
     const [time, setTime] = useState(initialTime)
@@ -33,8 +32,6 @@ export function PomodoroPanel(props: PomdoroProps) {
         }
 
         if (time === 0) {
-            // Handle timer completion, e.g., play a sound or show a notification.
-
             const timerType = isPomodoro ? "break" : "pomodoro"
             resetTimer(timerType)
             setPomodoroStart(!pomodoroStart)
@@ -59,22 +56,18 @@ export function PomodoroPanel(props: PomdoroProps) {
 
     const endTimer = () => {
         setTimerRunning(false)
-        // TODO: FIX time sum bug
         const pomodoroTimeSum = (pomodoroTime + (isPomodoro ? (initialTime - time) : 0)) / 60
         setPomodoroTime(pomodoroTimeSum)
         console.log("Pomodoro time 2: ", pomodoroTimeSum)
 
-        // TODO: send to backend
-        postData<{}, number>(`http://localhost:8080/task/pomodoro`, {taskId: props.taskId, completionTime: pomodoroTimeSum})();
-        // divide time by 60
+        postData<{}, number>(`http://localhost:8080/task/pomodoro`, { taskId: props.taskId, completionTime: pomodoroTimeSum })();
         props.closePanel()
     }
 
     const resetTimer = (type: string) => {
         setIsPomodoro(!isPomodoro)
         setPomodoroStart(timerRunning ? !pomodoroStart : pomodoroStart)
-        // TODO: FIX time sum bug
-        const pomodoroTimeSum = pomodoroTime + (isPomodoro ? (initialTime-time) : 0)
+        const pomodoroTimeSum = pomodoroTime + (isPomodoro ? (initialTime - time) : 0)
         setPomodoroTime(pomodoroTimeSum)
         console.log("Pomodoro time 3: ", pomodoroTimeSum)
         const timeLen = type == "pomodoro" ? initialTime : breakTime
@@ -100,7 +93,6 @@ export function PomodoroPanel(props: PomdoroProps) {
     }
     return (
         <div>
-            {/* {!pomodoroStart && <Button sx={buttonStyle} onClick={}>Start Timer</Button>} */}
             {<div className="pomodoro-container">
                 <div className="timer-row">
                     {pomodoroIcon} {Math.floor(time / 60).toString().padStart(2, '0')}:
@@ -114,8 +106,6 @@ export function PomodoroPanel(props: PomdoroProps) {
                 </div>
             </div>}
         </div>
-
-
     )
 
 }

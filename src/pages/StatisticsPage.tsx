@@ -48,7 +48,6 @@ function StatisticsPage() {
         backgroundColor: '#EE7F3B',
         color: 'white',
         "&:hover": { backgroundColor: "#F8DEB3" },
-        // width: '100%',
     }
 
     useEffect(() => {

@@ -80,11 +80,9 @@ export function AddTaskModal(props: AddTaskModalProps) {
     };
 
     const updateTask = (taskId: number, newTaskData: any) => {
-        // id to path
         putData<{}, number>(`http://localhost:8080/task/${taskId}`, { ...newTaskData })();
-        // TODO
-        // props.updateTask({...newTaskData})
     }
+
     const saveTask = (newTaskData: any) => {
         postNewTask(newTaskData)((id) => {
             props.addTask({
@@ -183,13 +181,8 @@ export function AddTaskModal(props: AddTaskModalProps) {
                     </div>
                     <div className="add-task-body-row">
                         <div className="add-task-body-row-label">How long will it take?</div>
-                        {/* <NumberInput endAdornment={<InputAdornment>kg</InputAdornment>} /> */}
                         <NumberInput onIncrementChange={setTimeEstimate} />
-                        {/* <Input sx={inputStyle} type="number" value={timeEstimate} onChange={(e) => setTimeEstimate(parseInt(e.target.value))}/> */}
                     </div>
-                    {/* <div className="add-task-body-row">
-                        <Button sx={subtasksButton}>Add Subtaks +</Button>
-                    </div> */}
                     <div className="add-task-body-row">
                         <Button sx={subtasksButton}
                             disabled={deadline.getTime() < (Date.now() - 24 * 3600 * 1000) || !priority || !likeliness || !difficulty || !taskName}

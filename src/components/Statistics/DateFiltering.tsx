@@ -26,38 +26,38 @@ export function DateFiltering(props: DateStatProps) {
     const subtasksButton = {
         backgroundColor: '#EE7F3B',
         color: 'white',
-        "&:hover": {backgroundColor: "#F8DEB3"},
-        // width: '100%',
+        "&:hover": { backgroundColor: "#F8DEB3" },
     }
 
     function updateDateRange() {
-        console.log('Updating date range...', String(startDate.format('YYYY-MM-DD')) + "T00:00",String(endDate.format('YYYY-MM-DD')) + "T23:59");
+        console.log('Updating date range...', String(startDate.format('YYYY-MM-DD')) + "T00:00", String(endDate.format('YYYY-MM-DD')) + "T23:59");
         props.onDatesUpdate({
             start_date: String(startDate.format('YYYY-MM-DD')) + "T00:00",
-            end_date: String(endDate.format('YYYY-MM-DD')) + "T23:59"})
+            end_date: String(endDate.format('YYYY-MM-DD')) + "T23:59"
+        })
     }
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <div className="container">
-            <div className="date-container">
-            <DatePicker
-                value={startDate}
-                onChange={handleStartDateChange}
-                format="DD/MM/YY"
-            />
-            <div className="label"> - </div>
-            <DatePicker
-                value={endDate}
-                onChange={handleEndDateChange}
-                minDate={startDate}
-                format="DD/MM/YY"
-            />
+            <div className="container">
+                <div className="date-container">
+                    <DatePicker
+                        value={startDate}
+                        onChange={handleStartDateChange}
+                        format="DD/MM/YY"
+                    />
+                    <div className="label"> - </div>
+                    <DatePicker
+                        value={endDate}
+                        onChange={handleEndDateChange}
+                        minDate={startDate}
+                        format="DD/MM/YY"
+                    />
 
+                </div>
+
+                <Button sx={subtasksButton} disabled={endDate < startDate} onClick={() => updateDateRange()}>Update</Button>
             </div>
-            
-            <Button sx={subtasksButton} disabled={endDate < startDate} onClick={() => updateDateRange()}>Update</Button>
-        </div>
         </LocalizationProvider>
     )
 }

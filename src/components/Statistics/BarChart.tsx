@@ -1,14 +1,6 @@
 import React, { useEffect } from "react";
 import { Chart } from "react-google-charts";
 
-// export const data = [
-//     ["Category", "Done Tasks", "Not done tasks"],
-//     ["Category 1", 100, 80],
-//     ["Category 2", 50, 60],
-//     ["Category 3", 70, 10],
-//     ["Category 4", 10, 90],
-// ];
-
 type BarChartProps = {
     title: string,
     data: any[][]

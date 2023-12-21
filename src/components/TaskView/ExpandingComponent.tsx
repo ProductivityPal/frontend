@@ -100,7 +100,7 @@ export function ExpandingComponent(props: TaskViewProps) {
     function sendCategory(category: string) {
         // get name for category
         const categoryName = categoryContext.getNameForCategory(category)
-        console.log("CategoryName!",categoryName)
+        console.log("CategoryName!", categoryName)
         putData<{}, number>(`http://localhost:8080/task/${props.task.id}`, { "category": categoryName })();
         setCategory(category)
         setCategoryName(categoryName)
@@ -135,16 +135,9 @@ export function ExpandingComponent(props: TaskViewProps) {
                 style={{
                     opacity: isCompleted ? 0.5 : 1,
                 }}>
-                {/* <Button sx={buttonLowStyle} onClick={() => deleteTask(props.task.id)}>x</Button> */}
-                {/* {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />} */}
-                {/* {!props.task.completed && !props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={() => { completeTask(props.task.id) }}><img className="expand-icon" src={done} /></Button>} */}
-                
                 <div className='task-title-container'>
                     <h2 className='task-label'>{props.task.name}</h2>
-                    {/* {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />} */}
-
                 </div>
-                {/* {props.isEditView && <Button className='basicButton' sx={buttonLowStyle} onClick={addNewTaskAction}>✎</Button>} */}
                 <Button sx={buttonLowStyle} onClick={handleClick}><img className="expand-icon" src={dots} /></Button>
                 <Popover
                     open={Boolean(anchorEl)}
