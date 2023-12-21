@@ -31,14 +31,16 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
+    text-overflow: ellipsis;
+    margin-top: -2px;
 }
 
 .task-title-container {
-    white-space: wrap;
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 50%;
+    /* max-width: 80%; */
     font-size: small;
 }
 
@@ -91,9 +93,12 @@
 }
 
 .task-label {
-    font-size: medium;
+    font-size: small;
     color: var(--primary-black);
     font-weight: 500;
     padding-left: 6px;
+    text-overflow: ellipsis;
+    /* white-space: wrap; */
+    overflow: hidden;
 
 }
