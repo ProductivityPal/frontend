@@ -6,7 +6,13 @@ import { fetchData, putData } from '../../utils/fetchUtils';
 import { CalendarTask, converDbTaskToTask, convetDbCalendarTaskToCalendarTask, Task } from '../../types/Task';
 import { TasksCalendarContext } from '../../utils/tasksCalendarContext';
 
-const convertKeyToDate = (key: string): Date | null => {
+const convertKeyToDate = (key: string): Date => {
+    const currentDate = new Date()
+    currentDate.setDate(currentDate.getDate() - 1);
+
+    if(!key.includes("-")) {
+        return currentDate
+    }
 
     try {
         const date = new Date();
@@ -18,7 +24,7 @@ const convertKeyToDate = (key: string): Date | null => {
 
         return date;
     } catch {
-        return null;
+        return currentDate;
     }
 
 }
@@ -47,15 +53,18 @@ export function CurrentTaskPanel() {
     useEffect(() => {
         const activeTasks = Object.entries(calendar)
             .flatMap(([key, value]) => value.map(task => {
-                const startTime = key.includes("-") ? convertKeyToDate(key) : null;
-                const endDate = startTime ? new Date(startTime.getTime() + (task.timeEstimate ? task.timeEstimate : 0) * 60 * 1000) : null;
+                console.log("Sofis", key)
+                // const startTime = key.includes("-") ? convertKeyToDate(key) : null;
+                const startTime = convertKeyToDate(key);
+                // const endDate = startTime ? new Date(startTime.getTime() + (task.timeEstimate ? task.timeEstimate : 30) * 60 * 1000) : null;
+                const endDate = new Date(startTime.getTime() + (task.timeEstimate ? task.timeEstimate : 30) * 60 * 1000);
                 return ({
                     ...task,
                     startTime,
                     endDate,
                 })
             }))
-            .filter(task => !task.completed && task.startTime)
+            .filter(task => !task.completed && task.endDate.getTime() >= Date.now())
             .sort((task1, task2) => task1.startTime!.getTime() - task2.startTime!.getTime());
         const newCurrentTask = activeTasks[0] && activeTasks[0].startTime!.getTime() <= Date.now() && activeTasks[0].endDate!.getTime() >= Date.now() ? activeTasks[0] : null
         setCurrentTask(newCurrentTask)
