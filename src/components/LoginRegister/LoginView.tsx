@@ -55,19 +55,19 @@ export function LoginView() {
         console.log("body", body);
         setJwt(body.token);
         // Fetch category names after successful login
-        fetch('http://localhost:8080/settings/category', {
-          headers: {
-            Authorization: `Bearer ${body.token}`
-          }
-        })
-          .then(res => res.json())
-          .then(categoryNames => {
-            categoryContext.updateCategoryNames(categoryNames)
-            console.log("categoryNames", categoryNames)
-          })
-          .catch(err => {
-            console.log("Error fetching category names", err);
-          });
+        // fetch('http://localhost:8080/settings/category', {
+        //   headers: {
+        //     Authorization: `Bearer ${body.token}`
+        //   }
+        // })
+          // .then(res => res.json())
+          // .then(categoryNames => {
+          //   categoryContext.updateCategoryNames(categoryNames)
+          //   console.log("categoryNames", categoryNames)
+          // })
+          // .catch(err => {
+          //   console.log("Error fetching category names", err);
+          // });
         navigate("/calendar");
       }).catch(err => {
         console.log("err", err);

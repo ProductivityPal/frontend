@@ -36,6 +36,7 @@ export function ExpandingComponent(props: TaskViewProps) {
     const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
     const [anchorElCategory, setAnchorElCategory] = React.useState<HTMLButtonElement | null>(null);
+    const [isCompleted, setIsCompleted] = useState(props.task.completed)
 
     const handlePopover = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorElCategory(anchorElCategory ? null : event.currentTarget);
@@ -78,7 +79,9 @@ export function ExpandingComponent(props: TaskViewProps) {
 
     function completeTask(taskId: number) {
         console.log("complete Task!" + taskId)
-        putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "completed": true })();
+        putData<{}, number>(`http://localhost:8080/task/${taskId}`, { "completed": true })(() => {
+            setIsCompleted(true)
+        });
 
         props.onComplete()
     }
@@ -123,14 +126,14 @@ export function ExpandingComponent(props: TaskViewProps) {
     return (
         <div className='expand-container' style={{
             height: props.duration ? props.duration : 'auto',
-            opacity: props.task.completed ? 0.5 : 1,
+            opacity: isCompleted ? 0.5 : 1,
             backgroundColor: taskColor + '88',
             border: (new Date(props.task.deadline) >= new Date()) ? ('2px solid ' + taskColor) : ('2px solid ' + "#eb403488"),
         }}>
 
             <div className='task-header'
                 style={{
-                    opacity: props.task.completed ? 0.5 : 1,
+                    opacity: isCompleted ? 0.5 : 1,
                 }}>
                 {/* <Button sx={buttonLowStyle} onClick={() => deleteTask(props.task.id)}>x</Button> */}
                 {/* {props.isExpandable && <img className="expand-icon" src={expand} alt="expand tasks view" onClick={() => setExpanded(!expanded)} />} */}

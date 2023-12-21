@@ -77,28 +77,56 @@ export function TaskContainerView() {
         // handleAddTaskClick(e)
     }
     const showSortedTasksForEnergyLevel = (energyLevel: String) => {
-        putEnergyLevel(energyLevel)();
+        // putEnergyLevel(energyLevel)();
         setTasks(TASK_LIST_COMPONENT_ID, []);
         // fetchAlgoSortList(energyLevel)((tasks) => setTasks(TASK_LIST_COMPONENT_ID, tasks.filter(task => task.completed == false && !usedTasks.includes(task.id))), setIsLoading, setErrorMessage);
         setEnergyLevelPopupView(false);
 
-        fetchAlgoSortList(energyLevel)((tasks: Task[]) => {
-            fetchCalendarTasks((calendarTasks: any[]) => {
-                const filteredTasks = tasks.filter(task => {
-                    const isTaskInCalendar = calendarTasks.find(ct => ct.task.id === task.id);
-                    const isSubtask = converDbTaskToTask(task).isSubtask;
-                  
-                    const shouldIncludeTask = !isTaskInCalendar && task.completed === false && isSubtask === false;
-                    return shouldIncludeTask;
-                  });
-                // const tasksList = calendar[TASK_LIST_COMPONENT_ID]
-                // .filter(task => task.completed == false && !usedTasks.includes(task.id));
+        let token = localStorage.getItem('jwt');
 
-                setTasks(TASK_LIST_COMPONENT_ID, filteredTasks)
-                setUsedTasks(calendarTasks.map((calendartT: any) => calendartT.task.id));
-            })
-        }, setIsLoading, setErrorMessage, navigate)
+        // Check if token is wrapped in double quotes and remove them.
+        if (token && token.startsWith('"') && token.endsWith('"')) {
+            token = token.substring(1, token.length - 1);
+        }
 
+        fetch(`http://localhost:8080/user/energyLevel/${energyLevel}`, {
+            method: 'PUT',
+            body: JSON.stringify(energyLevel),
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        }).then((response) => {
+            console.log('response', response)
+            if (response.ok) {
+                return response.json();
+            }
+            console.log(response.status)
+            if (response.status == 401) {
+                if (navigate) navigate("/loggedOut")
+            }
+
+        }).then(data => {
+            fetchAlgoSortList(energyLevel)((tasks: Task[]) => {
+                fetchCalendarTasks((calendarTasks: any[]) => {
+                    const filteredTasks = tasks.filter(task => {
+                        const isTaskInCalendar = calendarTasks.find(ct => ct.task.id === task.id);
+                        const isSubtask = converDbTaskToTask(task).isSubtask;
+
+                        const shouldIncludeTask = !isTaskInCalendar && task.completed === false && isSubtask === false;
+                        return shouldIncludeTask;
+                    });
+                    // const tasksList = calendar[TASK_LIST_COMPONENT_ID]
+                    // .filter(task => task.completed == false && !usedTasks.includes(task.id));
+
+                    setTasks(TASK_LIST_COMPONENT_ID, filteredTasks)
+                    setUsedTasks(calendarTasks.map((calendartT: any) => calendartT.task.id));
+                })
+            }, setIsLoading, setErrorMessage, navigate)
+        })
+            .catch((e) => {
+            }).finally(() => {
+            });
     }
 
     const energyButtonLow = {
@@ -122,12 +150,12 @@ export function TaskContainerView() {
                 const filteredTasks = tasks.filter(task => {
                     const isTaskInCalendar = calendarTasks.find(ct => ct.task.id === task.id);
                     const isSubtask = converDbTaskToTask(task).isSubtask;
-                  
+
                     const shouldIncludeTask = !isTaskInCalendar && task.completed === false && isSubtask === false;
                     return shouldIncludeTask;
-                  });
+                });
 
-                  setTasks(TASK_LIST_COMPONENT_ID, filteredTasks);
+                setTasks(TASK_LIST_COMPONENT_ID, filteredTasks);
 
                 console.log("tasks test", tasks.filter(task => !calendarTasks.find(ct => ct.task.id == task.id) && task.completed == false && !usedTasks.includes(task.id)))
                 console.log("tasks test", tasks)
@@ -159,18 +187,18 @@ export function TaskContainerView() {
                     {(provided) => (
                         <div  {...provided.droppableProps} ref={provided.innerRef} >
                             {tasksList.map((task, index) => (
-                                
+
                                 <TaskView isExpandable={true}
                                     key={task.id}
                                     task={task}
-                                    isEditView={editView} 
+                                    isEditView={editView}
                                     isAlgoSort={currentView !== 'ListView'}
-                                     index={index}
+                                    index={index}
                                     onComplete={() => handleTaskComplete(index)}
-                                    openTaskModal={() => editTaskAction(task.id)} 
+                                    openTaskModal={() => editTaskAction(task.id)}
                                     onUpdateTask={(newTask: Task) => {
                                         const updateTaskInCalendar = modifyTask(TASK_LIST_COMPONENT_ID, task.id, newTask);
-                                      }}/>))}
+                                    }} />))}
                             {/* <button onClick={() => setEditView(!editView)} className='linedActionButton'>Edit Tasks</button> */}
                             {provided.placeholder}
                         </div>

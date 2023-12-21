@@ -13,7 +13,7 @@ type DateStatProps = {
 }
 export function DateFiltering(props: DateStatProps) {
     const [startDate, setStartDate] = useState<Dayjs>(dayjs().subtract(1, 'month'));
-    const [endDate, setEndDate] = useState<Dayjs>(dayjs());
+    const [endDate, setEndDate] = useState<Dayjs>(dayjs().add(5, 'day'));
 
     const handleStartDateChange = (date: any) => {
         setStartDate(date);
